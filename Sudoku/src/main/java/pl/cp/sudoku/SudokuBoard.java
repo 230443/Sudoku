@@ -50,11 +50,11 @@ public class SudokuBoard {
     }
 
     private boolean isBoxSafe(int row, int col, int guess) {
-        row = (row % 3) * 3;
-        col = (col % 3) * 3;
+        row = (row / 3) * 3;
+        col = (col / 3) * 3;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (board[row + i][col + i] == guess) {
+                if (board[row + i][col + j] == guess) {
                     return false;
                 }
             }
