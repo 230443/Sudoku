@@ -9,6 +9,11 @@ import java.util.List;
  */
 
 public class SudokuBoard {
+
+    public SudokuBoard() {
+        fillNumbers();
+    }
+
     int[][] board = new int[9][9];
 
     //default access modifier used for testing
@@ -59,13 +64,7 @@ public class SudokuBoard {
         return isRowSafe(row, guess) && isColSafe(col, guess) && isBoxSafe(row, col, guess);
     }
 
-
-    public void fillBoard() {
-        fillNumbers();
-        backtracking();
-    }
-
-    public boolean backtracking() {
+    public boolean fillBoard() {
         int row = -1;
         int col = -1;
         boolean isEmpty = true;
@@ -93,7 +92,7 @@ public class SudokuBoard {
         for (int num : numbers) {
             if (isSafe(row, col, num)) {
                 board[row][col] = num;
-                if (backtracking()) {
+                if (fillBoard()) {
                     return true;
                 } else {
                     board[row][col] = 0;
