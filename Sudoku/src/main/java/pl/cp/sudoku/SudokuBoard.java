@@ -14,21 +14,23 @@ public class SudokuBoard {
         fillNumbers();
     }
 
-    int[][] board = new int[9][9];
+    private int[][] board = new int[9][9];
 
-    //default access modifier used for testing
+    public int[][] getBoard() {
+        return board;
+    }
 
     //HashSet is not random for small capacity
-    List<Integer> numbers = new ArrayList<>(9);
+    private List<Integer> numbers = new ArrayList<>(9);
 
-    void fillNumbers() {
+    private void fillNumbers() {
         for (int i = 1; i <= 9; i++) {
             numbers.add(i);
         }
         Collections.shuffle(numbers);
     }
 
-    boolean isRowSafe(int row, int guess) {
+    private boolean isRowSafe(int row, int guess) {
         for (int value :
                 board[row]) {
             if (value == guess) {
@@ -38,7 +40,7 @@ public class SudokuBoard {
         return true;
     }
 
-    boolean isColSafe(int col, int guess) {
+    private boolean isColSafe(int col, int guess) {
         for (int i = 0; i < 9; i++) {
             if (board[i][col] == guess) {
                 return false;
@@ -47,7 +49,7 @@ public class SudokuBoard {
         return true;
     }
 
-    boolean isBoxSafe(int row, int col, int guess) {
+    private boolean isBoxSafe(int row, int col, int guess) {
         row = (row % 3) * 3;
         col = (col % 3) * 3;
         for (int i = 0; i < 3; i++) {
@@ -60,7 +62,7 @@ public class SudokuBoard {
         return true;
     }
 
-    boolean isSafe(int row, int col, int guess) {
+    private boolean isSafe(int row, int col, int guess) {
         return isRowSafe(row, guess) && isColSafe(col, guess) && isBoxSafe(row, col, guess);
     }
 
