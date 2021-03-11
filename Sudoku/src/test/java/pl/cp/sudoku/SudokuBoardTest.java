@@ -5,7 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.Test;
-import pl.cp.sudoku.SudokuBoard;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author daniel
@@ -21,6 +25,14 @@ public class SudokuBoardTest {
     @Test
     public void fillBoardTest() {
 
+    }
+    @Test
+    public void shuffleTest() {
+        SudokuBoard board = new SudokuBoard();
+        board.fillNumbers();
+        System.out.println(board.numbers);
+        Collections.shuffle(board.numbers);
+        System.out.println(board.numbers);
     }
 
 }
