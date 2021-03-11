@@ -9,13 +9,11 @@ import java.util.List;
  */
 
 public class SudokuBoard {
-    private int[][] board = new int[9][9];
+    int[][] board = new int[9][9];
 
     //default access modifier used for testing
 
     //HashSet is not random for small capacity
-    //Set<Integer> numbers = new HashSet<>(9);
-
     List<Integer> numbers = new ArrayList<>(9);
 
     void fillNumbers() {
@@ -57,8 +55,51 @@ public class SudokuBoard {
         return true;
     }
 
+    boolean isSafe(int row, int col, int guess) {
+        return isRowSafe(row, guess) && isColSafe(col, guess) && isBoxSafe(row, col, guess);
+    }
+
 
     public void fillBoard() {
+        fillNumbers();
+        backtracking();
+    }
 
+    public boolean backtracking() {
+        int row = -1;
+        int col = -1;
+        boolean isEmpty = true;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] == 0) {
+                    row = i;
+                    col = j;
+
+                    // We still have some remaining
+                    // missing values in Sudoku
+                    isEmpty = false;
+                    break;
+                }
+            }
+            if (!isEmpty) {
+                break;
+            }
+        }
+
+        if (isEmpty) {
+            return true;
+        }
+
+        for (int num : numbers) {
+            if (isSafe(row, col, num)) {
+                board[row][col] = num;
+                if (backtracking()) {
+                    return true;
+                } else {
+                    board[row][col] = 0;
+                }
+            }
+        }
+        return false;
     }
 }

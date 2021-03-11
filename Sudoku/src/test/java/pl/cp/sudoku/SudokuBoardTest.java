@@ -26,6 +26,7 @@ public class SudokuBoardTest {
     public void fillBoardTest() {
 
     }
+
     @Test
     public void shuffleTest() {
         SudokuBoard board = new SudokuBoard();
@@ -33,6 +34,20 @@ public class SudokuBoardTest {
         System.out.println(board.numbers);
         Collections.shuffle(board.numbers);
         System.out.println(board.numbers);
+    }
+
+    @Test
+    public void SolveTest() {
+        SudokuBoard board = new SudokuBoard();
+        board.fillBoard();
+        for (int i = 0; i<9 ; i++)
+        {
+            for (int j = 0; j<9 ; j++)
+            {
+                System.out.print(board.board[i][j]);
+            }
+            System.out.println();
+        }
     }
 
 }
