@@ -1,11 +1,8 @@
 package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,19 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class SudokuBoardTest {
 
-    public SudokuBoardTest() {
-    }
-
-    /**
-     * Test of append method, of class StudentArrayList.
-     */
-    @Test
-    public void fillBoardTest() {
-
-    }
-
-    public boolean isValidSudoku(int[][] board) {
-        // init Hashmaps mapping values
+    private boolean isValidSudoku(int[][] board) {
+        // init Hashmaps arrays containing hashmaps mapping values to number of times they occured in the row, column and box
         HashMap<Integer, Integer> [] rows = new HashMap[9];
         HashMap<Integer, Integer> [] columns = new HashMap[9];
         HashMap<Integer, Integer> [] boxes = new HashMap[9];
@@ -41,7 +27,7 @@ public class SudokuBoardTest {
             for (int j = 0; j < 9; j++) {
                 int n = board[i][j];
                 int box_index = (i / 3 ) * 3 + j / 3;
-                // keep the current cell value
+                // the following line if there was no such key it initializes new key with 0 and adds 1
                 rows[i].put(n, rows[i].getOrDefault(n, 0) + 1);
                 columns[j].put(n, columns[j].getOrDefault(n, 0) + 1);
                 boxes[box_index].put(n, boxes[box_index].getOrDefault(n, 0) + 1);
@@ -60,8 +46,16 @@ public class SudokuBoardTest {
         assertTrue(isValidSudoku(board.getBoard()));
     }
 
+
     @Test
-    public void SolveTest() {
+    public void checkTwoSudokusDifferent() {
+        SudokuBoard board1 = new SudokuBoard();
+        board1.fillBoard();
+        SudokuBoard board2= new SudokuBoard();
+        board2.fillBoard();
+        //we will convert arrays to strings and check if the content is not the same
+        assertFalse(Arrays.deepEquals(board2.getBoard(), board1.getBoard()));
+
 
     }
 
