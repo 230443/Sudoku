@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SudokuBoardTest {
 
     private boolean isValidSudoku(int[][] board) {
-        // init Hashmaps arrays containing hashmaps mapping values to number of times they occured in the row, column and box
+        // init Hashmaps arrays containing hashmaps mapping values to number of times they occurred in the row, column and box
         HashMap<Integer, Integer> [] rows = new HashMap[9];
         HashMap<Integer, Integer> [] columns = new HashMap[9];
         HashMap<Integer, Integer> [] boxes = new HashMap[9];
@@ -55,8 +55,16 @@ public class SudokuBoardTest {
         board2.fillBoard();
         //we will convert arrays to strings and check if the content is not the same
         assertFalse(Arrays.deepEquals(board2.getBoard(), board1.getBoard()));
+    }
 
-
+    @Test
+    public void checkGetBoard_returnCopy() {
+        SudokuBoard board = new SudokuBoard();
+        board.fillBoard();
+        int[][] b1 = board.getBoard();
+        b1[0][0]=0;
+        //we will convert arrays to strings and check if the content is not the same
+        assertFalse(Arrays.deepEquals(b1, board.getBoard()));
     }
 
 }

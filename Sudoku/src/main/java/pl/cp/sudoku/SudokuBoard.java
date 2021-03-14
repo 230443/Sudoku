@@ -17,7 +17,13 @@ public class SudokuBoard {
     private int[][] board = new int[9][9];
 
     public int[][] getBoard() {
-        return board;
+        int[][] copy = new int[9][9];
+        for (int i = 0; i < board.length; i++) {
+            int[] singleRow = board[i];
+            copy[i] = new int[9];
+            System.arraycopy(singleRow, 0, copy[i], 0, 9);
+        }
+        return copy;
     }
 
     //HashSet is not random for small capacity
