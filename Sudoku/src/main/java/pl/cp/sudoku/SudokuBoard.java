@@ -27,7 +27,7 @@ public class SudokuBoard {
     }
 
     public void setBoard(int x, int y, int value) {
-        this.board[x][y]=value;
+        this.board[x][y] = value;
     }
 
     //HashSet is not random for small capacity
