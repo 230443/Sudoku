@@ -62,6 +62,7 @@ public class SudokuBoardTest {
         SudokuBoard board = new SudokuBoard();
         board.fillBoard();
         int[][] b1 = board.getBoard();
+        assertTrue(Arrays.deepEquals(b1, board.getBoard()));
         b1[0][0]=0;
         //we will convert arrays to strings and check if the content is not the same
         assertFalse(Arrays.deepEquals(b1, board.getBoard()));
