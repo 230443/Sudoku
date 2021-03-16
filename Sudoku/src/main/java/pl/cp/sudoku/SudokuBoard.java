@@ -14,6 +14,16 @@ public class SudokuBoard {
         fillNumbers();
     }
 
+    private SudokuSolver solver;
+
+    void setSudokuSolver(SudokuSolver solver) {
+        this.solver = solver;
+    }
+
+    public void solveGame() {
+        solver.solve(this);
+    }
+
     private int[][] board = new int[9][9];
 
     public int[][] getBoard() {
@@ -26,8 +36,20 @@ public class SudokuBoard {
         return copy;
     }
 
-    public void setBoard(int x, int y, int value) {
-        this.board[x][y] = value;
+    public int get(int x, int y) {
+        return board[x][y];
+    }
+
+    public boolean set(int x, int y, int value) {
+        if (isSafe(x, y, value)) {
+            this.board[x][y] = value;
+            return true;
+        }
+        if (value == 0) {
+            this.board[x][y] = value;
+            return true;
+        }
+        return false;
     }
 
     //HashSet is not random for small capacity
@@ -77,40 +99,7 @@ public class SudokuBoard {
     }
 
     public boolean fillBoard() {
-        int row = -1;
-        int col = -1;
-        boolean isEmpty = true;
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (board[i][j] == 0) {
-                    row = i;
-                    col = j;
-
-                    // We still have some remaining
-                    // missing values in Sudoku
-                    isEmpty = false;
-                    break;
-                }
-            }
-            if (!isEmpty) {
-                break;
-            }
-        }
-
-        if (isEmpty) {
-            return true;
-        }
-
-        for (int num : numbers) {
-            if (isSafe(row, col, num)) {
-                board[row][col] = num;
-                if (fillBoard()) {
-                    return true;
-                } else {
-                    board[row][col] = 0;
-                }
-            }
-        }
-        return false;
+        return solver.solve(this);
     }
+
 }

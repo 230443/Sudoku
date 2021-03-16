@@ -13,9 +13,9 @@ public class SudokuBoardTest {
 
     private boolean isValidSudoku(int[][] board) {
         // init Hashmaps arrays containing hashmaps mapping values to number of times they occurred in the row, column and box
-        HashMap<Integer, Integer> [] rows = new HashMap[9];
-        HashMap<Integer, Integer> [] columns = new HashMap[9];
-        HashMap<Integer, Integer> [] boxes = new HashMap[9];
+        HashMap<Integer, Integer>[] rows = new HashMap[9];
+        HashMap<Integer, Integer>[] columns = new HashMap[9];
+        HashMap<Integer, Integer>[] boxes = new HashMap[9];
         for (int i = 0; i < 9; i++) {
             rows[i] = new HashMap<Integer, Integer>();
             columns[i] = new HashMap<Integer, Integer>();
@@ -26,7 +26,7 @@ public class SudokuBoardTest {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 int n = board[i][j];
-                int box_index = (i / 3 ) * 3 + j / 3;
+                int box_index = (i / 3) * 3 + j / 3;
                 // the following line if there was no such key it initializes new key with 0 and adds 1
                 rows[i].put(n, rows[i].getOrDefault(n, 0) + 1);
                 columns[j].put(n, columns[j].getOrDefault(n, 0) + 1);
@@ -42,6 +42,7 @@ public class SudokuBoardTest {
     @Test
     public void sudokuValidationTest() {
         SudokuBoard board = new SudokuBoard();
+        board.setSudokuSolver(new BacktrackingSudokuSolver());
         board.fillBoard();
         assertTrue(isValidSudoku(board.getBoard()));
     }
@@ -50,8 +51,10 @@ public class SudokuBoardTest {
     @Test
     public void checkTwoSudokusDifferent() {
         SudokuBoard board1 = new SudokuBoard();
+        board1.setSudokuSolver(new BacktrackingSudokuSolver());
         board1.fillBoard();
-        SudokuBoard board2= new SudokuBoard();
+        SudokuBoard board2 = new SudokuBoard();
+        board2.setSudokuSolver(new BacktrackingSudokuSolver());
         board2.fillBoard();
         //we will convert arrays to strings and check if the content is not the same
         assertFalse(Arrays.deepEquals(board2.getBoard(), board1.getBoard()));
@@ -60,10 +63,11 @@ public class SudokuBoardTest {
     @Test
     public void checkGetBoard_returnCopy() {
         SudokuBoard board = new SudokuBoard();
+        board.setSudokuSolver(new BacktrackingSudokuSolver());
         board.fillBoard();
         int[][] b1 = board.getBoard();
         assertTrue(Arrays.deepEquals(b1, board.getBoard()));
-        b1[0][0]=0;
+        b1[0][0] = 0;
         //we will convert arrays to strings and check if the content is not the same
         assertFalse(Arrays.deepEquals(b1, board.getBoard()));
     }
