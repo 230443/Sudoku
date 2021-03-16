@@ -17,9 +17,9 @@ public class SudokuBoardTest {
         HashMap<Integer, Integer>[] columns = new HashMap[9];
         HashMap<Integer, Integer>[] boxes = new HashMap[9];
         for (int i = 0; i < 9; i++) {
-            rows[i] = new HashMap<Integer, Integer>();
-            columns[i] = new HashMap<Integer, Integer>();
-            boxes[i] = new HashMap<Integer, Integer>();
+            rows[i] = new HashMap<>();
+            columns[i] = new HashMap<>();
+            boxes[i] = new HashMap<>();
         }
 
         // validate a board
@@ -41,30 +41,26 @@ public class SudokuBoardTest {
 
     @Test
     public void sudokuValidationTest() {
-        SudokuBoard board = new SudokuBoard();
-        board.setSudokuSolver(new BacktrackingSudokuSolver());
-        board.fillBoard();
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        board.solveGame();
         assertTrue(isValidSudoku(board.getBoard()));
     }
 
 
     @Test
     public void checkTwoSudokusDifferent() {
-        SudokuBoard board1 = new SudokuBoard();
-        board1.setSudokuSolver(new BacktrackingSudokuSolver());
-        board1.fillBoard();
-        SudokuBoard board2 = new SudokuBoard();
-        board2.setSudokuSolver(new BacktrackingSudokuSolver());
-        board2.fillBoard();
+        SudokuBoard board1 = new SudokuBoard(new BacktrackingSudokuSolver());
+        board1.solveGame();
+        SudokuBoard board2 = new SudokuBoard(new BacktrackingSudokuSolver());
+        board2.solveGame();
         //we will convert arrays to strings and check if the content is not the same
         assertFalse(Arrays.deepEquals(board2.getBoard(), board1.getBoard()));
     }
 
     @Test
     public void checkGetBoard_returnCopy() {
-        SudokuBoard board = new SudokuBoard();
-        board.setSudokuSolver(new BacktrackingSudokuSolver());
-        board.fillBoard();
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        board.solveGame();
         int[][] b1 = board.getBoard();
         assertTrue(Arrays.deepEquals(b1, board.getBoard()));
         b1[0][0] = 0;

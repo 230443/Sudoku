@@ -1,30 +1,18 @@
 package pl.cp.sudoku;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Sudoku Board.
  */
 
 public class SudokuBoard {
 
-    public SudokuBoard() {
-        fillNumbers();
-    }
-
-    private SudokuSolver solver;
-
-    void setSudokuSolver(SudokuSolver solver) {
+    public SudokuBoard(SudokuSolver solver) {
         this.solver = solver;
     }
 
     public void solveGame() {
         solver.solve(this);
     }
-
-    private int[][] board = new int[9][9];
 
     public int[][] getBoard() {
         int[][] copy = new int[9][9];
@@ -52,14 +40,11 @@ public class SudokuBoard {
         return false;
     }
 
-    //HashSet is not random for small capacity
-    private List<Integer> numbers = new ArrayList<>(9);
+    private int[][] board = new int[9][9];
+    private final SudokuSolver solver;
 
-    private void fillNumbers() {
-        for (int i = 1; i <= 9; i++) {
-            numbers.add(i);
-        }
-        Collections.shuffle(numbers);
+    private boolean isSafe(int row, int col, int guess) {
+        return isRowSafe(row, guess) && isColSafe(col, guess) && isBoxSafe(row, col, guess);
     }
 
     private boolean isRowSafe(int row, int guess) {
@@ -92,14 +77,6 @@ public class SudokuBoard {
             }
         }
         return true;
-    }
-
-    private boolean isSafe(int row, int col, int guess) {
-        return isRowSafe(row, guess) && isColSafe(col, guess) && isBoxSafe(row, col, guess);
-    }
-
-    public boolean fillBoard() {
-        return solver.solve(this);
     }
 
 }
