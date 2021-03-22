@@ -29,11 +29,7 @@ public class SudokuBoard {
     }
 
     public boolean set(int x, int y, int value) {
-        if (isSafe(x, y, value)) {
-            this.board[x][y] = value;
-            return true;
-        }
-        if (value == 0) {
+        if (isSafe(x, y, value) || value == 0) {
             this.board[x][y] = value;
             return true;
         }
