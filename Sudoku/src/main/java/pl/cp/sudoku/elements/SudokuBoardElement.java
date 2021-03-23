@@ -13,7 +13,7 @@ public abstract class SudokuBoardElement {
         for (SudokuField field :
                 sudokuFields) {
 
-            if (++fieldCounters[field.getFieldValue()] > 1) {
+            if (++fieldCounters[field.getValue()] > 1) {
                 return false;
             }
         }
