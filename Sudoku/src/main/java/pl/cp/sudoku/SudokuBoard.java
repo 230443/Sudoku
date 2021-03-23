@@ -1,5 +1,10 @@
 package pl.cp.sudoku;
 
+import pl.cp.sudoku.elements.SudokuBox;
+import pl.cp.sudoku.elements.SudokuColumn;
+import pl.cp.sudoku.elements.SudokuField;
+import pl.cp.sudoku.elements.SudokuRow;
+
 /**
  * Sudoku Board.
  */
@@ -38,6 +43,41 @@ public class SudokuBoard {
 
     private int[][] board = new int[9][9];
     private final SudokuSolver solver;
+
+    public SudokuRow getRow(int y) {
+        return new SudokuRow(sudokuFields[y]);
+    }
+
+    public SudokuColumn getColumn(int x) {
+        SudokuField[] column = new SudokuField[9];
+        for (int i = 0; i < 9; i++) {
+            column[i] = sudokuFields[i][x];
+        }
+        return new SudokuColumn(column);
+    }
+
+    public SudokuBox getBox(int x, int y) {
+        SudokuField[] box = new SudokuField[9];
+        x = (x / 3) * 3;
+        y = (y / 3) * 3;
+        for (int i = 0; i < 3; i++) {
+            //  for (int j = 0; j < 3; j++) {
+            //      box[i+j] = sudokuFields[y + i][x + j];
+            //  }
+            System.arraycopy(sudokuFields[y + i], x, box, i, 3);
+        }
+
+        return new SudokuBox(box);
+    }
+
+    private SudokuField[][] sudokuFields = new SudokuField[9][9];
+    private SudokuRow[] rows = new SudokuRow[9];
+    private SudokuColumn[] columns = new SudokuColumn[9];
+    private SudokuBox[][] boxes = new SudokuBox[3][3];
+
+    private boolean checkBoard() {
+        return false;
+    }
 
     private boolean isSafe(int row, int col, int guess) {
         return isRowSafe(row, guess) && isColSafe(col, guess) && isBoxSafe(row, col, guess);

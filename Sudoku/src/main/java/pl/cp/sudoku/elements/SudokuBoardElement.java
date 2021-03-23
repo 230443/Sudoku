@@ -2,6 +2,10 @@ package pl.cp.sudoku.elements;
 
 public abstract class SudokuBoardElement {
 
+    public SudokuBoardElement(SudokuField[] fields) {
+        this.sudokuFields = fields;
+    }
+
     public boolean verify() {
 
         int[] fieldCounters = new int[9];
@@ -9,12 +13,12 @@ public abstract class SudokuBoardElement {
         for (SudokuField field :
                 sudokuFields) {
 
-            if(++fieldCounters[field.getFieldValue()] > 1) {
+            if (++fieldCounters[field.getFieldValue()] > 1) {
                 return false;
             }
         }
         return true;
     }
 
-    private SudokuField[] sudokuFields;
+    protected SudokuField[] sudokuFields;
 }
