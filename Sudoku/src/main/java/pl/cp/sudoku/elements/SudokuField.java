@@ -9,19 +9,22 @@ public class SudokuField {
     private SudokuColumn column;
     private SudokuBox box;
 
+    public SudokuField() {
+        this.value = 0;
+    }
+
     public SudokuField(SudokuRow row, SudokuColumn column, SudokuBox box) {
         this.row = row;
         this.column = column;
         this.box = box;
     }
 
-    public int getFieldValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(int value) throws Exception {
+    public void setValue(int value) {
         this.value = value;
-        throw new Exception("not implemented");
     }
 
 

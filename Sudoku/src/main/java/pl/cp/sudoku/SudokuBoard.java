@@ -76,7 +76,21 @@ public class SudokuBoard {
     private SudokuBox[][] boxes = new SudokuBox[3][3];
 
     private boolean checkBoard() {
-        return false;
+        for (int i = 0; i < 9; i++) {
+            if (!(getRow(i).verify() || getColumn(i).verify())) {
+                return false;
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (!getBox(i,j).verify()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private boolean isSafe(int row, int col, int guess) {
