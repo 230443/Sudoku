@@ -71,9 +71,7 @@ public class SudokuBoard {
     }
 
     private SudokuField[][] sudokuFields = new SudokuField[9][9];
-    private SudokuRow[] rows = new SudokuRow[9];
-    private SudokuColumn[] columns = new SudokuColumn[9];
-    private SudokuBox[][] boxes = new SudokuBox[3][3];
+
 
     private boolean checkBoard() {
         for (int i = 0; i < 9; i++) {
