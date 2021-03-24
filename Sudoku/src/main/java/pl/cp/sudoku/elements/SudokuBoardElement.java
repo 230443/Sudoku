@@ -1,5 +1,11 @@
 package pl.cp.sudoku.elements;
 
+/**
+ * Sudoku board element.
+ */
+
+
+
 public abstract class SudokuBoardElement {
 
     public SudokuBoardElement(SudokuField[] fields) {
