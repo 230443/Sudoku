@@ -19,7 +19,7 @@ public abstract class SudokuBoardElement {
         for (SudokuField field :
                 sudokuFields) {
 
-            if (++fieldCounters[field.getValue()] > 1) {
+            if (++fieldCounters[field.getValue()] > 1 && field.getValue()!=0) { //there can be more than one 0
                 return false;
             }
         }
