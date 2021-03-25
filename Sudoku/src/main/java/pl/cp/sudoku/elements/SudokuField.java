@@ -7,8 +7,6 @@ import java.io.Serializable;
  */
 
 
-
-
 public class SudokuField implements Serializable {
 
     private int value;
@@ -20,16 +18,14 @@ public class SudokuField implements Serializable {
     public int getValue() {
         return value;
     }
-    
-    public void setValue(int value){
+
+    public void setValue(int value) {
         if (value >= 0 && value <= 9) {
             this.value = value;
-        }
-        else {
+        } else {
             //throw new Exception("invalid number");
         }
     }
-
 
 
 }

@@ -5,19 +5,9 @@ package pl.cp.sudoku.elements;
  */
 
 
-
 public abstract class SudokuBoardElement {
 
     public SudokuBoardElement(SudokuField[] fields) {
-        //for (int i = 0; i < 9; i++) {
-//
-        //    this.sudokuFields[i] = new SudokuField();
-        //    try {
-        //        this.sudokuFields[i].setValue(fields[i].getValue());
-        //    } catch (Exception e) {
-        //        e.printStackTrace();
-        //    }
-        //}
         this.sudokuFields = fields;
     }
 
@@ -28,7 +18,8 @@ public abstract class SudokuBoardElement {
         for (SudokuField field :
                 sudokuFields) {
 
-            if (++fieldCounters[field.getValue()] > 1 && field.getValue()!=0) { //there can be more than one 0
+            //there can be more than one 0
+            if (++fieldCounters[field.getValue()] > 1 && field.getValue() != 0) {
                 return false;
             }
         }

@@ -49,28 +49,6 @@ public class SudokuBoard {
         return true;
     }
 
-    public boolean setParallel(int x, int y, int value) {
-        boolean isSafe = (isSafe(x, y, value) || value == 0);
-        int v = sudokuFields[x][y].getValue();
-        sudokuFields[x][y].setValue(value);
-        boolean isVerified = checkBoard();
-
-
-        boolean isSame = isSafe == isVerified;
-        if (!isSame) {
-            System.out.println("not the same");
-        }
-
-        if (isSafe(x, y, value) || value == 0) {
-            this.board[x][y] = value;
-            sudokuFields[x][y].setValue(value);
-            return true;
-        }
-        sudokuFields[x][y].setValue(v);
-        return false;
-    }
-
-    private int[][] board = new int[9][9];
     private final SudokuSolver solver;
 
     public SudokuRow getRow(int y) {
@@ -107,7 +85,6 @@ public class SudokuBoard {
 
     }
 
-
     private boolean checkBoard() {
         for (int i = 0; i < 9; i++) {
             if (!getRow(i).verify()) {
@@ -126,42 +103,6 @@ public class SudokuBoard {
             }
         }
 
-        return true;
-    }
-
-    private boolean isSafe(int row, int col, int guess) {
-        return isRowSafe(row, guess) && isColSafe(col, guess) && isBoxSafe(row, col, guess);
-    }
-
-    private boolean isRowSafe(int row, int guess) {
-        for (int value :
-                board[row]) {
-            if (value == guess) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean isColSafe(int col, int guess) {
-        for (int i = 0; i < 9; i++) {
-            if (board[i][col] == guess) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean isBoxSafe(int row, int col, int guess) {
-        row = (row / 3) * 3;
-        col = (col / 3) * 3;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[row + i][col + j] == guess) {
-                    return false;
-                }
-            }
-        }
         return true;
     }
 
