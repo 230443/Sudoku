@@ -21,20 +21,35 @@ public class SudokuBoard {
     }
 
     public int[][] getBoard() {
+
         int[][] copy = new int[9][9];
-        for (int i = 0; i < board.length; i++) {
-            int[] singleRow = board[i];
-            copy[i] = new int[9];
-            System.arraycopy(singleRow, 0, copy[i], 0, 9);
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                copy[i][j] = sudokuFields[i][j].getValue();
+            }
         }
+
         return copy;
     }
 
     public int get(int x, int y) {
-        return board[x][y];
+        return sudokuFields[x][y].getValue();
     }
 
     public boolean set(int x, int y, int value) {
+
+        int v = sudokuFields[x][y].getValue();
+        sudokuFields[x][y].setValue(value);
+
+        if (!checkBoard()) {
+            sudokuFields[x][y].setValue(v);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean setParallel(int x, int y, int value) {
         boolean isSafe = (isSafe(x, y, value) || value == 0);
         int v = sudokuFields[x][y].getValue();
         sudokuFields[x][y].setValue(value);
