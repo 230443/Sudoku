@@ -9,12 +9,21 @@ package pl.cp.sudoku.elements;
 public abstract class SudokuBoardElement {
 
     public SudokuBoardElement(SudokuField[] fields) {
+        //for (int i = 0; i < 9; i++) {
+//
+        //    this.sudokuFields[i] = new SudokuField();
+        //    try {
+        //        this.sudokuFields[i].setValue(fields[i].getValue());
+        //    } catch (Exception e) {
+        //        e.printStackTrace();
+        //    }
+        //}
         this.sudokuFields = fields;
     }
 
     public boolean verify() {
 
-        int[] fieldCounters = new int[9];
+        int[] fieldCounters = new int[10];
 
         for (SudokuField field :
                 sudokuFields) {
@@ -26,5 +35,5 @@ public abstract class SudokuBoardElement {
         return true;
     }
 
-    protected SudokuField[] sudokuFields;
+    protected SudokuField[] sudokuFields = new SudokuField[9];
 }

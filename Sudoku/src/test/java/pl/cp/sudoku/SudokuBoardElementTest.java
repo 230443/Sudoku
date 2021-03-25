@@ -18,10 +18,14 @@ public class SudokuBoardElementTest {
             field[i] = new SudokuField();
             field[i].setValue(i);
         }
+        SudokuBox box1 = new SudokuBox(field);
+        assertTrue(box1.verify());
 
-        SudokuBox box = new SudokuBox(field);
-
-        assertTrue(box.verify());
+        for (int i = 0; i < 9; i++) {
+            field[i].setValue(1);
+        }
+        SudokuBox box2 = new SudokuBox(field);
+        assertFalse(box2.verify());
 
     }
 

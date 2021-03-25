@@ -14,6 +14,7 @@ public class SudokuField implements Serializable {
     private int value;
 
     public SudokuField() {
+        value = 0;
     }
 
     public int getValue() {

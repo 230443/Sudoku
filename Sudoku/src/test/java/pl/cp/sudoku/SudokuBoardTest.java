@@ -1,6 +1,9 @@
 package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
+import pl.cp.sudoku.elements.SudokuBox;
+import pl.cp.sudoku.elements.SudokuColumn;
+import pl.cp.sudoku.elements.SudokuRow;
 
 import java.util.*;
 
@@ -39,10 +42,12 @@ public class SudokuBoardTest {
         return true;
     }
 
+
     @Test
     public void sudokuValidationTest() {
         SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
         board.solveGame();
+        int[][] b = board.getBoard();
         assertTrue(isValidSudoku(board.getBoard()));
     }
 
@@ -67,5 +72,50 @@ public class SudokuBoardTest {
         //we will convert arrays to strings and check if the content is not the same
         assertFalse(Arrays.deepEquals(b1, board.getBoard()));
     }
+
+    @Test
+    public void setTest() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        int a = 5;
+        board.set(0,0,a);
+        assertEquals(a, board.get(0,0));
+
+        assertFalse(board.set(1,0,a));
+
+    }
+
+    @Test
+    public void getRowTest() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        board.set(0,0,5);
+        SudokuRow row = board.getRow(0);
+        assertFalse(board.set(1,0,5));
+
+        assertTrue(row.verify());
+    }
+
+    @Test
+    public void getColumnTest() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        board.set(0,0,5);
+        SudokuColumn column = board.getColumn(0);
+        assertTrue(column.verify());
+
+        assertFalse(board.set(0,1,5));
+
+    }
+
+    @Test
+    public void getBoxTest() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        board.set(0,0,5);
+        SudokuBox box = board.getBox(0,0);
+        assertTrue(box.verify());
+
+        assertFalse(board.set(1,1,5));
+
+    }
+
+
 
 }
