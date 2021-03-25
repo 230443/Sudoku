@@ -20,7 +20,7 @@ public class SudokuBoard {
         solver.solve(this);
     }
 
-    public int[][] getIntBoard() {
+    public int[][] getBoard() {
         int[][] copy = new int[9][9];
         for (int i = 0; i < board.length; i++) {
             int[] singleRow = board[i];
@@ -29,70 +29,55 @@ public class SudokuBoard {
         }
         return copy;
     }
-    public int[][] getBoard() {
-        int[][] copy = new int[9][9];
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                copy[i][j] = sudokuFields[i][j].getValue();
-            }
-        }
-
-        return copy;
-    }
 
     public int get(int x, int y) {
-        return sudokuFields[x][y].getValue();
-        //return board[x][y];
+        return board[x][y];
     }
 
     public boolean set(int x, int y, int value) {
-        try {
+        boolean isSafe = (isSafe(x, y, value) || value == 0);
+        int v = sudokuFields[x][y].getValue();
+        sudokuFields[x][y].setValue(value);
+        boolean isVerified = checkBoard();
+
+
+        boolean isSame = isSafe == isVerified;
+        if (!isSame) {
+            System.out.println("not the same");
+        }
+
+        if (isSafe(x, y, value) || value == 0) {
+            this.board[x][y] = value;
             sudokuFields[x][y].setValue(value);
+            return true;
         }
-        catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        return checkBoard();
-
-        // if (isSafe(x, y, value) || value == 0) {
-        //     this.board[x][y] = value;
-        //     return true;
-        // }
-        // return false;
+        sudokuFields[x][y].setValue(v);
+        return false;
     }
 
     private int[][] board = new int[9][9];
     private final SudokuSolver solver;
 
     public SudokuRow getRow(int y) {
-        return new SudokuRow(this.sudokuFields[y]);
+        return new SudokuRow(sudokuFields[y]);
     }
 
     public SudokuColumn getColumn(int x) {
         SudokuField[] column = new SudokuField[9];
         for (int i = 0; i < 9; i++) {
-            column[i] = this.sudokuFields[i][x];
+            column[i] = sudokuFields[i][x];
         }
         return new SudokuColumn(column);
     }
 
     public SudokuBox getBox(int x, int y) {
         SudokuField[] box = new SudokuField[9];
-        //for (int i = 0; i < 9; i++) {
-        //    box[i] = new SudokuField();
-        //}
-        x = (x / 3) * 3;
-        y = (y / 3) * 3;
+        x *= 3;
+        y *= 3;
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                box[i*3+j] = this.sudokuFields[y + i][x + j];
-            }
-            //System.arraycopy(this.sudokuFields[y + i], x, box, i, 3);
+            System.arraycopy(this.sudokuFields[y + i], x, box, i * 3, 3);
         }
-//
+
         return new SudokuBox(box);
     }
 
@@ -103,21 +88,24 @@ public class SudokuBoard {
             for (int x = 0; x < 9; x++) {
                 sudokuFields[y][x] = new SudokuField();
             }
-
         }
 
     }
 
+
     private boolean checkBoard() {
         for (int i = 0; i < 9; i++) {
-            if (!getRow(i).verify() || !getColumn(i).verify()) {
+            if (!getRow(i).verify()) {
+                return false;
+            }
+            if (!getColumn(i).verify()) {
                 return false;
             }
         }
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (!getBox(i,j).verify()) {
+                if (!getBox(i, j).verify()) {
                     return false;
                 }
             }

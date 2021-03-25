@@ -111,8 +111,11 @@ public class SudokuBoardTest {
         board.set(0,0,5);
         SudokuBox box = board.getBox(0,0);
         assertTrue(box.verify());
-
         assertFalse(board.set(1,1,5));
+
+        board.set(3,3,1);
+        assertFalse(board.set(4,4,1));
+
 
     }
 

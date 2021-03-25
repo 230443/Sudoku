@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SudokuBoardElementTest {
 
     @Test
-    public void set_getTest() throws Exception {
+    public void verifyTest() throws Exception {
 
         SudokuField[] field = new SudokuField[9];
 
@@ -26,6 +26,12 @@ public class SudokuBoardElementTest {
         }
         SudokuBox box2 = new SudokuBox(field);
         assertFalse(box2.verify());
+
+        for (int i = 0; i < 9; i++) {
+            field[i].setValue(0);
+        }
+        SudokuBox box3 = new SudokuBox(field);
+        assertTrue(box3.verify());
 
     }
 
