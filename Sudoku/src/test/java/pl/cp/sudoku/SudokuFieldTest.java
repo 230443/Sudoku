@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SudokuFieldTest {
 
     @Test
-    public void set_getTest() {
+    public void set_getTest() throws Exception {
 
         SudokuField field = new SudokuField();
 
