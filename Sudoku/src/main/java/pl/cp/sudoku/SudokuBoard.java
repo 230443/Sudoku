@@ -76,9 +76,24 @@ public class SudokuBoard {
     private final SudokuField[][] board = new SudokuField[9][9];
 
     {   //initialization block
+
+        //initialize rows and columns
+        SudokuRow[] rows = new SudokuRow[9];
+        SudokuColumn[] columns = new SudokuColumn[9];
+        SudokuBox[] boxes = new SudokuBox[9];
+
+        for (int i = 0; i < 9; i++) {
+            rows[i] = getRow(i);
+            columns[i] = getColumn(i);
+            boxes[i] = getBox(i / 3, i % 3);
+        }
+
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
                 board[y][x] = new SudokuField();
+                board[y][x].setRow(rows[y]);
+                board[y][x].setColumn(columns[x]);
+                board[y][x].setBox(boxes[(y / 3) * 3 + (x / 3)]);
             }
         }
     }

@@ -1,11 +1,18 @@
 package pl.cp.sudoku.elements;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 /**
  * Sudoku board element.
  */
 
 
-public abstract class SudokuBoardElement {
+public abstract class SudokuBoardElement implements PropertyChangeListener {
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+    }
 
     public SudokuBoardElement(SudokuField[] fields) {
         this.sudokuFields = fields;
@@ -26,5 +33,5 @@ public abstract class SudokuBoardElement {
         return true;
     }
 
-    protected SudokuField[] sudokuFields = new SudokuField[9];
+    protected SudokuField[] sudokuFields;
 }

@@ -116,7 +116,6 @@ public class SudokuBoardTest {
         board.set(3,3,1);
         assertFalse(board.set(4,4,1));
 
-
     }
 
 
