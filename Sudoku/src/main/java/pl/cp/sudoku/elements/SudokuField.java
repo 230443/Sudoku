@@ -24,8 +24,8 @@ public class SudokuField implements Serializable {
      listeners[2] = box;
     }
 
-    private void notify(int oldValue) {
-        PropertyChangeEvent event = new PropertyChangeEvent(this, "value", oldValue, this.value);
+    private void notify(int oldValue, int newValue) {
+        PropertyChangeEvent event = new PropertyChangeEvent(this, "value", oldValue, newValue);
         for (PropertyChangeListener listener :
                 listeners) {
             listener.propertyChange(event);
@@ -48,6 +48,7 @@ public class SudokuField implements Serializable {
 
     public void setValue(int value) {
         if (value >= 0 && value <= 9) {
+            notify(this.value, value);
             this.value = value;
         } else {
             //throw new Exception("invalid number");
