@@ -90,10 +90,7 @@ public class SudokuBoard {
 
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                board[y][x] = new SudokuField();
-                board[y][x].setRow(rows[y]);
-                board[y][x].setColumn(columns[x]);
-                board[y][x].setBox(boxes[(y / 3) * 3 + (x / 3)]);
+                board[y][x] = new SudokuField(rows[y], columns[x], boxes[(y / 3) * 3 + (x / 3)]);
             }
         }
     }

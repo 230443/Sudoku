@@ -3,9 +3,9 @@ package pl.cp.sudoku;
 import org.junit.jupiter.api.Test;
 import pl.cp.sudoku.elements.SudokuBox;
 import pl.cp.sudoku.elements.SudokuField;
-import pl.cp.sudoku.elements.SudokuRow;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SudokuBoardElementTest {
 

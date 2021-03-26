@@ -1,14 +1,13 @@
 package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
-import pl.cp.sudoku.elements.SudokuBoardElement;
 import pl.cp.sudoku.elements.SudokuColumn;
 import pl.cp.sudoku.elements.SudokuField;
 import pl.cp.sudoku.elements.SudokuRow;
 
 import java.lang.reflect.Field;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class SudokuFieldTest {
 

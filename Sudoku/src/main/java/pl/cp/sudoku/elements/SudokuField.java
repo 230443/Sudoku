@@ -58,23 +58,11 @@ public class SudokuField implements Serializable {
         return row;
     }
 
-    public void setRow(SudokuRow row) {
-        this.row = row;
-    }
-
     public SudokuColumn getColumn() {
         return column;
     }
 
-    public void setColumn(SudokuColumn column) {
-        this.column = column;
-    }
-
     public SudokuBox getBox() {
         return box;
-    }
-
-    public void setBox(SudokuBox box) {
-        this.box = box;
     }
 }
