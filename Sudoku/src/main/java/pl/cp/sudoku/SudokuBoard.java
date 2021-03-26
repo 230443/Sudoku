@@ -13,7 +13,6 @@ public class SudokuBoard {
 
     public SudokuBoard(SudokuSolver solver) {
         this.solver = solver;
-        initializeSudokuFields();
     }
 
     public void solveGame() {
@@ -26,7 +25,7 @@ public class SudokuBoard {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                copy[i][j] = sudokuFields[i][j].getValue();
+                copy[i][j] = board[i][j].getValue();
             }
         }
 
@@ -34,16 +33,16 @@ public class SudokuBoard {
     }
 
     public int get(int x, int y) {
-        return sudokuFields[x][y].getValue();
+        return board[x][y].getValue();
     }
 
     public boolean set(int x, int y, int value) {
 
-        int v = sudokuFields[x][y].getValue();
-        sudokuFields[x][y].setValue(value);
+        int v = board[x][y].getValue();
+        board[x][y].setValue(value);
 
         if (!checkBoard()) {
-            sudokuFields[x][y].setValue(v);
+            board[x][y].setValue(v);
             return false;
         }
         return true;
@@ -52,13 +51,13 @@ public class SudokuBoard {
     private final SudokuSolver solver;
 
     public SudokuRow getRow(int y) {
-        return new SudokuRow(sudokuFields[y]);
+        return new SudokuRow(board[y]);
     }
 
     public SudokuColumn getColumn(int x) {
         SudokuField[] column = new SudokuField[9];
         for (int i = 0; i < 9; i++) {
-            column[i] = sudokuFields[i][x];
+            column[i] = board[i][x];
         }
         return new SudokuColumn(column);
     }
@@ -68,21 +67,20 @@ public class SudokuBoard {
         x *= 3;
         y *= 3;
         for (int i = 0; i < 3; i++) {
-            System.arraycopy(this.sudokuFields[y + i], x, box, i * 3, 3);
+            System.arraycopy(this.board[y + i], x, box, i * 3, 3);
         }
 
         return new SudokuBox(box);
     }
 
-    private SudokuField[][] sudokuFields = new SudokuField[9][9];
+    private final SudokuField[][] board = new SudokuField[9][9];
 
-    private void initializeSudokuFields() {
+    {   //initialization block
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                sudokuFields[y][x] = new SudokuField();
+                board[y][x] = new SudokuField();
             }
         }
-
     }
 
     private boolean checkBoard() {
