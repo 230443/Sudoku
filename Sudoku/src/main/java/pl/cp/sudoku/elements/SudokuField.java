@@ -28,6 +28,9 @@ public class SudokuField implements Serializable {
         PropertyChangeEvent event = new PropertyChangeEvent(this, "value", oldValue, newValue);
         for (PropertyChangeListener listener :
                 listeners) {
+            if (listener == null) {
+                continue;
+            }
             listener.propertyChange(event);
         }
     }

@@ -9,11 +9,12 @@ import pl.cp.sudoku.elements.SudokuRow;
 import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SudokuFieldTest {
 
     @Test
-    public void set_getTest() {
+    public void set_getTest() throws Exception {
 
         SudokuField field = new SudokuField();
 
