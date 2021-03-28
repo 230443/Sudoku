@@ -19,11 +19,11 @@ public class SudokuField implements Serializable {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(int value) throws Exception {
         if (value >= 0 && value <= 9) {
             this.value = value;
         } else {
-            //throw new Exception("invalid number");
+            throw new Exception("Number out of range 0-9");
         }
     }
 

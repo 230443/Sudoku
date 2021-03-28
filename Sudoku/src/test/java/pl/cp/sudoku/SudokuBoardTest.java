@@ -79,8 +79,8 @@ public class SudokuBoardTest {
         int a = 5;
         board.set(0,0,a);
         assertEquals(a, board.get(0,0));
-
         assertFalse(board.set(1,0,a));
+        assertFalse(board.set(5,0,74));
 
     }
 
@@ -115,8 +115,6 @@ public class SudokuBoardTest {
 
         board.set(3,3,1);
         assertFalse(board.set(4,4,1));
-
-
     }
 
 
