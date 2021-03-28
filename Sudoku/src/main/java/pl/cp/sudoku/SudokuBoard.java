@@ -42,16 +42,14 @@ public class SudokuBoard {
 
         try {
             board[x][y].setValue(value);
-        } catch (Exception e) {
+
+        if (!checkBoard()) {
+            board[x][y].setValue(v);
             return false;
         }
 
-        if (!checkBoard()) {
-            try {
-                board[x][y].setValue(v);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
         return true;
