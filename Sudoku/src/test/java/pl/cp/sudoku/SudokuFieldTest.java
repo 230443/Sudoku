@@ -1,6 +1,7 @@
 package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import pl.cp.sudoku.elements.SudokuColumn;
 import pl.cp.sudoku.elements.SudokuField;
 import pl.cp.sudoku.elements.SudokuRow;
@@ -39,6 +40,23 @@ public class SudokuFieldTest {
         }
         assertSame(boardFields[0][0].getBox(),boardFields[2][2].getBox());
         assertSame(boardFields[8][6].getBox(),boardFields[7][7].getBox());
+
+    }
+
+    @Test
+    public void setOutOfRangeTest() {
+
+        SudokuField field = new SudokuField();
+
+        assertThrows(Exception.class, new Executable() {
+
+            @Override
+            public void execute() throws Throwable {
+                for (int i = -1; i < 11; i++) {
+                    field.setValue(i);
+                }
+            }
+        });
 
     }
 

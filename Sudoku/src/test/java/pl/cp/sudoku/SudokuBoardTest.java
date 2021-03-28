@@ -81,6 +81,7 @@ public class SudokuBoardTest {
         assertEquals(a, board.get(0,0));
 
         assertFalse(board.set(1,0,a));
+        assertFalse(board.set(5,0,74));
 
     }
 

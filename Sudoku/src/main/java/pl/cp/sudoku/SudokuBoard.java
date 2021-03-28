@@ -39,10 +39,19 @@ public class SudokuBoard {
     public boolean set(int x, int y, int value) {
 
         int v = board[x][y].getValue();
-        board[x][y].setValue(value);
+
+        try {
+            board[x][y].setValue(value);
+        } catch (Exception e) {
+            return false;
+        }
 
         if (!checkBoard()) {
-            board[x][y].setValue(v);
+            try {
+                board[x][y].setValue(v);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return false;
         }
         return true;
