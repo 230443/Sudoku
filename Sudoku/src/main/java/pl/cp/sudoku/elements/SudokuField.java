@@ -58,6 +58,10 @@ public class SudokuField implements Serializable {
         }
     }
 
+    public boolean verify() {
+        return row.verify() && column.verify() && box.verify();
+    }
+
     public SudokuRow getRow() {
         return row;
     }
