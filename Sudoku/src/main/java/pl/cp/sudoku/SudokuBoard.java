@@ -1,14 +1,10 @@
 package pl.cp.sudoku;
 
+import java.util.Arrays;
 import pl.cp.sudoku.elements.SudokuBox;
 import pl.cp.sudoku.elements.SudokuColumn;
 import pl.cp.sudoku.elements.SudokuField;
 import pl.cp.sudoku.elements.SudokuRow;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Sudoku Board.
@@ -48,7 +44,7 @@ public class SudokuBoard {
         try {
             board[x][y].setValue(value);
 
-        if (! board[x][y].verify()) {
+        if (!checkBoard()) {
             board[x][y].setValue(v);
             return false;
         }
@@ -82,7 +78,6 @@ public class SudokuBoard {
         for (int i = 0; i < 3; i++) {
             System.arraycopy(this.board[y + i], x, box, i * 3, 3);
         }
-
         return new SudokuBox(Arrays.asList(box));
     }
 
