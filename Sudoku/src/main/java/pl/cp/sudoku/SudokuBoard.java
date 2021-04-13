@@ -1,5 +1,7 @@
 package pl.cp.sudoku;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import pl.cp.sudoku.elements.SudokuBox;
 import pl.cp.sudoku.elements.SudokuColumn;
@@ -63,12 +65,12 @@ public class SudokuBoard {
     }
 
     public SudokuColumn getColumn(int x) {
-        SudokuField[] column = new SudokuField[9];
+        ArrayList<SudokuField> column = new ArrayList<>(9);
         for (int i = 0; i < 9; i++) {
-            column[i] = board[i][x];
+            column.add(board[i][x]);
         }
 
-        return new SudokuColumn(Arrays.asList(column));
+        return new SudokuColumn(column);
     }
 
     public SudokuBox getBox(int x, int y) {

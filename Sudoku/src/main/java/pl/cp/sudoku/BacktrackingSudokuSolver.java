@@ -1,6 +1,7 @@
 package pl.cp.sudoku;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import java.util.List;
  */
 
 class BacktrackingSudokuSolver implements SudokuSolver {
+
+    private final Integer[] possibleValues = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
     @Override
     public boolean solve(SudokuBoard board) {
@@ -36,8 +39,7 @@ class BacktrackingSudokuSolver implements SudokuSolver {
             return true;
         }
 
-        List<Integer> numbers = new ArrayList<>(9);
-        Collections.addAll(numbers, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        ArrayList<Integer> numbers = new ArrayList<>(Arrays.asList(possibleValues));
         Collections.shuffle(numbers);
 
         for (int num : numbers) {

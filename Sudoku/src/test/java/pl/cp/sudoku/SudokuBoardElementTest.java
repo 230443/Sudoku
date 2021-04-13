@@ -8,9 +8,10 @@ import pl.cp.sudoku.elements.SudokuField;
 import pl.cp.sudoku.elements.SudokuRow;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SudokuBoardElementTest {
 
@@ -50,7 +51,9 @@ public class SudokuBoardElementTest {
             field[i].setValue(0);
         }
         SudokuBox box = new SudokuBox(Arrays.asList(field));
+        SudokuBox box2 = new SudokuBox();
         assertTrue(box.verify());
+        assertTrue(box2.verify());
     }
 
     @Test
@@ -74,5 +77,26 @@ public class SudokuBoardElementTest {
         }
     }
 
+    @Test
+    public void hashSetAddTheSameElement() throws Exception{
+
+        Set<SudokuField> sudokuFields = new HashSet<>(9);
+
+        sudokuFields.add(field[0]);
+        assertTrue(sudokuFields.contains(field[0]));
+
+        field[0].setValue(7);
+        sudokuFields.add(field[0]);
+        assertEquals(1, sudokuFields.size());
+
+        for (SudokuField sf :
+                sudokuFields) {
+            assertEquals(7, sf.getValue());
+        }
+
+
+
+
+    }
 
 }
