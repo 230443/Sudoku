@@ -5,6 +5,11 @@ import pl.cp.sudoku.elements.SudokuColumn;
 import pl.cp.sudoku.elements.SudokuField;
 import pl.cp.sudoku.elements.SudokuRow;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Sudoku Board.
  */
@@ -58,7 +63,7 @@ public class SudokuBoard {
     private final SudokuSolver solver;
 
     public SudokuRow getRow(int y) {
-        return new SudokuRow(board[y]);
+        return new SudokuRow(Arrays.asList(board[y]));
     }
 
     public SudokuColumn getColumn(int x) {
@@ -66,7 +71,8 @@ public class SudokuBoard {
         for (int i = 0; i < 9; i++) {
             column[i] = board[i][x];
         }
-        return new SudokuColumn(column);
+
+        return new SudokuColumn(Arrays.asList(column));
     }
 
     public SudokuBox getBox(int x, int y) {
@@ -77,7 +83,7 @@ public class SudokuBoard {
             System.arraycopy(this.board[y + i], x, box, i * 3, 3);
         }
 
-        return new SudokuBox(box);
+        return new SudokuBox(Arrays.asList(box));
     }
 
     private final SudokuField[][] board = new SudokuField[9][9];
@@ -90,9 +96,9 @@ public class SudokuBoard {
         SudokuBox[] boxes = new SudokuBox[9];
 
         for (int i = 0; i < 9; i++) {
-            rows[i] = getRow(i);
-            columns[i] = getColumn(i);
-            boxes[i] = getBox(i / 3, i % 3);
+            rows[i] = new SudokuRow();
+            columns[i] = new SudokuColumn();
+            boxes[i] = new SudokuBox();
         }
 
         for (int y = 0; y < 9; y++) {

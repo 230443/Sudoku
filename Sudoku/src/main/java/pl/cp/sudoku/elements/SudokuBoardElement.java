@@ -2,6 +2,10 @@ package pl.cp.sudoku.elements;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Sudoku board element.
@@ -12,10 +16,18 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        sudokuFields.add((SudokuField) evt.getSource());
     }
 
-    public SudokuBoardElement(SudokuField[] fields) {
-        this.sudokuFields = fields;
+    public SudokuBoardElement(Set<SudokuField> sudokuFields) {
+        this.sudokuFields = sudokuFields;
+    }
+
+    public SudokuBoardElement(List<SudokuField> sudokuFields) {
+        this.sudokuFields = new HashSet<>(sudokuFields);
+    }
+
+    public SudokuBoardElement() {
     }
 
     public boolean verify() {
@@ -33,5 +45,5 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
         return true;
     }
 
-    protected SudokuField[] sudokuFields;
+    private Set<SudokuField> sudokuFields = new HashSet<>(9);
 }
