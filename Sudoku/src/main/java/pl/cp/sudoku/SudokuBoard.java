@@ -1,12 +1,16 @@
 package pl.cp.sudoku;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import pl.cp.sudoku.elements.SudokuBox;
 import pl.cp.sudoku.elements.SudokuColumn;
 import pl.cp.sudoku.elements.SudokuField;
 import pl.cp.sudoku.elements.SudokuRow;
+
+
 
 /**
  * Sudoku Board.
@@ -46,10 +50,10 @@ public class SudokuBoard {
         try {
             board[x][y].setValue(value);
 
-        if (!board[x][y].verify()) {
-            board[x][y].setValue(v);
-            return false;
-        }
+            if (!board[x][y].verify()) {
+                board[x][y].setValue(v);
+                return false;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,6 +110,29 @@ public class SudokuBoard {
                 rows[y].addField(board[y][x]);
                 boxes[(y / 3) * 3 + (x / 3)].addField(board[y][x]);
             }
+        }
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board);
+    }
+
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj instanceof SudokuBoard) {
+            final SudokuBoard other = (SudokuBoard) obj;
+            return new EqualsBuilder()
+                    .append(board, other.board)
+                    .isEquals();
+        } else {
+            return false;
         }
     }
 

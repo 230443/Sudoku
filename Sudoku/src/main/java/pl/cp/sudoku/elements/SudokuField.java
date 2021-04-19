@@ -4,6 +4,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Sudoku Field.
@@ -69,6 +72,45 @@ public class SudokuField implements Serializable {
     public boolean verify() {
         return row.verify() && column.verify() && box.verify();
     }
+
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
+    /*
+
+    // commons.lang3 version
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder(17, 31)
+                    .append(this.value)
+                    .append(this.listeners)
+                    .toHashCode();
+        }
+    */
+
+    // java 7 version
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, getPropertyChangeListeners());
+    }
+
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj instanceof SudokuField) {
+            final SudokuField other = (SudokuField) obj;
+            return new EqualsBuilder()
+                    .append(value, other.value)
+                    .append(listeners, other.listeners)
+                    .isEquals();
+        } else {
+            return false;
+        }
+    }
+
 
     public SudokuRow getRow() {
         return row;
