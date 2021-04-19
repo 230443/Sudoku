@@ -19,10 +19,6 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
         sudokuFields.add((SudokuField) evt.getSource());
     }
 
-    public SudokuBoardElement(Set<SudokuField> sudokuFields) {
-        this.sudokuFields = sudokuFields;
-    }
-
     public SudokuBoardElement(List<SudokuField> sudokuFields) {
         this.sudokuFields = new HashSet<>(sudokuFields);
     }
@@ -43,6 +39,12 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
             }
         }
         return true;
+    }
+
+    public void addField(SudokuField field) {
+        sudokuFields.add(field);
+        field.addPropertyChangeListener(this);
+
     }
 
     private Set<SudokuField> sudokuFields = new HashSet<>(9);

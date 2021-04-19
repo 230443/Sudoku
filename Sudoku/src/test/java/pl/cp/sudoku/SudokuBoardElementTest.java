@@ -57,6 +57,23 @@ public class SudokuBoardElementTest {
     }
 
     @Test
+    public void addFieldTest() throws Exception {
+
+        SudokuRow row = new SudokuRow();
+        SudokuColumn column = new SudokuColumn();
+        SudokuBox box = new SudokuBox();
+
+        SudokuField[] fields = new SudokuField[9];
+        for (int i = 0; i < 9; i++) {
+            fields[i] = new SudokuField(row, column, box);
+            row.addField(fields[i]);
+            column.addField(fields[i]);
+            box.addField(fields[i]);
+        }
+        assertTrue(Arrays.equals(fields[0].getPropertyChangeListeners(), fields[5].getPropertyChangeListeners()));
+    }
+
+    @Test
     public void notifyTest() throws Exception {
 
         SudokuRow row = new SudokuRow();
@@ -93,10 +110,6 @@ public class SudokuBoardElementTest {
                 sudokuFields) {
             assertEquals(7, sf.getValue());
         }
-
-
-
-
     }
 
 }

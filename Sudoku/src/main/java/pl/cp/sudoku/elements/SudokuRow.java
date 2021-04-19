@@ -8,12 +8,9 @@ import java.util.Set;
  */
 
 public class SudokuRow extends SudokuBoardElement {
+
     public SudokuRow() {
         super();
-    }
-
-    public SudokuRow(Set<SudokuField> sudokuFields) {
-        super(sudokuFields);
     }
 
     public SudokuRow(List<SudokuField> sudokuFields) {

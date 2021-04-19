@@ -46,7 +46,7 @@ public class SudokuBoard {
         try {
             board[x][y].setValue(value);
 
-        if (!checkBoard()) {
+        if (!board[x][y].verify()) {
             board[x][y].setValue(v);
             return false;
         }
@@ -101,6 +101,10 @@ public class SudokuBoard {
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
                 board[y][x] = new SudokuField(rows[y], columns[x], boxes[(y / 3) * 3 + (x / 3)]);
+
+                columns[x].addField(board[y][x]);
+                rows[y].addField(board[y][x]);
+                boxes[(y / 3) * 3 + (x / 3)].addField(board[y][x]);
             }
         }
     }

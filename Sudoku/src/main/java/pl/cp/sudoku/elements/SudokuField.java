@@ -3,6 +3,7 @@ package pl.cp.sudoku.elements;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Sudoku Field.
@@ -16,13 +17,7 @@ public class SudokuField implements Serializable {
     private SudokuRow row;
     private SudokuColumn column;
     private SudokuBox box;
-    private final PropertyChangeListener[] listeners = new SudokuBoardElement[3];
-
-    {
-     listeners[0] = row;
-     listeners[1] = column;
-     listeners[2] = box;
-    }
+    private final ArrayList<PropertyChangeListener> listeners = new ArrayList<>(3);
 
     private void notify(int oldValue, int newValue) {
         PropertyChangeEvent event = new PropertyChangeEvent(this, "value", oldValue, newValue);
@@ -39,10 +34,15 @@ public class SudokuField implements Serializable {
         value = 0;
     }
 
+
     public SudokuField(SudokuRow row, SudokuColumn column, SudokuBox box) {
         this.row = row;
         this.column = column;
         this.box = box;
+
+        listeners.add(row);
+        listeners.add(column);
+        listeners.add(box);
     }
 
     public int getValue() {
@@ -56,6 +56,14 @@ public class SudokuField implements Serializable {
         } else {
             throw new Exception("Number out of range 0-9");
         }
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener x) {
+        listeners.add(x);
+    }
+
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return listeners.toArray(new PropertyChangeListener[listeners.size()]);
     }
 
     public boolean verify() {

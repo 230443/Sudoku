@@ -15,10 +15,6 @@ public class SudokuBox extends SudokuBoardElement {
         super();
     }
 
-    public SudokuBox(Set<SudokuField> sudokuFields) {
-        super(sudokuFields);
-    }
-
     public SudokuBox(List<SudokuField> sudokuFields) {
         super(sudokuFields);
     }

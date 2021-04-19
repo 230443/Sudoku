@@ -35,12 +35,12 @@ public class SudokuFieldTest {
             SudokuRow row = boardFields[y][0].getRow();
             SudokuColumn column = boardFields[0][y].getColumn();
             for (int x = 0; x < 9; x++) {
-                assertSame(row,boardFields[y][x].getRow());
-                assertSame(column,boardFields[x][y].getColumn());
+                assertSame(row, boardFields[y][x].getRow());
+                assertSame(column, boardFields[x][y].getColumn());
             }
         }
-        assertSame(boardFields[0][0].getBox(),boardFields[2][2].getBox());
-        assertSame(boardFields[8][6].getBox(),boardFields[7][7].getBox());
+        assertSame(boardFields[0][0].getBox(), boardFields[2][2].getBox());
+        assertSame(boardFields[8][6].getBox(), boardFields[7][7].getBox());
 
     }
 
@@ -58,7 +58,16 @@ public class SudokuFieldTest {
                 }
             }
         });
+    }
 
+    @Test
+    public void notifyNullListener() throws Exception {
+
+        SudokuField field = new SudokuField();
+
+        SudokuRow row = null;
+        field.addPropertyChangeListener(row);
+        field.setValue(7);
     }
 
 
