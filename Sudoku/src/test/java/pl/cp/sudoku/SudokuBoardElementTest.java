@@ -2,14 +2,9 @@ package pl.cp.sudoku;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import pl.cp.sudoku.elements.SudokuBox;
-import pl.cp.sudoku.elements.SudokuColumn;
-import pl.cp.sudoku.elements.SudokuField;
-import pl.cp.sudoku.elements.SudokuRow;
+import pl.cp.sudoku.elements.*;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -111,5 +106,65 @@ public class SudokuBoardElementTest {
             assertEquals(7, sf.getValue());
         }
     }
+
+
+    @Test
+    public void hashCodeTestTrue() throws Exception{
+        SudokuBoardElement element1=new SudokuRow();
+        SudokuBoardElement element2=new SudokuRow();
+        assertTrue(element1.hashCode()==element2.hashCode());
+
+    }
+
+    @Test
+    public void hashCodeTestFalse() throws Exception{
+        SudokuBoardElement element1=new SudokuRow();
+        SudokuBoardElement element2=new SudokuRow();
+        element2.addField(new SudokuField());
+        assertFalse(element1.hashCode()==element2.hashCode());
+
+    }
+
+    @Test
+    public void toStringTest() throws Exception{
+        SudokuBoardElement element1=new SudokuRow();
+        SudokuBoardElement element2=new SudokuRow();
+        element2.addField(new SudokuField());
+        assertFalse(element1.toString()==element2.toString());
+
+    }
+
+    @Test
+    public void toStringTest2() throws Exception{
+        SudokuBoardElement element1=new SudokuRow();
+
+        assertFalse(element1.toString()==element1.toString());
+
+    }
+
+    @Test
+    public void EqualityTest() throws Exception{
+        SudokuBoardElement element1=new SudokuRow();
+        SudokuBoardElement element2=new SudokuRow();
+        assertTrue(element1.equals(element2));
+
+    }
+
+    @Test
+    public void InEqualityTest() throws Exception{
+        SudokuBoardElement element1=new SudokuRow();
+        assertFalse(element1.equals(2));
+
+    }
+
+    @Test
+    public void InEqualityTest2() throws Exception{
+        SudokuBoardElement element1=new SudokuRow();
+        SudokuBoardElement element2=new SudokuRow();
+        element2.addField(new SudokuField());
+        assertFalse(element1.equals(element2));
+
+    }
+
 
 }

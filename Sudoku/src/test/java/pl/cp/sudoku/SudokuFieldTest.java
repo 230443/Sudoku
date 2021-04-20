@@ -8,8 +8,7 @@ import pl.cp.sudoku.elements.SudokuRow;
 
 import java.lang.reflect.Field;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SudokuFieldTest {
 
@@ -70,6 +69,63 @@ public class SudokuFieldTest {
         field.setValue(7);
     }
 
+    @Test
+    public void EqualityTest() throws Exception {
+
+        SudokuField field1 = new SudokuField();
+        SudokuField field2 = new SudokuField();
+        assertTrue(field1.equals(field2));
+
+    }
+
+    @Test
+    public void InEqualityTest() throws Exception {
+
+        SudokuField field1 = new SudokuField();
+        SudokuField field2 = new SudokuField();
+        field2.setValue(2);
+        assertFalse(field1.equals(field2));
+
+    }
+    @Test
+    public void InEqualityTest2() throws Exception {
+
+        SudokuField field1 = new SudokuField();
+
+
+        assertFalse(field1.equals(3));
+
+    }
+
+    @Test
+    public void hashCodeTest() throws Exception {
+
+        SudokuField field1 = new SudokuField();
+        SudokuField field2 = new SudokuField();
+        field2.setValue(3);
+        assertFalse(field1.hashCode()==field2.hashCode());
+
+    }
+
+    @Test
+    public void ToStringTestFalse() throws Exception {
+
+        SudokuField field1 = new SudokuField();
+        SudokuField field2 = new SudokuField();
+        field2.setValue(3);
+        assertFalse(field1.toString()==field2.toString());
+
+    }
+
+    @Test
+    public void ToStringTestFalse2() throws Exception {
+
+        SudokuField field1 = new SudokuField();
+        SudokuField field2 = new SudokuField();
+
+        assertFalse(field1.toString()==field2.toString());
+
+    }
 
 }
 

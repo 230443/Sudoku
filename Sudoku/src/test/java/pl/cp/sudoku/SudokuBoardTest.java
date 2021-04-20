@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import pl.cp.sudoku.elements.SudokuBox;
 import pl.cp.sudoku.elements.SudokuColumn;
 import pl.cp.sudoku.elements.SudokuRow;
-
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -118,6 +117,57 @@ public class SudokuBoardTest {
         assertFalse(board.set(4,4,1));
 
     }
+
+    @Test
+    public void toStingTest1() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        assertFalse(board.toString()==board.toString());
+
+    }
+
+    @Test
+    public void toStingTest2() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        SudokuBoard board2 = new SudokuBoard(new BacktrackingSudokuSolver());
+        assertFalse(board.toString()==board2.toString());
+
+    }
+
+    @Test
+    public void hashCodeTest1() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        SudokuBoard board2 = new SudokuBoard(new BacktrackingSudokuSolver());
+        board.set(0,0,5);
+        assertFalse(board.hashCode()==board2.hashCode());
+
+    }
+
+    @Test
+    public void hashCodeTest2() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        SudokuBoard board2 = new SudokuBoard(new BacktrackingSudokuSolver());
+        assertFalse(board.hashCode()==board2.hashCode());
+
+    }
+
+    @Test
+    public void InEqualityTest() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        SudokuBoard board2 = new SudokuBoard(new BacktrackingSudokuSolver());
+        board.set(0,0,5);
+        assertFalse(board.equals(board2));
+
+    }
+
+    @Test
+    public void InEqualityTest2() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+
+        assertFalse(board.equals(654));
+
+    }
+
+
 
 
 
