@@ -2,9 +2,10 @@ package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-import pl.cp.sudoku.elements.SudokuColumn;
-import pl.cp.sudoku.elements.SudokuField;
-import pl.cp.sudoku.elements.SudokuRow;
+import pl.cp.sudoku.model.SudokuBoard;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
+import pl.cp.sudoku.model.SudokuField;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
 
 import java.lang.reflect.Field;
 

@@ -1,15 +1,14 @@
-package pl.cp.sudoku;
+package pl.cp.sudoku.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import pl.cp.sudoku.elements.SudokuBox;
-import pl.cp.sudoku.elements.SudokuColumn;
-import pl.cp.sudoku.elements.SudokuField;
-import pl.cp.sudoku.elements.SudokuRow;
-
+import pl.cp.sudoku.SudokuSolver;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
 
 
 /**
@@ -123,17 +122,19 @@ public class SudokuBoard {
         return Objects.hash(board);
     }
 
-
     @Override
-    public boolean equals(final Object obj) {
-        if (obj instanceof SudokuBoard) {
-            final SudokuBoard other = (SudokuBoard) obj;
-            return new EqualsBuilder()
-                    .append(board, other.board)
-                    .isEquals();
-        } else {
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
+
+        SudokuBoard that = (SudokuBoard) o;
+
+        return new EqualsBuilder().append(board, that.board).isEquals();
     }
 
     private boolean checkBoard() {

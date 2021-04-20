@@ -1,9 +1,10 @@
 package pl.cp.sudoku;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
+import pl.cp.sudoku.model.SudokuBoard;
 
 /**
  * Backtracking Sudoku Solver.

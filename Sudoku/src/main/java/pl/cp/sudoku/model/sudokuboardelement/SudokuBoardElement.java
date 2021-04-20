@@ -1,4 +1,4 @@
-package pl.cp.sudoku.elements;
+package pl.cp.sudoku.model.sudokuboardelement;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import pl.cp.sudoku.model.SudokuField;
 
 /**
  * Sudoku board element.
@@ -22,6 +23,8 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
             sudokuFields.remove(newField);
         }
         sudokuFields.add(newField);
+
+
     }
 
     public SudokuBoardElement(List<SudokuField> sudokuFields) {
@@ -62,19 +65,20 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
         return Objects.hash(sudokuFields);
     }
 
-
     @Override
-    public boolean equals(final Object obj) {
-        if (obj instanceof SudokuBoardElement) {
-            final SudokuBoardElement other = (SudokuBoardElement) obj;
-            return new EqualsBuilder()
-                    .append(sudokuFields, other.sudokuFields)
-                    .isEquals();
-        } else {
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-    }
 
+        SudokuBoardElement that = (SudokuBoardElement) o;
+
+        return new EqualsBuilder().append(sudokuFields, that.sudokuFields).isEquals();
+    }
 
     private List<SudokuField> sudokuFields = new ArrayList<>(9);
 }

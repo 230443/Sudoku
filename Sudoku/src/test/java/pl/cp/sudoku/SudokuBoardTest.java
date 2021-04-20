@@ -1,9 +1,10 @@
 package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
-import pl.cp.sudoku.elements.SudokuBox;
-import pl.cp.sudoku.elements.SudokuColumn;
-import pl.cp.sudoku.elements.SudokuRow;
+import pl.cp.sudoku.model.SudokuBoard;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;

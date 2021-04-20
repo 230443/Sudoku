@@ -1,5 +1,7 @@
 package pl.cp.sudoku;
 
+import pl.cp.sudoku.model.SudokuBoard;
+
 /**
  * Sudoku Solver.
  */

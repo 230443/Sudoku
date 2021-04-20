@@ -1,8 +1,8 @@
-package pl.cp.sudoku.elements;
-
+package pl.cp.sudoku.model.sudokuboardelement;
 
 import java.util.List;
-import java.util.Set;
+import pl.cp.sudoku.model.SudokuField;
+
 
 /**
  * Sudoku Box.

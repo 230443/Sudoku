@@ -1,8 +1,11 @@
 package pl.cp.sudoku;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import pl.cp.sudoku.elements.*;
+import pl.cp.sudoku.model.*;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuBoardElement;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
 
 import java.util.*;
 
@@ -132,13 +135,14 @@ public class SudokuBoardElementTest {
         element2.addField(new SudokuField());
         assertFalse(element1.toString()==element2.toString());
 
+
     }
 
     @Test
     public void toStringTest2() throws Exception{
         SudokuBoardElement element1=new SudokuRow();
 
-        assertFalse(element1.toString()==element1.toString());
+        assertTrue(element1.toString().equals(element1.toString()));
 
     }
 

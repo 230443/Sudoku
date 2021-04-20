@@ -1,4 +1,4 @@
-package pl.cp.sudoku;
+package pl.cp.sudoku.javafx;
 
 public class Controller {
 }
