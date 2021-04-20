@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
@@ -79,24 +80,23 @@ public class SudokuField implements Serializable {
         return ToStringBuilder.reflectionToString(this);
     }
 
-    /*
 
     // commons.lang3 version
-        @Override
-        public int hashCode() {
-            return new HashCodeBuilder(17, 31)
-                    .append(this.value)
-                    .append(this.listeners)
-                    .toHashCode();
-        }
-    */
+//        @Override
+//        public int hashCode() {
+//            return new HashCodeBuilder(17, 31)
+//                    .append(this.value)
+//                    .append(this.listeners)
+//                    .toHashCode();
+//        }
+
 
     // java 7 version
-    @Override
+    /*@Override
     public int hashCode() {
         return Objects.hash(value, getPropertyChangeListeners());
     }
-
+*/
 
     @Override
     public boolean equals(final Object obj) {
