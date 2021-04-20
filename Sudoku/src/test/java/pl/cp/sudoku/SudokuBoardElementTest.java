@@ -94,7 +94,7 @@ public class SudokuBoardElementTest {
         }
     }
 
-    @Test
+    //@Test
     public void hashSetAddTheSameElement() throws Exception{
 
         Set<SudokuField> sudokuFields = new HashSet<>(9);

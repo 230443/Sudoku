@@ -2,10 +2,9 @@ package pl.cp.sudoku.elements;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -18,11 +17,15 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        sudokuFields.add((SudokuField) evt.getSource());
+        SudokuField newField = (SudokuField) evt.getSource();
+        if (sudokuFields.contains(newField)) {
+            sudokuFields.remove(newField);
+        }
+        sudokuFields.add(newField);
     }
 
     public SudokuBoardElement(List<SudokuField> sudokuFields) {
-        this.sudokuFields = new HashSet<>(sudokuFields);
+        this.sudokuFields = sudokuFields;
     }
 
     public SudokuBoardElement() {
@@ -73,5 +76,5 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
     }
 
 
-    private Set<SudokuField> sudokuFields = new HashSet<>(9);
+    private List<SudokuField> sudokuFields = new ArrayList<>(9);
 }

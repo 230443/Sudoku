@@ -81,22 +81,23 @@ public class SudokuField implements Serializable {
     }
 
 
-    // commons.lang3 version
-//        @Override
-//        public int hashCode() {
-//            return new HashCodeBuilder(17, 31)
-//                    .append(this.value)
-//                    .append(this.listeners)
-//                    .toHashCode();
-//        }
+     // commons.lang3 version
+     @Override
+     public int hashCode() {
+         return new HashCodeBuilder(17, 31)
+                 .append(this.value)
+                 //.append(this.listeners)
+                 .toHashCode();
+     }
 
 
     // java 7 version
-    /*@Override
+    /*
+    @Override
     public int hashCode() {
         return Objects.hash(value, getPropertyChangeListeners());
     }
-*/
+    */
 
     @Override
     public boolean equals(final Object obj) {
@@ -104,7 +105,7 @@ public class SudokuField implements Serializable {
             final SudokuField other = (SudokuField) obj;
             return new EqualsBuilder()
                     .append(value, other.value)
-                    .append(listeners, other.listeners)
+                    // .append(listeners, other.listeners)
                     .isEquals();
         } else {
             return false;

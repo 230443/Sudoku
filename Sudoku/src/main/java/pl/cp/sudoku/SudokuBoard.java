@@ -50,7 +50,7 @@ public class SudokuBoard {
         try {
             board[x][y].setValue(value);
 
-            if (!board[x][y].verify()) {
+            if (!checkBoard()) {
                 board[x][y].setValue(v);
                 return false;
             }

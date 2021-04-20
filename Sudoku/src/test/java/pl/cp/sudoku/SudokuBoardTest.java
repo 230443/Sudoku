@@ -59,7 +59,7 @@ public class SudokuBoardTest {
         SudokuBoard board2 = new SudokuBoard(new BacktrackingSudokuSolver());
         board2.solveGame();
         //we will convert arrays to strings and check if the content is not the same
-        assertFalse(Arrays.deepEquals(board2.getBoard(), board1.getBoard()));
+        assertFalse(board1.equals(board2));
     }
 
     @Test
