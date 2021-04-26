@@ -38,15 +38,16 @@ public class SudokuField implements Serializable {
     }
 
     public void setValue(int value) {
-        try {
 
-            if (value >= 0 && value <= 9) {
-                notify(this.value, value);
-                this.value = value;
-            } else {
-                throw new ValueOutOfScopeException("Number out of range 0-9");
-            }
+        if (value < 0 || value > 9) {
+            throw new ValueOutOfScopeException("Number out of range 0-9");
+        }
+        int oldValue = this.value;
+        try {
+            this.value = value;
+            notify(oldValue, value);
         } catch (FieldAlreadyExistException e) {
+            this.value = oldValue;
             throw e;
         }
     }

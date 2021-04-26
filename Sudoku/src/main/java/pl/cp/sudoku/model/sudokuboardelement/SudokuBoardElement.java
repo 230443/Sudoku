@@ -13,19 +13,9 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        SudokuField newField = new SudokuField();
-        newField.setValue((Integer) evt.getNewValue());
-        SudokuField oldField = (SudokuField) evt.getSource();
-
-        if (newField.getValue() == 0) {
-            return;
-        }
-        if (sudokuFields.contains(newField)) {
+        if (!verify()) {
             throw new FieldAlreadyExistException("FieldAlreadyExist");
         }
-        sudokuFields.remove(oldField);
-        sudokuFields.add(newField);
-
     }
 
     public SudokuBoardElement(List<SudokuField> sudokuFields) {
