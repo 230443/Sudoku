@@ -183,12 +183,11 @@ public class SudokuBoardTest {
         SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
         SudokuBoard board2 = new SudokuBoard(new BacktrackingSudokuSolver());
         board.set(0, 0, 5);
-        assertFalse(board.equals(null));
-        assertFalse(board.equals(board2));
-        assertFalse(board.equals(832));
+        assertNotEquals(board, null);
+        assertNotEquals(board2, board);
+        assertNotEquals(board, 832);
         board2 = null;
-        assertFalse(board.equals(board2));
+        assertNotEquals(board2, board);
     }
-
 
 }

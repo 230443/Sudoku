@@ -153,17 +153,17 @@ public class SudokuBoardElementTest {
     @Test
     public void EqualsDifferentClassTest() throws Exception {
         SudokuBoardElement element1 = new SudokuRow();
-        assertNotEquals(2, element1);
+        SudokuBoardElement element2 = new SudokuColumn();
+        assertNotEquals(element2, element1);
     }
 
     @Test
     public void EqualsNullTest() throws Exception {
         SudokuBoardElement element1 = new SudokuRow();
-        SudokuBoardElement element2 = null;
-
+        SudokuBoardElement element2 = new SudokuRow();
+        element2.addField(new SudokuField());
         assertNotEquals(element1, null);
         assertNotEquals(element1, element2);
-
     }
 
 
