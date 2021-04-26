@@ -5,7 +5,7 @@ import pl.cp.sudoku.model.SudokuField;
 
 
 /**
- *  Sudoku row.
+ * Sudoku row.
  */
 
 public class SudokuRow extends SudokuBoardElement {

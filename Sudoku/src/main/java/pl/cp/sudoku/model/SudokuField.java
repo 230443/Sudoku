@@ -8,9 +8,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import pl.cp.sudoku.model.sudokuboardelement.FieldAlreadyExistException;
-import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
-import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
-import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
 
 public class SudokuField implements Serializable {
 
@@ -66,14 +63,14 @@ public class SudokuField implements Serializable {
     }
 
 
-     // commons.lang3 version
-     @Override
-     public int hashCode() {
-         return new HashCodeBuilder(17, 31)
-                 .append(this.value)
-                 //.append(this.listeners)
-                 .toHashCode();
-     }
+    // commons.lang3 version
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31)
+                .append(this.value)
+                //.append(this.listeners)
+                .toHashCode();
+    }
 
 
     @Override

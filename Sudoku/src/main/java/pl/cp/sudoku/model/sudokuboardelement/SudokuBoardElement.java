@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import pl.cp.sudoku.model.SudokuField;
 
@@ -53,8 +54,9 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
 
     @Override
     public int hashCode() {
-        return Objects.hash(sudokuFields);
+        return new HashCodeBuilder(17, 37).append(sudokuFields).toHashCode();
     }
+
 
     @Override
     public boolean equals(Object o) {

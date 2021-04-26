@@ -88,7 +88,7 @@ public class SudokuBoardElementTest {
     }
 
     //@Test
-    public void hashSetAddTheSameElement() throws Exception{
+    public void hashSetAddTheSameElement() throws Exception {
 
         Set<SudokuField> sudokuFields = new HashSet<>(9);
 
@@ -107,61 +107,62 @@ public class SudokuBoardElementTest {
 
 
     @Test
-    public void hashCodeTestTrue() throws Exception{
-        SudokuBoardElement element1=new SudokuRow();
-        SudokuBoardElement element2=new SudokuRow();
-        assertTrue(element1.hashCode()==element2.hashCode());
+    public void hashCodeTestTrue() throws Exception {
+        SudokuBoardElement element1 = new SudokuRow();
+        SudokuBoardElement element2 = new SudokuRow();
+        assertEquals(element2.hashCode(), element1.hashCode());
 
     }
 
     @Test
-    public void hashCodeTestFalse() throws Exception{
-        SudokuBoardElement element1=new SudokuRow();
-        SudokuBoardElement element2=new SudokuRow();
+    public void hashCodeTestFalse() throws Exception {
+        SudokuBoardElement element1 = new SudokuRow();
+        SudokuBoardElement element2 = new SudokuRow();
         element2.addField(new SudokuField());
-        assertFalse(element1.hashCode()==element2.hashCode());
+        assertNotEquals(element2.hashCode(), element1.hashCode());
 
     }
 
     @Test
-    public void toStringTest() throws Exception{
-        SudokuBoardElement element1=new SudokuRow();
-        SudokuBoardElement element2=new SudokuRow();
+    public void toStringTest() throws Exception {
+        SudokuBoardElement element1 = new SudokuRow();
+        SudokuBoardElement element2 = new SudokuRow();
         element2.addField(new SudokuField());
-        assertFalse(element1.toString()==element2.toString());
+        assertNotEquals(element1.toString(), element2.toString());
 
 
     }
 
     @Test
-    public void toStringTest2() throws Exception{
-        SudokuBoardElement element1=new SudokuRow();
+    public void toStringTest2() throws Exception {
+        SudokuBoardElement element1 = new SudokuRow();
 
-        assertTrue(element1.toString().equals(element1.toString()));
-
-    }
-
-    @Test
-    public void EqualityTest() throws Exception{
-        SudokuBoardElement element1=new SudokuRow();
-        SudokuBoardElement element2=new SudokuRow();
-        assertTrue(element1.equals(element2));
+        assertEquals(element1.toString(), element1.toString());
 
     }
 
     @Test
-    public void InEqualityTest() throws Exception{
-        SudokuBoardElement element1=new SudokuRow();
-        assertFalse(element1.equals(2));
+    public void EqualityTest() throws Exception {
+        SudokuBoardElement element1 = new SudokuRow();
+        SudokuBoardElement element2 = new SudokuRow();
+        assertEquals(element1, element1);
+        assertEquals(element2, element1);
 
     }
 
     @Test
-    public void InEqualityTest2() throws Exception{
-        SudokuBoardElement element1=new SudokuRow();
-        SudokuBoardElement element2=new SudokuRow();
-        element2.addField(new SudokuField());
-        assertFalse(element1.equals(element2));
+    public void EqualsDifferentClassTest() throws Exception {
+        SudokuBoardElement element1 = new SudokuRow();
+        assertNotEquals(2, element1);
+    }
+
+    @Test
+    public void EqualsNullTest() throws Exception {
+        SudokuBoardElement element1 = new SudokuRow();
+        SudokuBoardElement element2 = null;
+
+        assertNotEquals(element1, null);
+        assertNotEquals(element1, element2);
 
     }
 

@@ -12,7 +12,7 @@ import pl.cp.sudoku.model.SudokuBoard;
 
 class BacktrackingSudokuSolver implements SudokuSolver {
 
-    private final Integer[] possibleValues = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    private final Integer[] possibleValues = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
     @Override
     public boolean solve(SudokuBoard board) {

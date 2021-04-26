@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import pl.cp.sudoku.SudokuSolver;
 import pl.cp.sudoku.model.sudokuboardelement.FieldAlreadyExistException;
@@ -48,8 +49,7 @@ public class SudokuBoard {
             board[x][y].setValue(value);
         } catch (FieldAlreadyExistException e) {
             return false;
-        }
-        catch (ValueOutOfScopeException e) {
+        } catch (ValueOutOfScopeException e) {
             return false;
         }
         return true;
@@ -113,7 +113,7 @@ public class SudokuBoard {
 
     @Override
     public int hashCode() {
-        return Objects.hash(board);
+        return new HashCodeBuilder(17, 37).append(board).toHashCode();
     }
 
     @Override

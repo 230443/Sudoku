@@ -76,7 +76,8 @@ public class SudokuFieldTest {
 
         SudokuField field1 = new SudokuField();
         SudokuField field2 = new SudokuField();
-        assertTrue(field1.equals(field2));
+        assertEquals(field1, field1);
+        assertEquals(field2, field1);
 
     }
 
@@ -86,27 +87,38 @@ public class SudokuFieldTest {
         SudokuField field1 = new SudokuField();
         SudokuField field2 = new SudokuField();
         field2.setValue(2);
-        assertFalse(field1.equals(field2));
 
+        assertNotEquals(field2, field1);
     }
+
     @Test
-    public void InEqualityTest2() throws Exception {
+    public void EqualsDifferentClassTest() throws Exception {
 
         SudokuField field1 = new SudokuField();
-
-
-        assertFalse(field1.equals(3));
-
+        SudokuField field2 = null;
+        SudokuRow row = new SudokuRow();
+        assertFalse(field1.equals(row));
+        assertFalse(field1.equals(null));
+        assertFalse(field1.equals(field2));
     }
 
     @Test
-    public void hashCodeTest() throws Exception {
+    public void DifferentHashCodeTest() throws Exception {
 
         SudokuField field1 = new SudokuField();
         SudokuField field2 = new SudokuField();
         field2.setValue(3);
-        assertFalse(field1.hashCode()==field2.hashCode());
 
+        assertNotEquals(field2.hashCode(), field1.hashCode());
+    }
+
+    @Test
+    public void SameHashCodeTest() throws Exception {
+
+        SudokuField field1 = new SudokuField();
+        SudokuField field2 = new SudokuField();
+
+        assertEquals(field2.hashCode(), field1.hashCode());
     }
 
     @Test
@@ -115,8 +127,8 @@ public class SudokuFieldTest {
         SudokuField field1 = new SudokuField();
         SudokuField field2 = new SudokuField();
         field2.setValue(3);
-        assertFalse(field1.toString()==field2.toString());
 
+        assertNotEquals(field1.toString(), field2.toString());
     }
 
     @Test
@@ -125,8 +137,7 @@ public class SudokuFieldTest {
         SudokuField field1 = new SudokuField();
         SudokuField field2 = new SudokuField();
 
-        assertFalse(field1.toString()==field2.toString());
-
+        assertNotEquals(field1.toString(), field2.toString());
     }
 
 }
