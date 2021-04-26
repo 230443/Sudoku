@@ -77,7 +77,7 @@ public class SudokuBoardTest {
     public void setTest() {
         SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
         int a = 5;
-        board.set(0,0,a);
+        assertTrue(board.set(0,0,a));
         assertEquals(a, board.get(0,0));
 
         assertFalse(board.set(1,0,a));

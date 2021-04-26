@@ -1,11 +1,9 @@
 package pl.cp.sudoku;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.cp.sudoku.model.*;
-import pl.cp.sudoku.model.sudokuboardelement.SudokuBoardElement;
-import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
-import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
-import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
+import pl.cp.sudoku.model.sudokuboardelement.*;
 
 import java.util.*;
 
@@ -63,7 +61,7 @@ public class SudokuBoardElementTest {
 
         SudokuField[] fields = new SudokuField[9];
         for (int i = 0; i < 9; i++) {
-            fields[i] = new SudokuField(row, column, box);
+            fields[i] = new SudokuField();
             row.addField(fields[i]);
             column.addField(fields[i]);
             box.addField(fields[i]);
@@ -80,16 +78,13 @@ public class SudokuBoardElementTest {
 
         SudokuField[] fields = new SudokuField[9];
         for (int i = 0; i < 9; i++) {
-            fields[i] = new SudokuField(row, column, box);
+            fields[i] = new SudokuField();
+            row.addField(fields[i]);
+            box.addField(fields[i]);
+            column.addField(fields[i]);
         }
-
-        for (int i = 0; i < 9; i++) {
-            fields[i].setValue(1);
-        }
-
-        for (int i = 0; i < 9; i++) {
-            assertFalse(fields[i].verify());
-        }
+        fields[0].setValue(1);
+        assertThrows(FieldAlreadyExistException.class, () -> fields[1].setValue(1));
     }
 
     //@Test

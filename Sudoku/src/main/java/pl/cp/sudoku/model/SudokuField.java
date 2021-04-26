@@ -7,22 +7,15 @@ import java.util.ArrayList;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import pl.cp.sudoku.model.sudokuboardelement.FieldAlreadyExistException;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
-
-/**
- * Sudoku Field.
- */
-
 
 public class SudokuField implements Serializable {
 
     private int value;
 
-    private SudokuRow row;
-    private SudokuColumn column;
-    private SudokuBox box;
     private final ArrayList<PropertyChangeListener> listeners = new ArrayList<>(3);
 
     private void notify(int oldValue, int newValue) {
@@ -40,27 +33,21 @@ public class SudokuField implements Serializable {
         value = 0;
     }
 
-
-    public SudokuField(SudokuRow row, SudokuColumn column, SudokuBox box) {
-        this.row = row;
-        this.column = column;
-        this.box = box;
-
-        listeners.add(row);
-        listeners.add(column);
-        listeners.add(box);
-    }
-
     public int getValue() {
         return value;
     }
 
-    public void setValue(int value) throws Exception {
-        if (value >= 0 && value <= 9) {
-            notify(this.value, value);
-            this.value = value;
-        } else {
-            throw new Exception("Number out of range 0-9");
+    public void setValue(int value) {
+        try {
+
+            if (value >= 0 && value <= 9) {
+                notify(this.value, value);
+                this.value = value;
+            } else {
+                throw new ValueOutOfScopeException("Number out of range 0-9");
+            }
+        } catch (FieldAlreadyExistException e) {
+            throw e;
         }
     }
 
@@ -71,11 +58,6 @@ public class SudokuField implements Serializable {
     public PropertyChangeListener[] getPropertyChangeListeners() {
         return listeners.toArray(new PropertyChangeListener[listeners.size()]);
     }
-
-    public boolean verify() {
-        return row.verify() && column.verify() && box.verify();
-    }
-
 
     @Override
     public String toString() {
@@ -108,15 +90,4 @@ public class SudokuField implements Serializable {
         return new EqualsBuilder().append(value, that.value).isEquals();
     }
 
-    public SudokuRow getRow() {
-        return row;
-    }
-
-    public SudokuColumn getColumn() {
-        return column;
-    }
-
-    public SudokuBox getBox() {
-        return box;
-    }
 }

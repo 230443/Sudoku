@@ -9,21 +9,22 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import pl.cp.sudoku.model.SudokuField;
 
-/**
- * Sudoku board element.
- */
-
-
 public abstract class SudokuBoardElement implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        SudokuField newField = (SudokuField) evt.getSource();
-        if (sudokuFields.contains(newField)) {
-            sudokuFields.remove(newField);
-        }
-        sudokuFields.add(newField);
+        SudokuField newField = new SudokuField();
+        newField.setValue((Integer) evt.getNewValue());
+        SudokuField oldField = (SudokuField) evt.getSource();
 
+        if (newField.getValue() == 0) {
+            return;
+        }
+        if (sudokuFields.contains(newField)) {
+            throw new FieldAlreadyExistException("FieldAlreadyExist");
+        }
+        sudokuFields.remove(oldField);
+        sudokuFields.add(newField);
 
     }
 

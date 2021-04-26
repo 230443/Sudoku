@@ -22,6 +22,7 @@ public class SudokuFieldTest {
         assertSame(1, field.getValue());
     }
 
+    /*
     @Test
     public void getSameSudokuBoardElementTest() throws NoSuchFieldException, IllegalAccessException {
 
@@ -43,7 +44,7 @@ public class SudokuFieldTest {
         assertSame(boardFields[8][6].getBox(), boardFields[7][7].getBox());
 
     }
-
+*/
     @Test
     public void setOutOfRangeTest() {
 

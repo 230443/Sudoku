@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import pl.cp.sudoku.SudokuSolver;
+import pl.cp.sudoku.model.sudokuboardelement.FieldAlreadyExistException;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
@@ -43,19 +44,12 @@ public class SudokuBoard {
     }
 
     public boolean set(int x, int y, int value) {
-
-        int v = board[x][y].getValue();
-
         try {
             board[x][y].setValue(value);
-
-            if (!checkBoard()) {
-                board[x][y].setValue(v);
-                return false;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (FieldAlreadyExistException e) {
+            return false;
+        }
+        catch (ValueOutOfScopeException e) {
             return false;
         }
         return true;
@@ -103,7 +97,7 @@ public class SudokuBoard {
 
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                board[y][x] = new SudokuField(rows[y], columns[x], boxes[(y / 3) * 3 + (x / 3)]);
+                board[y][x] = new SudokuField();
 
                 columns[x].addField(board[y][x]);
                 rows[y].addField(board[y][x]);
