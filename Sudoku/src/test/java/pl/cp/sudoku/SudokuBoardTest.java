@@ -59,7 +59,7 @@ public class SudokuBoardTest {
         SudokuBoard board2 = new SudokuBoard(new BacktrackingSudokuSolver());
         board2.solveGame();
         //we will convert arrays to strings and check if the content is not the same
-        assertFalse(board1.equals(board2));
+        assertNotEquals(board2, board1);
     }
 
     @Test
@@ -67,22 +67,44 @@ public class SudokuBoardTest {
         SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
         board.solveGame();
         int[][] b1 = board.getBoard();
-        assertTrue(Arrays.deepEquals(b1, board.getBoard()));
-        b1[0][0] = 0;
-        //we will convert arrays to strings and check if the content is not the same
-        assertFalse(Arrays.deepEquals(b1, board.getBoard()));
+        assertNotSame(b1, board.getBoard());
+    }
+
+    @Test
+    public void setTheSameNumberTwiceTest() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        int a = 5;
+        board.set(0,0,a);
+        assertFalse(board.set(1,0,a));
+        assertEquals(0, board.get(1,0));
     }
 
     @Test
     public void setTest() {
         SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
-        int a = 5;
-        assertTrue(board.set(0,0,a));
-        assertEquals(a, board.get(0,0));
+        assertTrue(board.set(0,0,5));
+        assertEquals(5, board.get(0,0));
+    }
 
-        assertFalse(board.set(1,0,a));
+    @Test
+    public void setOutOfRangeTest() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
         assertFalse(board.set(5,0,74));
+        assertEquals(0, board.get(5,0));
+    }
 
+    @Test
+    public void setToZero() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        board.set(0,0,5);
+        assertTrue(board.set(0,0,0));
+        assertEquals(0, board.get(0,0));
+    }
+    @Test
+    public void setZeroToZero() {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        assertTrue(board.set(0,0,0));
+        assertEquals(0, board.get(0,0));
     }
 
     @Test
