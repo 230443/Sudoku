@@ -33,13 +33,7 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard>, AutoCloseable {
                 }
             }
             return sudokuBoard;
-
-
-        } catch (FileNotFoundException e) {
-
-            return new SudokuBoard(new BacktrackingSudokuSolver());
         } catch (IOException e) {
-
             return new SudokuBoard(new BacktrackingSudokuSolver());
         }
 
