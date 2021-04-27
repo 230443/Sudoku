@@ -3,11 +3,8 @@ package pl.cp.sudoku.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import pl.cp.sudoku.SudokuSolver;
 import pl.cp.sudoku.model.sudokuboardelement.FieldAlreadyExistException;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
@@ -47,7 +44,7 @@ public class SudokuBoard implements Serializable {
     }
 
     /**
-     * Gets the integer value in given posistion.
+     * Gets the integer value in given position.
      * @param x x coordinate
      * @param y y coordinate
      * @return Value of sudokuField.
@@ -66,15 +63,13 @@ public class SudokuBoard implements Serializable {
     public boolean set(int x, int y, int value) {
         try {
             board[x][y].setValue(value);
-        } catch (FieldAlreadyExistException e) {
-            return false;
-        } catch (ValueOutOfScopeException e) {
+        } catch (FieldAlreadyExistException | ValueOutOfScopeException e) {
             return false;
         }
         return true;
     }
 
-    private final SudokuSolver solver;
+    private final transient SudokuSolver solver;
 
     /**
      * Gets copy of SudokuRow at given position.
@@ -143,14 +138,14 @@ public class SudokuBoard implements Serializable {
 
     @Override
     public String toString() {
-        String tmp = "";
+        StringBuilder tmp = new StringBuilder();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
-                tmp += String.valueOf(get(i, j));
+                tmp.append(get(i, j));
             }
-            tmp += "\n";
+            tmp.append("\n");
         }
-        return tmp;
+        return tmp.toString();
     }
 
     @Override

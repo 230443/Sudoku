@@ -2,8 +2,8 @@ package pl.cp.sudoku;
 
 public interface Dao<T> {
 
-    public T read();
+    T read();
 
-    public void write(T obj);
+    void write(T obj);
 
 }

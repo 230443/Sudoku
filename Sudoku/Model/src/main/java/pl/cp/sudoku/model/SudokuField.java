@@ -13,7 +13,7 @@ public class SudokuField implements Serializable {
 
     private int value;
 
-    private final ArrayList<PropertyChangeListener> listeners = new ArrayList<>(3);
+    private final transient ArrayList<PropertyChangeListener> listeners = new ArrayList<>(3);
 
     private void notify(int oldValue, int newValue) {
         PropertyChangeEvent event = new PropertyChangeEvent(this, "value", oldValue, newValue);

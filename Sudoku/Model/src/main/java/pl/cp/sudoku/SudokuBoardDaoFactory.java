@@ -1,12 +1,13 @@
 package pl.cp.sudoku;
 
+import pl.cp.sudoku.model.SudokuBoard;
+
 public class SudokuBoardDaoFactory {
 
-    public SudokuBoardDaoFactory() {
-
+    private SudokuBoardDaoFactory() {
     }
 
-    public Dao getFileDao(String fileName) {
-        return new FileSudokuBoardByteDao(fileName);
+    public static Dao<SudokuBoard> getFileDao(String fileName) {
+        return new FileSudokuBoardDao(fileName);
     }
 }

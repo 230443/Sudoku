@@ -1,67 +1,74 @@
 package pl.cp.sudoku;
 
-import org.junit.jupiter.api.Assertions;
+import java.io.File;
+import pl.cp.sudoku.model.SudokuBoard;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
-import pl.cp.sudoku.model.*;
-import pl.cp.sudoku.model.sudokuboardelement.*;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class FileSudokuBoardDaoTest {
 
-    SudokuBoardDaoFactory factory = new SudokuBoardDaoFactory();
 
-    @Test
-    public void writeEmptyBoardTest() {
+    private SudokuBoard writeSolvedBoard(String fileName) {
         SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        Dao<SudokuBoard> fileSudokuBoardDao = factory.getFileDao("test.txt");
-        fileSudokuBoardDao.write(sudokuBoard);
+        sudokuBoard.solveGame();
+        Dao<SudokuBoard> fileDao = SudokuBoardDaoFactory.getFileDao(fileName);
+        fileDao.write(sudokuBoard);
+        return sudokuBoard;
     }
 
     @Test
-    public void writeToWrongFileTest(){
+    public void writeToWrongFileTest() {
         SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        Dao fileSudokuBoardDao = factory.getFileDao("&?/|.txt");
-        fileSudokuBoardDao.write(sudokuBoard);
+        Dao<SudokuBoard> fileDao = SudokuBoardDaoFactory.getFileDao("&?/|.txt");
+        fileDao.write(sudokuBoard);
     }
 
     @Test
-    public void readEmptyBoardTest(){
+    public void WriteAndReadBoardTest() {
 
-        Dao<SudokuBoard> fileSudokuBoardDao = factory.getFileDao("test.txt");
-        SudokuBoard sudokuBoard=fileSudokuBoardDao.read();
-        System.out.print(sudokuBoard.toString());
+        var board = writeSolvedBoard("solvedSudoku.dat");
+        Dao<SudokuBoard> fileSudokuBoardDao = SudokuBoardDaoFactory.getFileDao("solvedSudoku.dat");
+        SudokuBoard readBoard = fileSudokuBoardDao.read();
+        assertEquals(board, readBoard);
     }
 
     @Test
     public void readNonExistingFileTest() {
-        Dao fileSudokuBoardDao = factory.getFileDao("notFound");
-        fileSudokuBoardDao.read();
+        Dao<SudokuBoard> fileSudokuBoardDao = SudokuBoardDaoFactory.getFileDao("notFound");
+        var readBoard = fileSudokuBoardDao.read();
+        assertNull(readBoard);
     }
 
     @Test
     public void readBadFileTest() {
-        Dao fileSudokuBoardDao = factory.getFileDao("faulty.txt");
-        SudokuBoard sudokuBoard = (SudokuBoard) fileSudokuBoardDao.read();
-        assertNotEquals(null, sudokuBoard);
+        Dao<SudokuBoard> fileSudokuBoardDao = SudokuBoardDaoFactory.getFileDao("faulty.txt");
+        SudokuBoard sudokuBoard = fileSudokuBoardDao.read();
+        assertNull(sudokuBoard);
     }
 
     @Test
     public void AutoClosableTest() {
-        try (FileSudokuBoardDao fileSudokuBoardDao = new FileSudokuBoardDao("test.txt")) {
-            SudokuBoard sudokuBoard = fileSudokuBoardDao.read();
-            SudokuBoard sudokuBoard1 = new SudokuBoard(new BacktrackingSudokuSolver());
-            assertEquals(sudokuBoard1, sudokuBoard);
-        } catch (Exception e) {
-            e.printStackTrace();
+        try (FileSudokuBoardDao dao = new FileSudokuBoardDao("tryTest.dat")) {
+
+            SudokuBoard b1 = new SudokuBoard(new BacktrackingSudokuSolver());
+            b1.solveGame();
+            dao.write(b1);
+            var b2 =  dao.read();
+
+            assertEquals(b1,b2);
         }
+    }
+
+    @AfterAll
+    public static void clean() {
+        File f1 = new File("tryTest.dat");
+        File f2 = new File("solvedSudoku.dat");
+        f1.delete();
+        f2.delete();
     }
 
 }
