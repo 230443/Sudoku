@@ -1,5 +1,6 @@
 package pl.cp.sudoku.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -18,7 +19,7 @@ import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
  * Sudoku Board.
  */
 
-public class SudokuBoard {
+public class SudokuBoard implements Serializable {
 
     public SudokuBoard(SudokuSolver solver) {
         this.solver = solver;
