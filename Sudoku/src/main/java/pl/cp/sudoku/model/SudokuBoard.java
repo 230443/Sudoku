@@ -3,6 +3,8 @@ package pl.cp.sudoku.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -108,7 +110,14 @@ public class SudokuBoard {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        String tmp="";
+        for(int i=0;i<board.length;i++){
+            for(int j=0; j<board.length;j++){
+                tmp+=String.valueOf(get(i,j));
+            }
+            tmp+="\n";
+        }
+        return tmp;
     }
 
     @Override

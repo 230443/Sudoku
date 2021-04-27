@@ -151,7 +151,7 @@ public class SudokuBoardTest {
     public void toStingTest2() {
         SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
         SudokuBoard board2 = new SudokuBoard(new BacktrackingSudokuSolver());
-        assertNotEquals(board.toString(), board2.toString());
+        assertEquals(board.toString(), board2.toString());
     }
 
     @Test
@@ -188,6 +188,12 @@ public class SudokuBoardTest {
         assertNotEquals(board, 832);
         board2 = null;
         assertNotEquals(board2, board);
+    }
+
+    @Test
+    public void PrintSudoku(){
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        System.out.print(board.toString());
     }
 
 }
