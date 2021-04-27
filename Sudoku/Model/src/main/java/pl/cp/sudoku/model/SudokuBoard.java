@@ -30,8 +30,8 @@ public class SudokuBoard {
 
 
     /**
-     *
-     * @return 2D int array representing sudoku board.
+     * gets Board in format of int[][].
+     * @return copy of board
      */
     public int[][] getBoard() {
         int[][] copy = new int[9][9];
@@ -46,7 +46,7 @@ public class SudokuBoard {
     }
 
     /**
-     *
+     * Gets the integer value in given posistion.
      * @param x x coordinate
      * @param y y coordinate
      * @return Value of sudokuField.
@@ -56,7 +56,7 @@ public class SudokuBoard {
     }
 
     /**
-     *
+     * sets the value into the field to which coordinates were provided.
      * @param x x coordinate
      * @param y y coordinate
      * @param value value to be set.
