@@ -1,30 +1,35 @@
 package pl.cp.sudoku;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
 import  pl.cp.sudoku.model.SudokuBoard;
 
-import java.io.*;
-import java.util.Arrays;
 
-public class FileSudokuBoardDao implements Dao<SudokuBoard>,AutoCloseable{
+public class FileSudokuBoardDao implements Dao<SudokuBoard>, AutoCloseable {
 
 
     private String filePath;
 
 
-    public FileSudokuBoardDao(String filePath){
-        this.filePath=filePath;
+    public FileSudokuBoardDao(String filePath) {
+        this.filePath = filePath;
     }
 
     @Override
-    public SudokuBoard Read() {
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
-            SudokuBoard sudokuBoard=new SudokuBoard(new BacktrackingSudokuSolver());
+    public SudokuBoard read() {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
+            SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
             String line = bufferedReader.readLine();
-            int i=0;
-            while(line != null) {
+            int i = 0;
+            while (line != null) {
                 line = bufferedReader.readLine();
-                if(line!=null){
-                for(int j=0;j<line.length();j++){
-                    sudokuBoard.set(i,j,Integer.parseInt(String.valueOf(line.charAt(j))));
+                if (line != null) {
+                for (int j = 0; j < line.length(); j++) {
+                    sudokuBoard.set(i, j, Integer.parseInt(String.valueOf(line.charAt(j))));
                 }
                 }
             }
@@ -45,8 +50,8 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard>,AutoCloseable{
     }
 
     @Override
-    public void Write(SudokuBoard obj) {
-        try(FileWriter fileWriter = new FileWriter(this.filePath)) {
+    public void write(SudokuBoard obj) {
+        try (FileWriter fileWriter = new FileWriter(this.filePath)) {
             fileWriter.write(obj.toString());
         } catch (IOException e) {
             e.printStackTrace();

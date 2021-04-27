@@ -17,14 +17,14 @@ public class FileSudokuBoardDaoTest {
     public void writeEmptyBoardTest(){
         SudokuBoard sudokuBoard=new SudokuBoard(new BacktrackingSudokuSolver());
         FileSudokuBoardDao fileSudokuBoardDao= new FileSudokuBoardDao("test.txt");
-        fileSudokuBoardDao.Write(sudokuBoard);
+        fileSudokuBoardDao.write(sudokuBoard);
     }
 
     @Test
     public void readEmptyBoardTest(){
 
         FileSudokuBoardDao fileSudokuBoardDao= new FileSudokuBoardDao("test.txt");
-        SudokuBoard sudokuBoard=fileSudokuBoardDao.Read();
+        SudokuBoard sudokuBoard=fileSudokuBoardDao.read();
         System.out.print(sudokuBoard.toString());
     }
 }

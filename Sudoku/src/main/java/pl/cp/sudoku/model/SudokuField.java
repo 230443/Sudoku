@@ -34,6 +34,8 @@ public class SudokuField implements Serializable {
         return value;
     }
 
+
+
     public void setValue(int value) {
 
         if (value < 0 || value > 9) {

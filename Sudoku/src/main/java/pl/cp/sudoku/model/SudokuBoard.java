@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -30,7 +29,6 @@ public class SudokuBoard {
     }
 
     public int[][] getBoard() {
-
         int[][] copy = new int[9][9];
 
         for (int i = 0; i < 9; i++) {
@@ -110,12 +108,12 @@ public class SudokuBoard {
 
     @Override
     public String toString() {
-        String tmp="";
-        for(int i=0;i<board.length;i++){
-            for(int j=0; j<board.length;j++){
-                tmp+=String.valueOf(get(i,j));
+        String tmp = "";
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                tmp += String.valueOf(get(i, j));
             }
-            tmp+="\n";
+            tmp += "\n";
         }
         return tmp;
     }
@@ -140,7 +138,7 @@ public class SudokuBoard {
         return new EqualsBuilder().append(board, that.board).isEquals();
     }
 
-    private boolean checkBoard() {
+    /*private boolean checkBoard() {
         for (int i = 0; i < 9; i++) {
             if (!getRow(i).verify()) {
                 return false;
@@ -159,6 +157,6 @@ public class SudokuBoard {
         }
 
         return true;
-    }
+    }*/
 
 }
