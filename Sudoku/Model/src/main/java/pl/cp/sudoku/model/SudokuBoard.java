@@ -28,6 +28,11 @@ public class SudokuBoard {
         solver.solve(this);
     }
 
+
+    /**
+     *
+     * @return 2D int array representing sudoku board.
+     */
     public int[][] getBoard() {
         int[][] copy = new int[9][9];
 
@@ -40,10 +45,23 @@ public class SudokuBoard {
         return copy;
     }
 
+    /**
+     *
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return Value of sudokuField.
+     */
     public int get(int x, int y) {
         return board[x][y].getValue();
     }
 
+    /**
+     *
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param value value to be set.
+     * @return true if value was set correctly, false otherwise.
+     */
     public boolean set(int x, int y, int value) {
         try {
             board[x][y].setValue(value);
@@ -57,10 +75,20 @@ public class SudokuBoard {
 
     private final SudokuSolver solver;
 
+    /**
+     * Gets copy of SudokuRow at given position.
+     * @param y y coordinate
+     * @return SudokuRow
+     */
     public SudokuRow getRow(int y) {
         return new SudokuRow(Arrays.asList(board[y]));
     }
 
+    /**
+     * Gets copy of SudokuColumn at given position.
+     * @param x x coordinate
+     * @return SudokuColumn
+     */
     public SudokuColumn getColumn(int x) {
         ArrayList<SudokuField> column = new ArrayList<>(9);
         for (int i = 0; i < 9; i++) {
@@ -70,6 +98,12 @@ public class SudokuBoard {
         return new SudokuColumn(column);
     }
 
+    /**
+     * Gets copy of sudokuBox at given position.
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return SudokuBox
+     */
     public SudokuBox getBox(int x, int y) {
         SudokuField[] box = new SudokuField[9];
         x *= 3;

@@ -35,7 +35,10 @@ public class SudokuField implements Serializable {
     }
 
 
-
+    /**
+     * Sets value of this SudokuField.
+     * @param value int value to be set.
+     */
     public void setValue(int value) {
 
         if (value < 0 || value > 9) {

@@ -1,12 +1,11 @@
 package pl.cp.sudoku;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import  pl.cp.sudoku.model.SudokuBoard;
+import pl.cp.sudoku.model.SudokuBoard;
 
 
 public class FileSudokuBoardDao implements Dao<SudokuBoard>, AutoCloseable {
@@ -28,13 +27,12 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard>, AutoCloseable {
             while (line != null) {
                 line = bufferedReader.readLine();
                 if (line != null) {
-                for (int j = 0; j < line.length(); j++) {
-                    sudokuBoard.set(i, j, Integer.parseInt(String.valueOf(line.charAt(j))));
-                }
+                    for (int j = 0; j < line.length(); j++) {
+                        sudokuBoard.set(i, j, Integer.parseInt(String.valueOf(line.charAt(j))));
+                    }
                 }
             }
             return sudokuBoard;
-
 
 
         } catch (FileNotFoundException e) {
@@ -44,7 +42,6 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard>, AutoCloseable {
 
             return new SudokuBoard(new BacktrackingSudokuSolver());
         }
-
 
 
     }

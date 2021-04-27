@@ -5,10 +5,14 @@
     <groupId>pl.cp</groupId>
     <artifactId>Sudoku</artifactId>
     <version>20.21-SNAPSHOT</version>
+    <modules>
+        <module>Model</module>
+        <module>View</module>
+    </modules>
 
     <name>01-${project.artifactId}-${project.version}</name>
             
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <url>http://maven.apache.org</url>
 
     <reporting>

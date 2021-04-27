@@ -26,6 +26,10 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
     public SudokuBoardElement() {
     }
 
+    /**
+     * Verify correctness of this element.
+     * @return true, if current sudoku combination is possible, false otherwise.
+     */
     public boolean verify() {
 
         int[] fieldCounters = new int[10];
@@ -41,6 +45,10 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
         return true;
     }
 
+    /**
+     * Adds new SudokuField to this SudokuBoardElement.
+     * @param field SudokuField to be added.
+     */
     public void addField(SudokuField field) {
         sudokuFields.add(field);
         field.addPropertyChangeListener(this);
