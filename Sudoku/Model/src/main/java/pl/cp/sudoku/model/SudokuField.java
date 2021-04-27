@@ -59,7 +59,7 @@ public class SudokuField implements Serializable {
     }
 
     public PropertyChangeListener[] getPropertyChangeListeners() {
-        return listeners.toArray(new PropertyChangeListener[listeners.size()]);
+        return listeners.toArray(new PropertyChangeListener[0]);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package pl.cp.sudoku;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.cp.sudoku.model.*;
 import pl.cp.sudoku.model.sudokuboardelement.*;
@@ -22,7 +21,7 @@ public class SudokuBoardElementTest {
 
 
     @Test
-    public void verifyCorrectTest() throws Exception {
+    public void verifyCorrectTest() {
         for (int i = 0; i < 9; i++) {
             field[i].setValue(i);
         }
@@ -31,7 +30,7 @@ public class SudokuBoardElementTest {
     }
 
     @Test
-    public void verifyIncorrectTest() throws Exception {
+    public void verifyIncorrectTest() {
 
         for (int i = 0; i < 9; i++) {
             field[i].setValue(1);
@@ -41,7 +40,7 @@ public class SudokuBoardElementTest {
     }
 
     @Test
-    public void verifyEmptyTest() throws Exception {
+    public void verifyEmptyTest() {
 
         for (int i = 0; i < 9; i++) {
             field[i].setValue(0);
@@ -53,7 +52,7 @@ public class SudokuBoardElementTest {
     }
 
     @Test
-    public void addFieldTest() throws Exception {
+    public void addFieldTest() {
 
         SudokuRow row = new SudokuRow();
         SudokuColumn column = new SudokuColumn();
@@ -70,7 +69,7 @@ public class SudokuBoardElementTest {
     }
 
     @Test
-    public void notifyTest() throws Exception {
+    public void notifyTest() {
 
         SudokuRow row = new SudokuRow();
         SudokuColumn column = new SudokuColumn();
@@ -87,27 +86,8 @@ public class SudokuBoardElementTest {
         assertThrows(FieldAlreadyExistException.class, () -> fields[1].setValue(1));
     }
 
-    //@Test
-    public void hashSetAddTheSameElement() throws Exception {
-
-        Set<SudokuField> sudokuFields = new HashSet<>(9);
-
-        sudokuFields.add(field[0]);
-        assertTrue(sudokuFields.contains(field[0]));
-
-        field[0].setValue(7);
-        sudokuFields.add(field[0]);
-        assertEquals(1, sudokuFields.size());
-
-        for (SudokuField sf :
-                sudokuFields) {
-            assertEquals(7, sf.getValue());
-        }
-    }
-
-
     @Test
-    public void hashCodeTestTrue() throws Exception {
+    public void hashCodeTestTrue() {
         SudokuBoardElement element1 = new SudokuRow();
         SudokuBoardElement element2 = new SudokuRow();
         assertEquals(element2.hashCode(), element1.hashCode());
@@ -115,7 +95,7 @@ public class SudokuBoardElementTest {
     }
 
     @Test
-    public void hashCodeTestFalse() throws Exception {
+    public void hashCodeTestFalse() {
         SudokuBoardElement element1 = new SudokuRow();
         SudokuBoardElement element2 = new SudokuRow();
         element2.addField(new SudokuField());
@@ -124,7 +104,7 @@ public class SudokuBoardElementTest {
     }
 
     @Test
-    public void toStringTest() throws Exception {
+    public void toStringTest() {
         SudokuBoardElement element1 = new SudokuRow();
         SudokuBoardElement element2 = new SudokuRow();
         element2.addField(new SudokuField());
@@ -134,7 +114,7 @@ public class SudokuBoardElementTest {
     }
 
     @Test
-    public void toStringTest2() throws Exception {
+    public void toStringTest2() {
         SudokuBoardElement element1 = new SudokuRow();
 
         assertEquals(element1.toString(), element1.toString());
@@ -142,7 +122,7 @@ public class SudokuBoardElementTest {
     }
 
     @Test
-    public void EqualityTest() throws Exception {
+    public void EqualityTest() {
         SudokuBoardElement element1 = new SudokuRow();
         SudokuBoardElement element2 = new SudokuRow();
         assertEquals(element1, element1);
@@ -151,20 +131,19 @@ public class SudokuBoardElementTest {
     }
 
     @Test
-    public void EqualsDifferentClassTest() throws Exception {
+    public void EqualsDifferentClassTest() {
         SudokuBoardElement element1 = new SudokuRow();
         SudokuBoardElement element2 = new SudokuColumn();
         assertNotEquals(element2, element1);
     }
 
     @Test
-    public void EqualsNullTest() throws Exception {
+    public void EqualsNullTest() {
         SudokuBoardElement element1 = new SudokuRow();
         SudokuBoardElement element2 = new SudokuRow();
         element2.addField(new SudokuField());
         assertNotEquals(element1, null);
         assertNotEquals(element1, element2);
     }
-
 
 }

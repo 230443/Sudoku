@@ -10,7 +10,7 @@ import pl.cp.sudoku.model.SudokuBoard;
 public class FileStringSudokuBoardDao implements Dao<SudokuBoard>, AutoCloseable {
 
 
-    private String filePath;
+    private final String filePath;
 
 
     public FileStringSudokuBoardDao(String filePath) {
@@ -49,7 +49,6 @@ public class FileStringSudokuBoardDao implements Dao<SudokuBoard>, AutoCloseable
     }
 
     @Override
-    public void close() throws Exception {
-        System.out.println("Closing?");
+    public void close() {
     }
 }

@@ -1,20 +1,15 @@
 package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-import pl.cp.sudoku.model.SudokuBoard;
-import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
 import pl.cp.sudoku.model.SudokuField;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
-
-import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SudokuFieldTest {
 
     @Test
-    public void set_getTest() throws Exception {
+    public void set_getTest() {
 
         SudokuField field = new SudokuField();
 
@@ -50,19 +45,15 @@ public class SudokuFieldTest {
 
         SudokuField field = new SudokuField();
 
-        assertThrows(Exception.class, new Executable() {
-
-            @Override
-            public void execute() throws Throwable {
-                for (int i = -1; i < 11; i++) {
-                    field.setValue(i);
-                }
+        assertThrows(Exception.class, () -> {
+            for (int i = -1; i < 11; i++) {
+                field.setValue(i);
             }
         });
     }
 
     @Test
-    public void notifyNullListener() throws Exception {
+    public void notifyNullListener() {
 
         SudokuField field = new SudokuField();
 
@@ -72,7 +63,7 @@ public class SudokuFieldTest {
     }
 
     @Test
-    public void EqualityTest() throws Exception {
+    public void EqualityTest() {
 
         SudokuField field1 = new SudokuField();
         SudokuField field2 = new SudokuField();
@@ -82,7 +73,7 @@ public class SudokuFieldTest {
     }
 
     @Test
-    public void InEqualityTest() throws Exception {
+    public void InEqualityTest() {
 
         SudokuField field1 = new SudokuField();
         SudokuField field2 = new SudokuField();
@@ -92,7 +83,7 @@ public class SudokuFieldTest {
     }
 
     @Test
-    public void EqualsDifferentClassTest() throws Exception {
+    public void EqualsDifferentClassTest() {
 
         SudokuField field1 = new SudokuField();
         SudokuField field2 = null;
@@ -103,7 +94,7 @@ public class SudokuFieldTest {
     }
 
     @Test
-    public void DifferentHashCodeTest() throws Exception {
+    public void DifferentHashCodeTest() {
 
         SudokuField field1 = new SudokuField();
         SudokuField field2 = new SudokuField();
@@ -113,7 +104,7 @@ public class SudokuFieldTest {
     }
 
     @Test
-    public void SameHashCodeTest() throws Exception {
+    public void SameHashCodeTest() {
 
         SudokuField field1 = new SudokuField();
         SudokuField field2 = new SudokuField();
@@ -122,7 +113,7 @@ public class SudokuFieldTest {
     }
 
     @Test
-    public void ToStringTestFalse() throws Exception {
+    public void ToStringTestFalse() {
 
         SudokuField field1 = new SudokuField();
         SudokuField field2 = new SudokuField();
@@ -132,7 +123,7 @@ public class SudokuFieldTest {
     }
 
     @Test
-    public void ToStringTestFalse2() throws Exception {
+    public void ToStringTestFalse2() {
 
         SudokuField field1 = new SudokuField();
         SudokuField field2 = new SudokuField();
