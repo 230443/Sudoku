@@ -1,5 +1,6 @@
 package pl.cp.sudoku.model.sudokuboardelement;
 
+import java.io.Serializable;
 import java.util.List;
 import pl.cp.sudoku.model.SudokuField;
 
@@ -9,7 +10,7 @@ import pl.cp.sudoku.model.SudokuField;
  */
 
 
-public class SudokuBox extends SudokuBoardElement {
+public class SudokuBox extends SudokuBoardElement implements Cloneable, Serializable {
 
     public SudokuBox() {
         super();
@@ -18,4 +19,5 @@ public class SudokuBox extends SudokuBoardElement {
     public SudokuBox(List<SudokuField> sudokuFields) {
         super(sudokuFields);
     }
+
 }

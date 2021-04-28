@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import pl.cp.sudoku.model.sudokuboardelement.FieldAlreadyExistException;
 
-public class SudokuField implements Serializable {
+public class SudokuField implements Serializable, Cloneable, Comparable {
 
     private int value;
 
@@ -93,4 +93,19 @@ public class SudokuField implements Serializable {
         return new EqualsBuilder().append(value, that.value).isEquals();
     }
 
+    @Override
+    public int compareTo(Object o) {
+        if (this == o) {
+            return 1;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return 0;
+        }
+
+        SudokuField that = (SudokuField) o;
+
+        if (value == that.value) return 1;
+        else return 0;
+    }
 }

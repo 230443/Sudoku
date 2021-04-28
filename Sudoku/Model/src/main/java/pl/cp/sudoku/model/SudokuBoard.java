@@ -16,7 +16,7 @@ import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
  * Sudoku Board.
  */
 
-public class SudokuBoard implements Serializable {
+public class SudokuBoard implements Serializable, Cloneable {
 
     public SudokuBoard(SudokuSolver solver) {
         this.solver = solver;
@@ -167,6 +167,7 @@ public class SudokuBoard implements Serializable {
 
         return new EqualsBuilder().append(board, that.board).isEquals();
     }
+
 
     /*private boolean checkBoard() {
         for (int i = 0; i < 9; i++) {
