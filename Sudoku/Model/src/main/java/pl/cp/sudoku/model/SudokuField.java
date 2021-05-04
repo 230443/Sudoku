@@ -111,8 +111,8 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
 
     @Override
     public SudokuField clone() throws CloneNotSupportedException {
-        SudokuField result= (SudokuField) super.clone();
-        result.listeners=new ArrayList<>(3);
+        SudokuField result = (SudokuField) super.clone();
+        result.listeners = new ArrayList<>(3);
         return result;
     }
 
@@ -156,8 +156,11 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
      * @throws ClassCastException   if the specified object's type prevents it
      *                              from being compared to this object.
      */
+
     @Override
     public int compareTo(SudokuField o) {
-        return 0;
+        return Integer.compare(this.value, o.getValue());
     }
+
+
 }
