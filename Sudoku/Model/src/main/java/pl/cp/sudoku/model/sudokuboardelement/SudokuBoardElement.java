@@ -80,5 +80,10 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
         return new EqualsBuilder().append(sudokuFields, that.sudokuFields).isEquals();
     }
 
+    @Override
+    protected SudokuBoardElement clone() throws CloneNotSupportedException {
+        return (SudokuBoardElement) super.clone();
+    }
+
     private List<SudokuField> sudokuFields = new ArrayList<>(9);
 }

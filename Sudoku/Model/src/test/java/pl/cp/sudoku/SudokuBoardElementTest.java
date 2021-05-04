@@ -146,4 +146,26 @@ public class SudokuBoardElementTest {
         assertNotEquals(element1, element2);
     }
 
+    @Test
+    public void cloneTest() throws CloneNotSupportedException {
+
+        SudokuRow row = new SudokuRow();
+
+        SudokuField f1 = new SudokuField();
+
+        row.addField(f1);
+
+        SudokuRow row2 = row.clone();
+
+        SudokuField f2 = new SudokuField();
+        f2.setValue(8);
+        row2.addField(f1);
+
+
+        //Assert not throws
+        f1.setValue(8);
+
+
+    }
+
 }

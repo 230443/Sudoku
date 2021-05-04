@@ -1,7 +1,10 @@
 package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
+import pl.cp.sudoku.model.SudokuBoard;
 import pl.cp.sudoku.model.SudokuField;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
+import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -131,6 +134,42 @@ public class SudokuFieldTest {
         assertNotEquals(field1.toString(), field2.toString());
     }
 
+    @Test
+    public void cloneValueTest() throws CloneNotSupportedException {
+
+        SudokuField f1 = new SudokuField();
+        f1.setValue(1);
+        SudokuField f2 = f1.clone();
+
+        assertNotSame(f1, f2);
+        assertEquals(f1, f2);
+
+        f2.setValue(8);
+
+        assertNotEquals(f1, f2);
+
+    }
+
+    @Test
+    public void cloneListenersTest() throws CloneNotSupportedException {
+
+        SudokuRow row = new SudokuRow();
+        SudokuColumn column = new SudokuColumn();
+        SudokuBox box = new SudokuBox();
+
+        SudokuField f1 = new SudokuField();
+
+        row.addField(f1);
+        column.addField(f1);
+        box.addField(f1);
+
+        SudokuField f2 = f1.clone();
+
+        //Assert not throws
+        f1.setValue(8);
+        f2.setValue(8);
+
+    }
 }
 
 

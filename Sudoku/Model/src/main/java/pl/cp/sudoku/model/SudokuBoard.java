@@ -168,6 +168,10 @@ public class SudokuBoard implements Serializable, Cloneable {
         return new EqualsBuilder().append(board, that.board).isEquals();
     }
 
+    @Override
+    public SudokuBoard clone() throws CloneNotSupportedException {
+        return (SudokuBoard) super.clone();
+    }
 
     /*private boolean checkBoard() {
         for (int i = 0; i < 9; i++) {

@@ -190,10 +190,30 @@ public class SudokuBoardTest {
         assertNotEquals(board2, board);
     }
 
-    @Test
+    //@Test
     public void PrintSudoku(){
         SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
         System.out.print(board.toString());
     }
+
+    @Test
+    public void cloneTest() throws CloneNotSupportedException {
+        SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
+        board.set(0, 0, 5);
+        SudokuBoard board2 = board.clone();
+
+        assertNotSame(board, board2);
+        assertEquals(board2,board);
+
+        board2.set(8,8,1);
+
+        assertNotEquals(board2,board);
+
+    }
+
+
+
+
+
 
 }

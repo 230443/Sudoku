@@ -18,4 +18,9 @@ public class SudokuColumn extends SudokuBoardElement implements Cloneable, Seria
     public SudokuColumn(List<SudokuField> sudokuFields) {
         super(sudokuFields);
     }
+
+    @Override
+    public SudokuColumn clone() throws CloneNotSupportedException {
+        return (SudokuColumn) super.clone();
+    }
 }

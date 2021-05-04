@@ -18,4 +18,9 @@ public class SudokuRow extends SudokuBoardElement implements Cloneable, Serializ
     public SudokuRow(List<SudokuField> sudokuFields) {
         super(sudokuFields);
     }
+
+    @Override
+    public SudokuRow clone() throws CloneNotSupportedException {
+        return (SudokuRow) super.clone();
+    }
 }

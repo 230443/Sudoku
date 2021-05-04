@@ -108,4 +108,9 @@ public class SudokuField implements Serializable, Cloneable, Comparable {
         if (value == that.value) return 1;
         else return 0;
     }
+
+    @Override
+    public SudokuField clone() throws CloneNotSupportedException {
+        return (SudokuField) super.clone();
+    }
 }
