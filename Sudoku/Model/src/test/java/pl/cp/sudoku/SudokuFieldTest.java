@@ -183,19 +183,21 @@ public class SudokuFieldTest {
         f2.setValue(2);
         f3.setValue(3);
 
-        assertEquals(-1,f1.compareTo(f2));
-        assertEquals(-1,f2.compareTo(f3));
-        assertEquals(-1,f1.compareTo(f3));
-        assertEquals(1,f2.compareTo(f1));
-        assertEquals(1,f3.compareTo(f1));
-        assertEquals(1,f3.compareTo(f2));
+        assertEquals(-1, f1.compareTo(f2));
+        assertEquals(-1, f2.compareTo(f3));
+        assertEquals(-1, f1.compareTo(f3));
+        assertEquals(1, f2.compareTo(f1));
+        assertEquals(1, f3.compareTo(f1));
+        assertEquals(1, f3.compareTo(f2));
 
         f2.setValue(1);
         f3.setValue(1);
 
-        assertEquals(0,f1.compareTo(f2));
-        assertEquals(0,f1.compareTo(f3));
-        assertEquals(0,f2.compareTo(f3));
+
+        assertEquals(0, f1.compareTo(f2));
+        assertEquals(0, f1.compareTo(f3));
+        assertEquals(0, f2.compareTo(f3));
+        assertThrows(NullPointerException.class, () -> f1.compareTo(null));
 
     }
 
