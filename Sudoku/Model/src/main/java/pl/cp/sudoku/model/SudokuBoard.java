@@ -110,7 +110,7 @@ public class SudokuBoard implements Serializable, Cloneable {
         return new SudokuBox(Arrays.asList(box));
     }
 
-    private final SudokuField[][] board = new SudokuField[9][9];
+    private SudokuField[][] board = new SudokuField[9][9];
 
     {   //initialization block
 
@@ -170,7 +170,9 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     @Override
     public SudokuBoard clone() throws CloneNotSupportedException {
-        return (SudokuBoard) super.clone();
+        SudokuBoard result= (SudokuBoard) super.clone();
+        result.board = board.clone();
+        return result;
     }
 
     /*private boolean checkBoard() {
