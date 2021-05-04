@@ -196,7 +196,7 @@ public class SudokuBoardTest {
         System.out.print(board.toString());
     }
 
-    @Test
+    //@Test
     public void cloneTest() throws CloneNotSupportedException {
         SudokuBoard board = new SudokuBoard(new BacktrackingSudokuSolver());
         board.set(0, 0, 5);
