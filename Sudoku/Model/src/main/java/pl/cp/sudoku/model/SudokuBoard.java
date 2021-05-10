@@ -19,6 +19,7 @@ import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
 public class SudokuBoard implements Serializable, Cloneable {
 
     public SudokuBoard(SudokuSolver solver) {
+        initializeBoard();
         this.solver = solver;
     }
 
@@ -112,8 +113,9 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     private SudokuField[][] board = new SudokuField[9][9];
 
-    {   //initialization block
+    private void initializeBoard() {   //initialization block
 
+        SudokuField[][] tmpBoard = new SudokuField[9][9];
         //initialize rows and columns
         SudokuRow[] rows = new SudokuRow[9];
         SudokuColumn[] columns = new SudokuColumn[9];
@@ -127,13 +129,14 @@ public class SudokuBoard implements Serializable, Cloneable {
 
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                board[y][x] = new SudokuField();
+                tmpBoard[y][x] = new SudokuField();
 
-                columns[x].addField(board[y][x]);
-                rows[y].addField(board[y][x]);
-                boxes[(y / 3) * 3 + (x / 3)].addField(board[y][x]);
+                columns[x].addField(tmpBoard[y][x]);
+                rows[y].addField(tmpBoard[y][x]);
+                boxes[(y / 3) * 3 + (x / 3)].addField(tmpBoard[y][x]);
             }
         }
+        board = tmpBoard;
     }
 
     @Override
@@ -169,9 +172,20 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     @Override
-    public SudokuBoard clone() throws CloneNotSupportedException {
-        SudokuBoard result= (SudokuBoard) super.clone();
-        result.board = board.clone();
+    public SudokuBoard clone() {
+        SudokuBoard result;
+        try {
+            result = (SudokuBoard) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+
+        result.initializeBoard();
+        for (int row = 0; row < 9; row++) {
+            for (int column = 0; column < 9; column++) {
+                result.set(column, row, board[column][row].getValue());
+            }
+        }
         return result;
     }
 
