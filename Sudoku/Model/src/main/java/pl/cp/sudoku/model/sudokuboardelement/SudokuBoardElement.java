@@ -56,7 +56,9 @@ public abstract class SudokuBoardElement implements PropertyChangeListener, Clon
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return "SudokuBoardElement{" +
+                "sudokuFields=" + sudokuFields +
+                '}';
     }
 
     @Override
@@ -81,18 +83,14 @@ public abstract class SudokuBoardElement implements PropertyChangeListener, Clon
     }
 
     @Override
-    protected SudokuBoardElement clone() {
+    protected SudokuBoardElement clone() throws CloneNotSupportedException {
 
-        SudokuBoardElement result;
-        try {
-            result = (SudokuBoardElement) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
+        SudokuBoardElement result = (SudokuBoardElement) super.clone();
+
         result.sudokuFields = new ArrayList<>(9);
-            for (var field : sudokuFields) {
-                result.addField(field.clone());
-            }
+        for (var field : sudokuFields) {
+            result.addField(field.clone());
+        }
         return result;
     }
 

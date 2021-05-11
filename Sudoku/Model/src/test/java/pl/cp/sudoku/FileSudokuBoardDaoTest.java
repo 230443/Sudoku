@@ -37,6 +37,15 @@ public class FileSudokuBoardDaoTest {
     }
 
     @Test
+    public void ReadandSolveBoardTest() {
+
+        var board = writeSolvedBoard("solvedSudoku.dat");
+        Dao<SudokuBoard> fileSudokuBoardDao = SudokuBoardDaoFactory.getFileDao("solvedSudoku.dat");
+        SudokuBoard readBoard = fileSudokuBoardDao.read();
+        readBoard.solveGame();
+    }
+
+    @Test
     public void readNonExistingFileTest() {
         Dao<SudokuBoard> fileSudokuBoardDao = SudokuBoardDaoFactory.getFileDao("notFound");
         var readBoard = fileSudokuBoardDao.read();
@@ -51,8 +60,8 @@ public class FileSudokuBoardDaoTest {
     }
 
     @Test
-    public void AutoClosableTest() {
-        try (FileSudokuBoardDao dao = new FileSudokuBoardDao("tryTest.dat")) {
+    public void AutoClosableTest() throws Exception {
+        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getFileDao("tryTest.dat")) {
 
             SudokuBoard b1 = new SudokuBoard(new BacktrackingSudokuSolver());
             b1.solveGame();

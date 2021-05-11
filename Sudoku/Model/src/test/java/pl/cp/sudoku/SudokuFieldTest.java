@@ -131,7 +131,7 @@ public class SudokuFieldTest {
         SudokuField field1 = new SudokuField();
         SudokuField field2 = new SudokuField();
 
-        assertNotEquals(field1.toString(), field2.toString());
+        assertEquals(field1.toString(), field2.toString());
     }
 
     @Test

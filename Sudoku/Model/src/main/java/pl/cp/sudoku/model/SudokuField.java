@@ -64,9 +64,8 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return Integer.toString(value);
     }
-
 
     // commons.lang3 version
     @Override

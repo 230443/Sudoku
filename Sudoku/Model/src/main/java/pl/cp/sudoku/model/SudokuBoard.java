@@ -70,7 +70,7 @@ public class SudokuBoard implements Serializable, Cloneable {
         return true;
     }
 
-    private final transient SudokuSolver solver;
+    private final SudokuSolver solver;
 
     /**
      * Gets copy of SudokuRow at given position.

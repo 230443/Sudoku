@@ -20,7 +20,7 @@ public class SudokuColumn extends SudokuBoardElement implements Cloneable, Seria
     }
 
     @Override
-    public SudokuColumn clone() {
+    public SudokuColumn clone() throws CloneNotSupportedException {
         return (SudokuColumn) super.clone();
     }
 }

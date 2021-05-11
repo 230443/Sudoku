@@ -21,7 +21,7 @@ public class SudokuBox extends SudokuBoardElement implements Cloneable, Serializ
     }
 
     @Override
-    public SudokuBox clone() {
+    public SudokuBox clone() throws CloneNotSupportedException {
         return (SudokuBox) super.clone();
     }
 }

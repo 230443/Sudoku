@@ -147,7 +147,7 @@ public class SudokuBoardElementTest {
     }
 
     @Test
-    public void cloneRowTest() {
+    public void cloneRowTest() throws CloneNotSupportedException {
 
         SudokuRow row = new SudokuRow();
         SudokuField f1 = new SudokuField();
@@ -165,7 +165,7 @@ public class SudokuBoardElementTest {
     }
 
     @Test
-    public void cloneColumnTest() {
+    public void cloneColumnTest() throws CloneNotSupportedException {
 
         SudokuColumn column = new SudokuColumn();
         SudokuField f1 = new SudokuField();
@@ -179,7 +179,7 @@ public class SudokuBoardElementTest {
     }
 
     @Test
-    public void cloneBoxTest() {
+    public void cloneBoxTest() throws CloneNotSupportedException {
 
         SudokuBox box = new SudokuBox();
         SudokuField f1 = new SudokuField();

@@ -1,6 +1,7 @@
 package pl.cp.sudoku;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,7 +11,7 @@ import pl.cp.sudoku.model.SudokuBoard;
  * Backtracking Sudoku Solver.
  */
 
-class BacktrackingSudokuSolver implements SudokuSolver {
+class BacktrackingSudokuSolver implements SudokuSolver, Serializable {
 
     private final Integer[] possibleValues = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 

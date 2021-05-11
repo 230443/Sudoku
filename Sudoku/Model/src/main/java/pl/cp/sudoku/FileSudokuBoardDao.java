@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 import pl.cp.sudoku.model.SudokuBoard;
 
 
-public class FileSudokuBoardDao implements Dao<SudokuBoard>, AutoCloseable {
+public class FileSudokuBoardDao implements Dao<SudokuBoard> {
 
 
     private final String filePath;
