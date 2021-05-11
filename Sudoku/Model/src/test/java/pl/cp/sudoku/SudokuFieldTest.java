@@ -151,7 +151,7 @@ public class SudokuFieldTest {
     }
 
     @Test
-    public void cloneListenersTest() throws CloneNotSupportedException {
+    public void cloneListenersTest() {
 
         SudokuRow row = new SudokuRow();
         SudokuColumn column = new SudokuColumn();

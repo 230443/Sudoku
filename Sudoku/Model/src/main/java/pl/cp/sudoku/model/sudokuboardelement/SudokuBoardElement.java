@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import pl.cp.sudoku.model.SudokuField;
 
-public abstract class SudokuBoardElement implements PropertyChangeListener {
+public abstract class SudokuBoardElement implements PropertyChangeListener, Cloneable {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -81,9 +81,22 @@ public abstract class SudokuBoardElement implements PropertyChangeListener {
     }
 
     @Override
-    protected SudokuBoardElement clone() throws CloneNotSupportedException {
-        return (SudokuBoardElement) super.clone();
+    protected SudokuBoardElement clone() {
+
+        SudokuBoardElement result;
+        try {
+            result = (SudokuBoardElement) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+        result.sudokuFields = new ArrayList<>(9);
+            for (var field : sudokuFields) {
+                result.addField(field.clone());
+            }
+        return result;
     }
+
+
 
     private List<SudokuField> sudokuFields = new ArrayList<>(9);
 }

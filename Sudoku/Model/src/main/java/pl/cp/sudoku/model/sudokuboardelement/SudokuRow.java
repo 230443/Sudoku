@@ -20,7 +20,7 @@ public class SudokuRow extends SudokuBoardElement implements Cloneable, Serializ
     }
 
     @Override
-    public SudokuRow clone() throws CloneNotSupportedException {
+    public SudokuRow clone() {
         return (SudokuRow) super.clone();
     }
 }

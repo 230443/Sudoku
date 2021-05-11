@@ -146,13 +146,11 @@ public class SudokuBoardElementTest {
         assertNotEquals(element1, element2);
     }
 
-    //@Test
-    public void cloneTest() throws CloneNotSupportedException {
+    @Test
+    public void cloneRowTest() {
 
         SudokuRow row = new SudokuRow();
-
         SudokuField f1 = new SudokuField();
-
         row.addField(f1);
 
         SudokuRow row2 = row.clone();
@@ -161,11 +159,39 @@ public class SudokuBoardElementTest {
         f2.setValue(8);
         row2.addField(f1);
 
-
         //Assert not throws
         f1.setValue(8);
 
+    }
+
+    @Test
+    public void cloneColumnTest() {
+
+        SudokuColumn column = new SudokuColumn();
+        SudokuField f1 = new SudokuField();
+        column.addField(f1);
+
+        SudokuColumn column2 = column.clone();
+
+        assertNotSame(column, column2);
+        assertEquals(column, column2);
 
     }
+
+    @Test
+    public void cloneBoxTest() {
+
+        SudokuBox box = new SudokuBox();
+        SudokuField f1 = new SudokuField();
+        box.addField(f1);
+
+        SudokuBox box2 = box.clone();
+
+        assertNotSame(box, box2);
+        assertEquals(box, box2);
+
+
+    }
+
 
 }
