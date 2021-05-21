@@ -1,10 +1,16 @@
 package pl.cp;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 
 /**
@@ -13,14 +19,14 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     @Override
-    public void start(Stage stage) {
-        var javaVersion = SystemInfo.javaVersion();
-        var javafxVersion = SystemInfo.javafxVersion();
+    public void start(Stage stage) throws IOException {
+        Parent load = FXMLLoader.load(getClass().getResource("/MainView.fxml"));
 
-        var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        var scene = new Scene(new StackPane(label), 640, 480);
+        Scene scene = new Scene(load);
         stage.setScene(scene);
+        stage.setTitle("Sudoku");
         stage.show();
+
     }
 
     public static void main(String[] args) {
