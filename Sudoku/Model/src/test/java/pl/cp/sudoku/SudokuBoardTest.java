@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class SudokuBoardTest {
 
-    private boolean isValidSudoku(int[][] board) {
+    public static boolean isValidSudoku(int[][] board) {
         // init Hashmaps arrays containing hashmaps mapping values to number of times they occurred in the row, column and box
         HashMap<Integer, Integer>[] rows = new HashMap[9];
         HashMap<Integer, Integer>[] columns = new HashMap[9];

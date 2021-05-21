@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import pl.cp.sudoku.SudokuBoardPrototype;
 import pl.cp.sudoku.SudokuSolver;
 import pl.cp.sudoku.model.sudokuboardelement.FieldAlreadyExistException;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
@@ -173,23 +174,19 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     @Override
     public SudokuBoard clone() {
-        SudokuBoard result;
-        try {
-            result = (SudokuBoard) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
 
-        result.initializeBoard();
+        SudokuBoard result = SudokuBoardPrototype.getInstance();
+
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
-                result.set(column, row, board[column][row].getValue());
+                result.board[column][row].setValue(board[column][row].getValue());
             }
         }
+
         return result;
     }
 
-    /*private boolean checkBoard() {
+    public boolean checkBoard() {
         for (int i = 0; i < 9; i++) {
             if (!getRow(i).verify()) {
                 return false;
@@ -208,6 +205,6 @@ public class SudokuBoard implements Serializable, Cloneable {
         }
 
         return true;
-    }*/
+    }
 
 }

@@ -3,4 +3,5 @@ module Model {
     requires org.apache.commons.lang3;
     exports pl.cp.sudoku.model;
     exports pl.cp.sudoku.model.sudokuboardelement;
+    exports pl.cp.sudoku;
 }
