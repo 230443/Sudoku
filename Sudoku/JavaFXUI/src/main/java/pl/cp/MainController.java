@@ -50,7 +50,7 @@ public class MainController {
             FXMLLoader loader=new FXMLLoader(getClass().getResource("/SudokuBoardScene.fxml"));
             Parent root=(Parent)loader.load();
             SudokuBoardController sudokuBoardController=loader.getController();
-           sudokuBoardController.setBoard(this.difficulty);
+            sudokuBoardController.setBoard(this.difficulty);
             Stage stage=new Stage();
             stage.setScene(new Scene(root));
             stage.show();

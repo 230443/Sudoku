@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -21,6 +22,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static java.lang.String.valueOf;
+
 
 public class SudokuBoardController  {
     private Stage stage;
@@ -35,16 +38,20 @@ public class SudokuBoardController  {
 
     public void setBoard(Difficulty difficulty){
 
-        board = SudokuBoardPrototype.getInstance(difficulty);
+       this.board = SudokuBoardPrototype.getInstance(difficulty);
+
     }
 
 
 
    @FXML
     public void initialize() {
-        for(int i=0;i< 9*50;i+=50)
+        for(int i=0;i< 9;i++)
         {
-            for (int j=0;j<9*50;j+=50){
+            for (int j=0;j<9;j++){
+                TextField t=new TextField(valueOf(board.get(i,j)));
+                t.setPrefHeight(50);
+                t.setPrefHeight(50);
 
             }
         }
