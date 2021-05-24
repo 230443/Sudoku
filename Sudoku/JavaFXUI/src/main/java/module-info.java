@@ -4,4 +4,5 @@ module pl.cp {
     requires Model;
 
     exports pl.cp to javafx.graphics;
+    opens pl.cp;
 }
