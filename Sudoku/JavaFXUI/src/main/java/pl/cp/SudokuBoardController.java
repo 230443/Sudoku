@@ -45,7 +45,8 @@ public class SudokuBoardController  {
 
 
    @FXML
-    public void initialize() {
+    public void initialize(Difficulty difficulty) {
+       this.board = SudokuBoardPrototype.getInstance(difficulty);
         for(int i=0;i< 9;i++)
         {
             for (int j=0;j<9;j++){
@@ -57,4 +58,7 @@ public class SudokuBoardController  {
         }
     }
 
+    public SudokuBoardController(SudokuBoard board) {
+        this.board = board;
+    }
 }

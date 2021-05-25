@@ -10,6 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import pl.cp.sudoku.Difficulty;
+import pl.cp.sudoku.SudokuBoardPrototype;
+import pl.cp.sudoku.SudokuSolver;
+import pl.cp.sudoku.model.SudokuBoard;
 
 import java.io.IOException;
 
@@ -46,20 +49,16 @@ public class MainController {
     @FXML
     void switchToSudokuScene(ActionEvent event) {
 
-        try {
-            FXMLLoader loader=new FXMLLoader(getClass().getResource("/SudokuBoardScene.fxml"));
-            Parent root=(Parent)loader.load();
-            SudokuBoardController sudokuBoardController=loader.getController();
-            sudokuBoardController.setBoard(this.difficulty);
             Stage stage=new Stage();
-            stage.setScene(new Scene(root));
+
+            SudokuBoard model = SudokuBoardPrototype.getInstance(Difficulty.HARD);
+
+            SudokuBoardController controller = new SudokuBoardController(model);
+
+            SudokuBoardView view = new SudokuBoardView(controller, model);
+
+            stage.setScene(new Scene(view.asParent()));
             stage.show();
-
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
