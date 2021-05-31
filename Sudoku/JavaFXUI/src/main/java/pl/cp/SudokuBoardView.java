@@ -1,6 +1,7 @@
 package pl.cp;
 
 import javafx.application.Application;
+import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -39,7 +40,7 @@ public class SudokuBoardView {
         view.setAlignment(Pos.CENTER);
         view.setHgap(5);
         view.setVgap(5);
-
+        System.out.print(model.toString());
         int[][] tmpBoard = model.getBoard();
         for (int i = 0; i < 9; i++) {
             view.getColumnConstraints().add(new ColumnConstraints(30));
@@ -47,25 +48,43 @@ public class SudokuBoardView {
             for (int j = 0; j < 9 ; j++) {
                 if (tmpBoard[i][j] == 0) {
                     TextField textField=new TextField();
+                    int tmpi=i;
+                    int tmpj=j;
                     textField.setTextFormatter(new TextFormatter<String>((TextFormatter.Change change) -> {
                         String newText = change.getControlNewText();
 
                             if (check(newText)) {
+
                                 return null;
-                            } else  {
+                            }
+                            else {
+                                if(newText.equals("")){
+                                model.set(tmpi,tmpj,0);
+                                    }
+                                else{
+                                model.set(tmpi,tmpj,Integer.parseInt(newText));
+                                System.out.print(tmpi+" "+tmpj+"\n");
+                                System.out.print(model.toString());
+                                }
+
+
                                 return change;
                             }
 
                     }));
 
-                    view.add(textField, i, j);
+
+
+                    view.add(textField, j, i);
                 } else {
-                    view.add(new Label(String.valueOf(tmpBoard[i][j])), i, j);
+                    view.add(new Label(String.valueOf(tmpBoard[i][j])), j, i);
                 }
             }
 
         }
     }
+
+
 
     private static boolean isNotNumeric(String str){
         return !(str.matches("[0-9]"));
