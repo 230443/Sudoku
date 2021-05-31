@@ -70,10 +70,20 @@ public final class BundleHandler {
      *         optional arguments for the message
      * @return localized formatted string
      */
+    public static String get(String source,final String key, final Object... args) {
+
+        ResourceBundle bundle = ResourceBundle.getBundle(source, getLocale());
+        return MessageFormat.format(bundle.getString(key), args);
+
+    }
+
     public static String get(final String key, final Object... args) {
+
         ResourceBundle bundle = ResourceBundle.getBundle("difficulty", getLocale());
         return MessageFormat.format(bundle.getString(key), args);
+
     }
+
 
     /**
      * creates a String binding to a localized String for the given message bundle key
@@ -82,31 +92,37 @@ public final class BundleHandler {
      *         key
      * @return String binding
      */
+    public static StringBinding createStringBinding(String source,final String key, Object... args) {
+        return Bindings.createStringBinding(() -> get(source,key, args), locale);
+    }
+
     public static StringBinding createStringBinding(final String key, Object... args) {
         return Bindings.createStringBinding(() -> get(key, args), locale);
     }
 
-    /**
-     * creates a String Binding to a localized String that is computed by calling the given func
-     *
-     * @param func
-     *         function called on every change
-     * @return StringBinding
-     */
-    public static StringBinding createStringBinding(Callable<String> func) {
-        return Bindings.createStringBinding(func, locale);
-    }
+
+//    /**
+//     * creates a String Binding to a localized String that is computed by calling the given func
+//     *
+//     * @param func
+//     *         function called on every change
+//     * @return StringBinding
+//     */
+//    public static StringBinding createStringBinding(String func) {
+//        return Bindings.createStringBinding(func, locale);
+//    }
+
 
     /**
      * creates a bound Label whose value is computed on language change.
      *
-     * @param func
+     * @param key
      *         the function to compute the value
      * @return Label
      */
-    public static Label labelForValue(Callable<String> func) {
+    public static Label labelForValue(final String key, final Object... args) {
         Label label = new Label();
-        label.textProperty().bind(createStringBinding(func));
+        label.textProperty().bind(createStringBinding("pl.cp.MessageBundle",key, args));
         return label;
     }
 
@@ -125,7 +141,6 @@ public final class BundleHandler {
         return button;
     }
 
-    public static void buttonForKey(Button button, final String key, final Object... args) {
-        button.textProperty().bind(createStringBinding(key, args));
-    }
+
+
 }

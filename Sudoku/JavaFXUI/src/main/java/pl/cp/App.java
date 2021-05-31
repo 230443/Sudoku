@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -31,21 +32,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-//        Parent load = FXMLLoader.load(getClass().getResource("/MainView.fxml"));
-//
-//        Scene scene = new Scene(load);
-//        stage.setScene(scene);
-//        stage.titleProperty().bind(BundleHandler.createStringBinding("window.title"));
-//        
-//
-//        stage.show();
 
         stage.titleProperty().bind(BundleHandler.createStringBinding("window.title"));
 
-        // create content
+
         BorderPane content = new BorderPane();
 
-        // at the top two buttons
+
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(5, 5, 5, 5));
         hbox.setSpacing(5);
@@ -61,7 +54,7 @@ public class App extends Application {
         content.setTop(hbox);
 
         HBox cbox = new HBox();
-        cbox.setPadding(new Insets(5, 5, 5, 5));
+        cbox.setPadding(new Insets(15, 5, 5, 5));
         cbox.setSpacing(5);
 
         Button Easy = BundleHandler.buttonForKey("button.easy");
@@ -72,18 +65,26 @@ public class App extends Application {
         Normal.setOnAction((evt) -> switchToSudokuScene(Difficulty.NORMAL));
         cbox.getChildren().add(Normal);
 
-
         Button Hard = BundleHandler.buttonForKey("button.hard");
         Hard.setOnAction((evt) -> switchToSudokuScene(Difficulty.HARD));
         cbox.getChildren().add(Hard);
 
-        content.setTop(hbox);
 
+        HBox dbox=new HBox();
+        Label label=BundleHandler.labelForValue("author");
+        dbox.getChildren().add(label);
+
+
+        content.setTop(hbox);
         content.setCenter(cbox);
+        content.setBottom(dbox);
 
 
         stage.setScene(new Scene(content, 400, 200));
         stage.show();
+
+
+
 
     }
 
