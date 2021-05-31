@@ -33,81 +33,9 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        stage.titleProperty().bind(BundleHandler.createStringBinding("window.title"));
+        MainView view = new MainView();
 
-
-        BorderPane content = new BorderPane();
-
-
-        HBox hbox = new HBox();
-        hbox.setPadding(new Insets(5, 5, 5, 5));
-        hbox.setSpacing(5);
-
-        Button buttonEnglish = BundleHandler.buttonForKey("button.english");
-        buttonEnglish.setOnAction((evt) -> switchLanguage(new Locale("en")));
-        hbox.getChildren().add(buttonEnglish);
-
-        Button buttonPolish = BundleHandler.buttonForKey("button.polish");
-        buttonPolish.setOnAction((evt) -> switchLanguage(new Locale("pl", "PL")));
-        hbox.getChildren().add(buttonPolish);
-
-        content.setTop(hbox);
-
-        HBox cbox = new HBox();
-        cbox.setPadding(new Insets(15, 5, 5, 5));
-        cbox.setSpacing(5);
-
-        Button Easy = BundleHandler.buttonForKey("button.easy");
-        Easy.setOnAction((evt) -> switchToSudokuScene(Difficulty.EASY));
-        cbox.getChildren().add(Easy);
-
-        Button Normal = BundleHandler.buttonForKey("button.medium");
-        Normal.setOnAction((evt) -> switchToSudokuScene(Difficulty.NORMAL));
-        cbox.getChildren().add(Normal);
-
-        Button Hard = BundleHandler.buttonForKey("button.hard");
-        Hard.setOnAction((evt) -> switchToSudokuScene(Difficulty.HARD));
-        cbox.getChildren().add(Hard);
-
-
-        HBox dbox=new HBox();
-        Label label=BundleHandler.labelForValue("author");
-        dbox.getChildren().add(label);
-
-
-        content.setTop(hbox);
-        content.setCenter(cbox);
-        content.setBottom(dbox);
-
-
-        stage.setScene(new Scene(content, 400, 200));
-        stage.show();
-
-
-
-
-    }
-
-    private void switchLanguage(Locale locale) {
-
-        BundleHandler.setLocale(locale);
-    }
-
-
-    @FXML
-    void switchToSudokuScene(Difficulty difficulty) {
-
-        Stage stage=new Stage();
-
-        SudokuBoard model = SudokuBoardPrototype.getInstance(difficulty);
-
-        SudokuBoardController controller = new SudokuBoardController(model);
-
-        SudokuBoardView view = new SudokuBoardView(controller, model);
-
-        stage.setScene(new Scene(view.asParent()));
-        stage.show();
-
+        view.initialize(stage);
     }
 
     public static void main(String[] args) {
