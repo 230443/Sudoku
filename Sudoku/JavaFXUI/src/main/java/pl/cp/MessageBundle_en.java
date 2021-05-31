@@ -16,7 +16,7 @@ public class MessageBundle_en extends ListResourceBundle {
     @Override
     protected Object[][] getContents() {
         return new Object[][]{
-                {"author","Adam and Daniel"},
+                {"author","Adam Czyzewski and Daniel Baraniak"},
                 {"lang","in english"}
         };
     }
