@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -45,13 +46,34 @@ public class SudokuBoardView {
             view.getRowConstraints().add(new RowConstraints(30));
             for (int j = 0; j < 9 ; j++) {
                 if (tmpBoard[i][j] == 0) {
-                    view.add(new TextField(), i, j);
+                    TextField textField=new TextField();
+                    textField.setTextFormatter(new TextFormatter<String>((TextFormatter.Change change) -> {
+                        String newText = change.getControlNewText();
+
+                            if (check(newText)) {
+                                return null;
+                            } else  {
+                                return change;
+                            }
+
+                    }));
+
+                    view.add(textField, i, j);
                 } else {
                     view.add(new Label(String.valueOf(tmpBoard[i][j])), i, j);
                 }
             }
 
         }
+    }
+
+    private static boolean isNotNumeric(String str){
+        return !(str.matches("[0-9]"));
+    }
+
+    private static boolean check(String str){
+        if (str.equals("")) return false;
+         return isNotNumeric(str);
     }
 
 }

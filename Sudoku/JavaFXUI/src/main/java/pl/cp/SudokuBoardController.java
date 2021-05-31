@@ -44,19 +44,19 @@ public class SudokuBoardController  {
 
 
 
-   @FXML
-    public void initialize(Difficulty difficulty) {
-       this.board = SudokuBoardPrototype.getInstance(difficulty);
-        for(int i=0;i< 9;i++)
-        {
-            for (int j=0;j<9;j++){
-                TextField t=new TextField(valueOf(board.get(i,j)));
-                t.setPrefHeight(50);
-                t.setPrefHeight(50);
-
-            }
-        }
-    }
+//   @FXML
+//    public void initialize(Difficulty difficulty) {
+//       this.board = SudokuBoardPrototype.getInstance(difficulty);
+//        for(int i=0;i< 9;i++)
+//        {
+//            for (int j=0;j<9;j++){
+//                TextField t=new TextField(valueOf(board.get(i,j)));
+//                t.setPrefHeight(50);
+//                t.setPrefHeight(50);
+//
+//            }
+//        }
+//    }
 
     public SudokuBoardController(SudokuBoard board) {
         this.board = board;

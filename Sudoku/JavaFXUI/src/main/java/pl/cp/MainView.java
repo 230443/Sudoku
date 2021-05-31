@@ -17,7 +17,7 @@ import pl.cp.sudoku.model.SudokuBoard;
 import java.io.IOException;
 import java.util.Locale;
 
-public class MainView {
+public class MainView{
 
     private Difficulty difficulty;
     private BorderPane content = new BorderPane();
