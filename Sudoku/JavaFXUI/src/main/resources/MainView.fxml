@@ -7,6 +7,8 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.cp.MainController">
     <children>
+      <Button fx:id="POLBUTTON" mnemonicParsing="false" text="difficulty." />
+      <Button fx:id="ANGBUTTON" mnemonicParsing="false" text="Button" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sudoku">
          <font>
             <Font name="System Bold" size="32.0" />
