@@ -1,8 +1,8 @@
 package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
-import pl.cp.sudoku.model.*;
 import pl.cp.sudoku.model.sudokuboardelement.*;
+import pl.cp.sudoku.model.sudokufield.SudokuField;
 
 import java.util.*;
 

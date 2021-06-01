@@ -50,6 +50,14 @@ public class SudokuBoardPrototype {
             board.set(8 - p.x, 8 - p.y, 0);
         }
 
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board.get(i,j) != 0) {
+                    board.makeFieldUnmodifiable(i,j);
+                }
+            }
+        }
+
         return board;
     }
 }

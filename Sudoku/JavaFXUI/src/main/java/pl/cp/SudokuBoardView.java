@@ -14,17 +14,11 @@ import pl.cp.sudoku.SudokuBoardDaoFactory;
 import pl.cp.sudoku.model.SudokuBoard;
 
 public class SudokuBoardView {
+    private final SudokuBoard model;
     private GridPane gridPane;
     private VBox vBox;
     private Button saveButton;
-
-    public Parent asParent() {
-        return vBox;
-    }
-
     private SudokuBoardController controller;
-    private final SudokuBoard model;
-
     public SudokuBoardView(SudokuBoardController controller, SudokuBoard model) {
         this.controller = controller;
         this.model = model;
@@ -36,6 +30,19 @@ public class SudokuBoardView {
         vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(gridPane, saveButton);
+    }
+
+    private static boolean isNotNumeric(String str) {
+        return !(str.matches("[0-9]"));
+    }
+
+    private static boolean check(String str) {
+        if (str.equals("")) return false;
+        return isNotNumeric(str);
+    }
+
+    public Parent asParent() {
+        return vBox;
     }
 
     private void createAndConfigurePane() {
@@ -51,8 +58,11 @@ public class SudokuBoardView {
             gridPane.getColumnConstraints().add(new ColumnConstraints(30));
             gridPane.getRowConstraints().add(new RowConstraints(30));
             for (int j = 0; j < 9; j++) {
-                if (tmpBoard[i][j] == 0) {
+                if (!model.isFieldUnmodifiable(i, j)) {
                     TextField textField = new TextField();
+                    if (model.get(i, j) != 0) {
+                        textField.setText(String.valueOf(model.get(i, j)));
+                    }
                     int tmpi = i;
                     int tmpj = j;
                     textField.setTextFormatter(new TextFormatter<String>((TextFormatter.Change change) -> {
@@ -89,16 +99,6 @@ public class SudokuBoardView {
             }
 
         }
-    }
-
-
-    private static boolean isNotNumeric(String str) {
-        return !(str.matches("[0-9]"));
-    }
-
-    private static boolean check(String str) {
-        if (str.equals("")) return false;
-        return isNotNumeric(str);
     }
 
     private void saveBoard() {

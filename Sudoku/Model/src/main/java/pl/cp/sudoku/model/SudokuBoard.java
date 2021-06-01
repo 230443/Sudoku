@@ -11,6 +11,9 @@ import pl.cp.sudoku.model.sudokuboardelement.FieldAlreadyExistException;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
+import pl.cp.sudoku.model.sudokufield.SudokuField;
+import pl.cp.sudoku.model.sudokufield.UnmodifiableSudokuField;
+import pl.cp.sudoku.model.sudokufield.ValueOutOfScopeException;
 
 
 /**
@@ -180,6 +183,9 @@ public class SudokuBoard implements Serializable, Cloneable {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 result.board[column][row].setValue(board[column][row].getValue());
+                if (isFieldUnmodifiable(row,column)) {
+                    result.makeFieldUnmodifiable(row, column);
+                }
             }
         }
 
@@ -205,6 +211,14 @@ public class SudokuBoard implements Serializable, Cloneable {
         }
 
         return true;
+    }
+
+    public void makeFieldUnmodifiable(int x, int y) {
+        board[y][x] = new UnmodifiableSudokuField(board[y][x]);
+    }
+
+    public boolean isFieldUnmodifiable(int x, int y) {
+        return board[y][x] instanceof UnmodifiableSudokuField;
     }
 
 }

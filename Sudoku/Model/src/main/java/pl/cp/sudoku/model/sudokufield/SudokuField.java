@@ -1,4 +1,4 @@
-package pl.cp.sudoku.model;
+package pl.cp.sudoku.model.sudokufield;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import pl.cp.sudoku.model.sudokuboardelement.FieldAlreadyExistException;
 
 public class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {

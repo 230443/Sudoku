@@ -1,8 +1,7 @@
 package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
-import pl.cp.sudoku.model.SudokuBoard;
-import pl.cp.sudoku.model.SudokuField;
+import pl.cp.sudoku.model.sudokufield.SudokuField;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;

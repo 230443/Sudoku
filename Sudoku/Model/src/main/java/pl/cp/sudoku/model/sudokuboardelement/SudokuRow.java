@@ -2,7 +2,7 @@ package pl.cp.sudoku.model.sudokuboardelement;
 
 import java.io.Serializable;
 import java.util.List;
-import pl.cp.sudoku.model.SudokuField;
+import pl.cp.sudoku.model.sudokufield.SudokuField;
 
 
 /**

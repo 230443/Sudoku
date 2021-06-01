@@ -1,4 +1,4 @@
-package pl.cp.sudoku.model;
+package pl.cp.sudoku.model.sudokufield;
 
 /**
  * ValueOutOfScopeException.
