@@ -63,6 +63,10 @@ public class MainView{
         Hard.setOnAction((evt) -> switchToSudokuScene(Difficulty.HARD));
         cbox.getChildren().add(Hard);
 
+        Button Load = BundleHandler.buttonForKey("button.load");
+        Hard.setOnAction((evt) -> switchToSudokuScene(Difficulty.HARD));
+        cbox.getChildren().add(Load);
+
 
         HBox dbox=new HBox();
         Label label=BundleHandler.labelForValue("author");

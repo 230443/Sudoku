@@ -1,26 +1,22 @@
 package pl.cp;
 
-import javafx.application.Application;
-import javafx.beans.property.IntegerProperty;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import pl.cp.sudoku.Difficulty;
-import pl.cp.sudoku.SudokuBoardPrototype;
 import pl.cp.sudoku.model.SudokuBoard;
 
 public class SudokuBoardView {
-    private GridPane view;
+    private GridPane gridPane;
+    private VBox vBox;
+    private Button saveButton;
 
     public Parent asParent() {
-        return view;
+        return vBox;
     }
 
     private SudokuBoardController controller;
@@ -31,20 +27,25 @@ public class SudokuBoardView {
         this.model = model;
 
         createAndConfigurePane();
+        saveButton = BundleHandler.buttonForKey("button.save");
+
+        vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().addAll(gridPane, saveButton);
     }
 
     private void createAndConfigurePane() {
-        view = new GridPane();
+        gridPane = new GridPane();
 
 
-        view.setAlignment(Pos.CENTER);
-        view.setHgap(5);
-        view.setVgap(5);
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(5);
+        gridPane.setVgap(5);
         System.out.print(model.toString());
         int[][] tmpBoard = model.getBoard();
         for (int i = 0; i < 9; i++) {
-            view.getColumnConstraints().add(new ColumnConstraints(30));
-            view.getRowConstraints().add(new RowConstraints(30));
+            gridPane.getColumnConstraints().add(new ColumnConstraints(30));
+            gridPane.getRowConstraints().add(new RowConstraints(30));
             for (int j = 0; j < 9; j++) {
                 if (tmpBoard[i][j] == 0) {
                     TextField textField = new TextField();
@@ -77,9 +78,9 @@ public class SudokuBoardView {
                     }));
 
 
-                    view.add(textField, j, i);
+                    gridPane.add(textField, j, i);
                 } else {
-                    view.add(new Label(String.valueOf(tmpBoard[i][j])), j, i);
+                    gridPane.add(new Label(String.valueOf(tmpBoard[i][j])), j, i);
                 }
             }
 
