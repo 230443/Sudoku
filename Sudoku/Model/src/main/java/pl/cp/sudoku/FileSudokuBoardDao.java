@@ -21,7 +21,8 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard> {
     public SudokuBoard read() {
         try (FileInputStream fileIn = new FileInputStream(filePath);
              ObjectInputStream ois = new ObjectInputStream(fileIn)) {
-            return (SudokuBoard) ois.readObject();
+            SudokuBoard readBoard = (SudokuBoard) ois.readObject();
+            return readBoard.clone();
         } catch (IOException | ClassNotFoundException e) {
             return null;
         }

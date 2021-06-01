@@ -10,7 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import pl.cp.sudoku.Dao;
 import pl.cp.sudoku.Difficulty;
+import pl.cp.sudoku.SudokuBoardDaoFactory;
 import pl.cp.sudoku.SudokuBoardPrototype;
 import pl.cp.sudoku.model.SudokuBoard;
 
@@ -64,7 +66,7 @@ public class MainView{
         cbox.getChildren().add(Hard);
 
         Button Load = BundleHandler.buttonForKey("button.load");
-        Hard.setOnAction((evt) -> switchToSudokuScene(Difficulty.HARD));
+        Load.setOnAction((evt) -> load());
         cbox.getChildren().add(Load);
 
 
@@ -96,6 +98,28 @@ public class MainView{
 
         SudokuBoard model = SudokuBoardPrototype.getInstance(difficulty);
 
+        SudokuBoardController controller = new SudokuBoardController(model);
+
+        SudokuBoardView view = new SudokuBoardView(controller, model);
+
+        stage.setScene(new Scene(view.asParent()));
+        stage.show();
+
+    }
+
+    @FXML
+    void load() {
+
+        Stage stage = new Stage();
+
+        SudokuBoard model;
+        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getFileDao("savedBoard.dat")) {
+            model = dao.read();
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot load the board from file");
+        }
+
+        if (model == null) return;
         SudokuBoardController controller = new SudokuBoardController(model);
 
         SudokuBoardView view = new SudokuBoardView(controller, model);

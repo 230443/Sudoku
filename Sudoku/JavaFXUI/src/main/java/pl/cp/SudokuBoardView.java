@@ -8,6 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.*;
+import pl.cp.sudoku.Dao;
+import pl.cp.sudoku.Difficulty;
+import pl.cp.sudoku.SudokuBoardDaoFactory;
 import pl.cp.sudoku.model.SudokuBoard;
 
 public class SudokuBoardView {
@@ -28,6 +31,7 @@ public class SudokuBoardView {
 
         createAndConfigurePane();
         saveButton = BundleHandler.buttonForKey("button.save");
+        saveButton.setOnAction((evt) -> saveBoard());
 
         vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
@@ -95,6 +99,16 @@ public class SudokuBoardView {
     private static boolean check(String str) {
         if (str.equals("")) return false;
         return isNotNumeric(str);
+    }
+
+    private void saveBoard() {
+        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getFileDao("savedBoard.dat")) {
+
+            dao.write(model);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
