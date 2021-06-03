@@ -38,6 +38,9 @@ public class SudokuBoardPrototype {
         SudokuBoard board = getInstance();
         board.solveGame();
 
+        System.out.println(board);
+        System.out.println("^original");
+
         for (int i = 0; i < level.numberOfPairs; i++) {
             Point p;
 

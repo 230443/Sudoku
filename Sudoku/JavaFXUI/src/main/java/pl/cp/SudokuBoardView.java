@@ -29,6 +29,7 @@ public class SudokuBoardView {
     private GridPane gridPane;
     private VBox vBox;
     private Button saveButton;
+    Label boardLabel = new Label();
     private SudokuBoardController controller;
     SudokuBoardStringProperty boardStringProperty;
 
@@ -37,9 +38,8 @@ public class SudokuBoardView {
         this.controller = controller;
         this.model = model;
 
-        Label boardLabel = new Label();
         boardStringProperty = new SudokuBoardStringProperty(model);
-        boardLabel.textProperty().bind(boardStringProperty);
+        boardLabel.textProperty().bindBidirectional(boardStringProperty);
 
         createAndConfigurePane();
 
@@ -101,8 +101,19 @@ public class SudokuBoardView {
                     }
 
                     textField.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), null, integerFilter));
-                    SudokuFieldProperty sudokuFieldProperty = new SudokuFieldProperty(boardStringProperty, x, y);
+                    SudokuFieldProperty sudokuFieldProperty = new SudokuFieldProperty(model, x, y);
                     Bindings.bindBidirectional(textField.textProperty(), sudokuFieldProperty, converter);
+                    textField.textProperty().addListener(new ChangeListener<String>() {
+                        @Override
+                        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//                selectedStudent.setFirstName(newValue);
+                            System.out.println("Changed");
+                            sudokuFieldProperty.set((Integer) converter.fromString(newValue));
+                            boardStringProperty.fireValueChangedEvent();
+
+                        }
+                    });
+
                     Bindings.bindBidirectional(textField.textProperty(), boardStringProperty);
 
 
@@ -115,7 +126,7 @@ public class SudokuBoardView {
         }
     }
 
-    private final StringConverter converter = new IntegerStringConverter();
+    private final StringConverter converter = new SudokuStringConverter();
 
     private void saveBoard() {
         try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getFileDao("savedBoard.dat")) {

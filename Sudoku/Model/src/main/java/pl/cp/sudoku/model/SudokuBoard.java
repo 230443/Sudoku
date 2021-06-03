@@ -148,7 +148,7 @@ public class SudokuBoard implements Serializable, Cloneable {
         StringBuilder tmp = new StringBuilder();
         for (int y = 0; y < board.length; y++) {
             for (int x = 0; x < board.length; x++) {
-                tmp.append(get(y, x)).append("  ");
+                tmp.append(get(x, y)).append("  ");
                 if (x == 2 || x == 5) {
                     tmp.append("|  ");
                 }
