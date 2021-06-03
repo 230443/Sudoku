@@ -55,7 +55,7 @@ public class SudokuBoard implements Serializable, Cloneable {
      * @return Value of sudokuField.
      */
     public int get(int x, int y) {
-        return board[x][y].getValue();
+        return board[y][x].getValue();
     }
 
     /**
@@ -67,7 +67,7 @@ public class SudokuBoard implements Serializable, Cloneable {
      */
     public boolean set(int x, int y, int value) {
         try {
-            board[x][y].setValue(value);
+            board[y][x].setValue(value);
         } catch (FieldAlreadyExistException | ValueOutOfScopeException e) {
             return false;
         }
@@ -146,11 +146,17 @@ public class SudokuBoard implements Serializable, Cloneable {
     @Override
     public String toString() {
         StringBuilder tmp = new StringBuilder();
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board.length; j++) {
-                tmp.append(get(i, j));
+        for (int y = 0; y < board.length; y++) {
+            for (int x = 0; x < board.length; x++) {
+                tmp.append(get(y, x)).append("  ");
+                if (x == 2 || x == 5) {
+                    tmp.append("|  ");
+                }
             }
             tmp.append("\n");
+            if (y == 2 || y == 5) {
+                tmp.append("---------+-----------+---------\n");
+            }
         }
         return tmp.toString();
     }

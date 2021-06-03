@@ -1,5 +1,11 @@
 package pl.cp;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -8,10 +14,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.*;
+import javafx.util.StringConverter;
+import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.NumberStringConverter;
 import pl.cp.sudoku.Dao;
 import pl.cp.sudoku.Difficulty;
 import pl.cp.sudoku.SudokuBoardDaoFactory;
 import pl.cp.sudoku.model.SudokuBoard;
+
+import java.util.function.UnaryOperator;
 
 public class SudokuBoardView {
     private final SudokuBoard model;
@@ -19,17 +30,28 @@ public class SudokuBoardView {
     private VBox vBox;
     private Button saveButton;
     private SudokuBoardController controller;
+    SudokuBoardStringProperty boardStringProperty;
+
+
     public SudokuBoardView(SudokuBoardController controller, SudokuBoard model) {
         this.controller = controller;
         this.model = model;
 
+        Label boardLabel = new Label();
+        boardStringProperty = new SudokuBoardStringProperty(model);
+        boardLabel.textProperty().bind(boardStringProperty);
+
         createAndConfigurePane();
+
         saveButton = BundleHandler.buttonForKey("button.save");
         saveButton.setOnAction((evt) -> saveBoard());
 
+
         vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(gridPane, saveButton);
+        vBox.getChildren().addAll(gridPane, boardLabel, saveButton);
+
+
     }
 
     private static boolean isNotNumeric(String str) {
@@ -41,6 +63,20 @@ public class SudokuBoardView {
         return isNotNumeric(str);
     }
 
+    private static int getNumberFromString(String str) {
+        if (str.equals("")) return 0;
+        return Integer.parseInt(str);
+    }
+
+    UnaryOperator<TextFormatter.Change> integerFilter = change -> {
+        String newText = change.getControlNewText();
+        if (newText.matches("[0-9]?")) {
+            return change;
+        }
+        return null;
+    };
+
+
     public Parent asParent() {
         return vBox;
     }
@@ -48,58 +84,38 @@ public class SudokuBoardView {
     private void createAndConfigurePane() {
         gridPane = new GridPane();
 
-
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(5);
         gridPane.setVgap(5);
         System.out.print(model.toString());
-        int[][] tmpBoard = model.getBoard();
-        for (int i = 0; i < 9; i++) {
+
+        for (int y = 0; y < 9; y++) {
             gridPane.getColumnConstraints().add(new ColumnConstraints(30));
             gridPane.getRowConstraints().add(new RowConstraints(30));
-            for (int j = 0; j < 9; j++) {
-                if (!model.isFieldUnmodifiable(i, j)) {
+
+            for (int x = 0; x < 9; x++) {
+                if (!model.isFieldUnmodifiable(x, y)) {
                     TextField textField = new TextField();
-                    if (model.get(i, j) != 0) {
-                        textField.setText(String.valueOf(model.get(i, j)));
+                    if (model.get(x, y) != 0) {
+                        textField.setText(String.valueOf(model.get(x, y)));
                     }
-                    int tmpi = i;
-                    int tmpj = j;
-                    textField.setTextFormatter(new TextFormatter<String>((TextFormatter.Change change) -> {
-                        String newText = change.getControlNewText();
 
-                        if (check(newText)) {
-
-                            return null;
-                        } else {
-                            if (newText.equals("")) {
-                                model.set(tmpi, tmpj, 0);
-                                textField.setStyle("-fx-control-inner-background: white");
-                            } else {
-                                if (model.set(tmpi, tmpj, Integer.parseInt(newText))) {
-                                    textField.setStyle("-fx-control-inner-background: green");
-                                } else {
-                                    textField.setStyle("-fx-control-inner-background: red");
-                                }
-                                System.out.print(tmpi + " " + tmpj + "\n");
-                                System.out.print(model.toString());
-                            }
+                    textField.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), null, integerFilter));
+                    SudokuFieldProperty sudokuFieldProperty = new SudokuFieldProperty(boardStringProperty, x, y);
+                    Bindings.bindBidirectional(textField.textProperty(), sudokuFieldProperty, converter);
+                    Bindings.bindBidirectional(textField.textProperty(), boardStringProperty);
 
 
-                            return change;
-                        }
-
-                    }));
-
-
-                    gridPane.add(textField, j, i);
+                    gridPane.add(textField, x, y);
                 } else {
-                    gridPane.add(new Label(String.valueOf(tmpBoard[i][j])), j, i);
+                    gridPane.add(new Label(String.valueOf(model.get(x,y))), x, y);
                 }
             }
 
         }
     }
+
+    private final StringConverter converter = new IntegerStringConverter();
 
     private void saveBoard() {
         try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getFileDao("savedBoard.dat")) {
