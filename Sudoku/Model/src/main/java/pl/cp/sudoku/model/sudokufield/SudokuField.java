@@ -48,7 +48,7 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
             this.value = value;
             notify(oldValue, value);
         } catch (FieldAlreadyExistException e) {
-            this.value = oldValue;
+            //this.value = oldValue;
             throw e;
         }
     }

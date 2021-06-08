@@ -66,15 +66,25 @@ public class SudokuBoard implements Serializable, Cloneable {
      * @return true if value was set correctly, false otherwise.
      */
     public boolean set(int x, int y, int value) {
+        int oldValue = board[y][x].getValue();
+
         try {
             board[y][x].setValue(value);
-        } catch (FieldAlreadyExistException | ValueOutOfScopeException e) {
+        } catch (ValueOutOfScopeException e) {
             return false;
+        } catch (FieldAlreadyExistException e) {
+            if (isCheckingOn) {
+                board[y][x].setValue(oldValue);
+                return false;
+            } else {
+                return true;
+            }
         }
         return true;
     }
 
     private final SudokuSolver solver;
+    public boolean isCheckingOn = true;
 
     /**
      * Gets copy of SudokuRow at given position.
