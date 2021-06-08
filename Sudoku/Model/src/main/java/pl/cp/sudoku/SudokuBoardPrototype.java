@@ -7,8 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SudokuBoardPrototype {
+
+    private static final Logger logger = Logger.getLogger(SudokuBoardPrototype.class.getName());
 
     private static class Point {
         int x;
@@ -38,8 +42,7 @@ public class SudokuBoardPrototype {
         SudokuBoard board = getInstance();
         board.solveGame();
 
-        System.out.println(board);
-        System.out.println("^original");
+        logger.log(Level.INFO, "Original Sudoku: \n" + board.toString());
 
         for (int i = 0; i < level.numberOfPairs; i++) {
             Point p;

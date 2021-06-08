@@ -5,10 +5,17 @@ import pl.cp.sudoku.model.sudokufield.SudokuField;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
+import pl.cp.sudoku.model.sudokufield.UnmodifiableSudokuField;
+import pl.cp.sudoku.model.sudokufield.UnmodifiableSudokuFieldException;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SudokuFieldTest {
+
+    private static final Logger logger = Logger.getLogger(SudokuFieldTest.class.getName());
 
     @Test
     public void set_getTest() {
@@ -198,6 +205,22 @@ public class SudokuFieldTest {
         assertEquals(0, f2.compareTo(f3));
         assertThrows(NullPointerException.class, () -> f1.compareTo(null));
 
+    }
+
+    @Test
+    public void tryModifyUnmodifiableSudokuField() {
+
+        SudokuField f1 = new SudokuField();
+        f1.setValue(1);
+
+        UnmodifiableSudokuField field = new UnmodifiableSudokuField(f1);
+
+        try {
+            field.setValue(2);
+            fail();
+        } catch (UnmodifiableSudokuFieldException e) {
+            logger.log(Level.SEVERE,null, e);
+        }
     }
 
 }

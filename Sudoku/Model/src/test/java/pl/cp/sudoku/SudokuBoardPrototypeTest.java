@@ -7,6 +7,8 @@ import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
 
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,30 +18,35 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SudokuBoardPrototypeTest {
 
+    private static final Logger logger = Logger.getLogger(SudokuBoardPrototypeTest.class.getName());
+
     @Test
     public void PrintSudoku() {
         SudokuBoard board = SudokuBoardPrototype.getInstance();
-        System.out.print(board.toString() + "\n");
+        logger.log(Level.INFO, "Empty:\n" + board.toString());
     }
 
     @Test
     public void PrintSudokuEasy() {
-        SudokuBoard board = SudokuBoardPrototype.getInstance(Difficulty.EASY);
-        System.out.print(board.toString() + "\n");
+        Difficulty d = Difficulty.EASY;
+        SudokuBoard board = SudokuBoardPrototype.getInstance(d);
+        logger.log(Level.INFO, d.name() + "\n" + board.toString());
         assertTrue(board.checkBoard());
     }
 
     @Test
     public void PrintSudokuNormal() {
-        SudokuBoard board = SudokuBoardPrototype.getInstance(Difficulty.NORMAL);
-        System.out.print(board.toString() + "\n");
+        Difficulty d = Difficulty.NORMAL;
+        SudokuBoard board = SudokuBoardPrototype.getInstance(d);
+        logger.log(Level.INFO, d.name() + "\n" + board.toString());
         assertTrue(board.checkBoard());
     }
 
     @Test
     public void PrintSudokuHard() {
-        SudokuBoard board = SudokuBoardPrototype.getInstance(Difficulty.HARD);
-        System.out.print(board.toString());
+        Difficulty d = Difficulty.HARD;
+        SudokuBoard board = SudokuBoardPrototype.getInstance(d);
+        logger.log(Level.INFO, d.name() + "\n" + board.toString());
         assertTrue(board.checkBoard());
     }
 
