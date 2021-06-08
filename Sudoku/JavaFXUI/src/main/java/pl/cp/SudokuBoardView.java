@@ -37,7 +37,7 @@ public class SudokuBoardView {
     public SudokuBoardView(SudokuBoardController controller, SudokuBoard model) {
         this.controller = controller;
         this.model = model;
-        model.isCheckingOn = false;
+        //model.isCheckingOn = false;
 
         boardStringProperty = new SudokuBoardStringProperty(model);
         boardLabel.textProperty().bindBidirectional(boardStringProperty);
@@ -108,6 +108,15 @@ public class SudokuBoardView {
                         System.out.println("Changed");
                         sudokuFieldProperty.set((Integer) converter.fromString(newValue));
                         boardStringProperty.fireValueChangedEvent();
+                        if(model.isCheckingOn) {
+                            if (converter.fromString(newValue).equals(0)) {
+                                textField.setStyle("-fx-control-inner-background: white");
+                            } else if (sudokuFieldProperty.setValue((Integer) converter.fromString(newValue))) {
+                                textField.setStyle("-fx-control-inner-background: green");
+                            } else {
+                                textField.setStyle("-fx-control-inner-background: red");
+                            }
+                        }
                     });
 
                     Bindings.bindBidirectional(textField.textProperty(), boardStringProperty);

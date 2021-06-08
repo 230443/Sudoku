@@ -18,6 +18,11 @@ public class SudokuFieldProperty extends SimpleIntegerProperty {
         super.set(i);
     }
 
+    public boolean setValue(Integer i) {
+        super.set(i);
+        return board.set(x, y, i);
+    }
+
     @Override
     public int get() {
         super.get();
