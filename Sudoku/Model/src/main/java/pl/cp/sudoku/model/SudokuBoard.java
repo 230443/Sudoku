@@ -196,9 +196,11 @@ public class SudokuBoard implements Serializable, Cloneable {
 
         SudokuBoard result = SudokuBoardPrototype.getInstance();
 
+        result.isCheckingOn = this.isCheckingOn;
+
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
-                result.board[column][row].setValue(board[column][row].getValue());
+                result.set(row, column, board[column][row].getValue());
                 if (isFieldUnmodifiable(row,column)) {
                     result.makeFieldUnmodifiable(row, column);
                 }

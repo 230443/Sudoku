@@ -37,6 +37,7 @@ public class SudokuBoardView {
     public SudokuBoardView(SudokuBoardController controller, SudokuBoard model) {
         this.controller = controller;
         this.model = model;
+        model.isCheckingOn = false;
 
         boardStringProperty = new SudokuBoardStringProperty(model);
         boardLabel.textProperty().bindBidirectional(boardStringProperty);
@@ -103,15 +104,10 @@ public class SudokuBoardView {
                     textField.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), null, integerFilter));
                     SudokuFieldProperty sudokuFieldProperty = new SudokuFieldProperty(model, x, y);
                     Bindings.bindBidirectional(textField.textProperty(), sudokuFieldProperty, converter);
-                    textField.textProperty().addListener(new ChangeListener<String>() {
-                        @Override
-                        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//                selectedStudent.setFirstName(newValue);
-                            System.out.println("Changed");
-                            sudokuFieldProperty.set((Integer) converter.fromString(newValue));
-                            boardStringProperty.fireValueChangedEvent();
-
-                        }
+                    textField.textProperty().addListener((observable, oldValue, newValue) -> {
+                        System.out.println("Changed");
+                        sudokuFieldProperty.set((Integer) converter.fromString(newValue));
+                        boardStringProperty.fireValueChangedEvent();
                     });
 
                     Bindings.bindBidirectional(textField.textProperty(), boardStringProperty);
