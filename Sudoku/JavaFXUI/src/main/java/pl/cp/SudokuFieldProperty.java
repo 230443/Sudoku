@@ -29,6 +29,12 @@ public class SudokuFieldProperty extends SimpleIntegerProperty {
         return board.get(x, y);
     }
 
+    /**
+     * Property containing SudokuField.
+     * @param board SudokuBoard to which this SudokuField belongs.
+     * @param x x coordinate
+     * @param y y coordinate
+     */
     public SudokuFieldProperty(SudokuBoard board, int x, int y) {
         this.board = board;
         this.x = x;

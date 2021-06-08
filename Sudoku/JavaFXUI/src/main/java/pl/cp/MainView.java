@@ -1,6 +1,7 @@
 package pl.cp;
 
-import javafx.application.Application;
+
+import java.util.Locale;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -16,10 +17,8 @@ import pl.cp.sudoku.SudokuBoardDaoFactory;
 import pl.cp.sudoku.SudokuBoardPrototype;
 import pl.cp.sudoku.model.SudokuBoard;
 
-import java.io.IOException;
-import java.util.Locale;
 
-public class MainView{
+public class MainView {
 
     private Difficulty difficulty;
     private BorderPane content = new BorderPane();
@@ -28,8 +27,11 @@ public class MainView{
         return content;
     }
 
+    /**
+     * Initializes the stage.
+     * @param stage Stage where it will be placed
+     */
     public void initialize(Stage stage) {
-
 
 
         stage.titleProperty().bind(BundleHandler.createStringBinding("window.title"));
@@ -53,25 +55,25 @@ public class MainView{
         cbox.setPadding(new Insets(15, 5, 5, 5));
         cbox.setSpacing(5);
 
-        Button Easy = BundleHandler.buttonForKey("button.easy");
-        Easy.setOnAction((evt) -> switchToSudokuScene(Difficulty.EASY));
-        cbox.getChildren().add(Easy);
+        Button easy = BundleHandler.buttonForKey("button.easy");
+        easy.setOnAction((evt) -> switchToSudokuScene(Difficulty.EASY));
+        cbox.getChildren().add(easy);
 
-        Button Normal = BundleHandler.buttonForKey("button.medium");
-        Normal.setOnAction((evt) -> switchToSudokuScene(Difficulty.NORMAL));
-        cbox.getChildren().add(Normal);
+        Button normal = BundleHandler.buttonForKey("button.medium");
+        normal.setOnAction((evt) -> switchToSudokuScene(Difficulty.NORMAL));
+        cbox.getChildren().add(normal);
 
-        Button Hard = BundleHandler.buttonForKey("button.hard");
-        Hard.setOnAction((evt) -> switchToSudokuScene(Difficulty.HARD));
-        cbox.getChildren().add(Hard);
+        Button hard = BundleHandler.buttonForKey("button.hard");
+        hard.setOnAction((evt) -> switchToSudokuScene(Difficulty.HARD));
+        cbox.getChildren().add(hard);
 
-        Button Load = BundleHandler.buttonForKey("button.load");
-        Load.setOnAction((evt) -> load());
-        cbox.getChildren().add(Load);
+        Button load = BundleHandler.buttonForKey("button.load");
+        load.setOnAction((evt) -> load());
+        cbox.getChildren().add(load);
 
 
-        HBox dbox=new HBox();
-        Label label=BundleHandler.labelForValue("author");
+        HBox dbox = new HBox();
+        Label label = BundleHandler.labelForValue("author");
         dbox.getChildren().add(label);
 
 
@@ -94,7 +96,7 @@ public class MainView{
     @FXML
     void switchToSudokuScene(Difficulty difficulty) {
 
-        Stage stage=new Stage();
+        Stage stage = new Stage();
 
         SudokuBoard model = SudokuBoardPrototype.getInstance(difficulty);
 
@@ -119,7 +121,9 @@ public class MainView{
             throw new RuntimeException("Cannot load the board from file");
         }
 
-        if (model == null) return;
+        if (model == null) {
+            return;
+        }
         SudokuBoardController controller = new SudokuBoardController(model);
 
         SudokuBoardView view = new SudokuBoardView(controller, model);

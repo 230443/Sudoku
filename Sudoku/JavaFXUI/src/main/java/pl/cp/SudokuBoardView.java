@@ -1,28 +1,22 @@
 package pl.cp;
 
+import java.util.function.UnaryOperator;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.layout.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
-import javafx.util.converter.NumberStringConverter;
 import pl.cp.sudoku.Dao;
-import pl.cp.sudoku.Difficulty;
 import pl.cp.sudoku.SudokuBoardDaoFactory;
 import pl.cp.sudoku.model.SudokuBoard;
-
-import java.util.function.UnaryOperator;
 
 public class SudokuBoardView {
     private final SudokuBoard model;
@@ -104,11 +98,13 @@ public class SudokuBoardView {
                     textField.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), null, integerFilter));
                     SudokuFieldProperty sudokuFieldProperty = new SudokuFieldProperty(model, x, y);
                     Bindings.bindBidirectional(textField.textProperty(), sudokuFieldProperty, converter);
+
                     textField.textProperty().addListener((observable, oldValue, newValue) -> {
                         System.out.println("Changed");
                         sudokuFieldProperty.set((Integer) converter.fromString(newValue));
                         boardStringProperty.fireValueChangedEvent();
-                        if(model.isCheckingOn) {
+
+                        if (model.isCheckingOn) {
                             if (converter.fromString(newValue).equals(0)) {
                                 textField.setStyle("-fx-control-inner-background: white");
                             } else if (sudokuFieldProperty.setValue((Integer) converter.fromString(newValue))) {

@@ -6,6 +6,6 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.cp.SudokuBoardController">
    <center>
-      <Pane fx:id="PANE" BorderPane.alignment="CENTER" />
+      <Pane fx:id="pane" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

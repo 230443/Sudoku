@@ -6,6 +6,11 @@ public class SudokuStringConverter  extends StringConverter<Integer> {
     public SudokuStringConverter() {
     }
 
+    /**
+     * Converts String to Integer.
+     * @param var1 String
+     * @return  Integer value, 0 if null
+     */
     public Integer fromString(String var1) {
         if (var1 == null) {
             return null;
