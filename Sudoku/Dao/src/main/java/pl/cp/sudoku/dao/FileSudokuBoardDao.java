@@ -1,4 +1,4 @@
-package pl.cp.sudoku;
+package pl.cp.sudoku.dao;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

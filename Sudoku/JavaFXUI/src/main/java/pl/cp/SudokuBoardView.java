@@ -14,8 +14,8 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
-import pl.cp.sudoku.Dao;
-import pl.cp.sudoku.SudokuBoardDaoFactory;
+import pl.cp.sudoku.dao.Dao;
+import pl.cp.sudoku.dao.SudokuBoardDaoFactory;
 import pl.cp.sudoku.model.SudokuBoard;
 
 public class SudokuBoardView {
@@ -54,12 +54,16 @@ public class SudokuBoardView {
     }
 
     private static boolean check(String str) {
-        if (str.equals("")) return false;
+        if (str.equals("")) {
+            return false;
+        }
         return isNotNumeric(str);
     }
 
     private static int getNumberFromString(String str) {
-        if (str.equals("")) return 0;
+        if (str.equals("")) {
+            return 0;
+        }
         return Integer.parseInt(str);
     }
 
@@ -95,9 +99,11 @@ public class SudokuBoardView {
                         textField.setText(String.valueOf(model.get(x, y)));
                     }
 
-                    textField.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), null, integerFilter));
+                    textField.setTextFormatter(
+                            new TextFormatter<>(new IntegerStringConverter(), null, integerFilter));
                     SudokuFieldProperty sudokuFieldProperty = new SudokuFieldProperty(model, x, y);
-                    Bindings.bindBidirectional(textField.textProperty(), sudokuFieldProperty, converter);
+                    Bindings.bindBidirectional(
+                            textField.textProperty(), sudokuFieldProperty, converter);
 
                     textField.textProperty().addListener((observable, oldValue, newValue) -> {
                         System.out.println("Changed");
@@ -107,7 +113,8 @@ public class SudokuBoardView {
                         if (model.isCheckingOn) {
                             if (converter.fromString(newValue).equals(0)) {
                                 textField.setStyle("-fx-control-inner-background: white");
-                            } else if (sudokuFieldProperty.setValue((Integer) converter.fromString(newValue))) {
+                            } else if (sudokuFieldProperty.setValue(
+                                    (Integer) converter.fromString(newValue))) {
                                 textField.setStyle("-fx-control-inner-background: green");
                             } else {
                                 textField.setStyle("-fx-control-inner-background: red");
@@ -120,7 +127,7 @@ public class SudokuBoardView {
 
                     gridPane.add(textField, x, y);
                 } else {
-                    gridPane.add(new Label(String.valueOf(model.get(x,y))), x, y);
+                    gridPane.add(new Label(String.valueOf(model.get(x, y))), x, y);
                 }
             }
 

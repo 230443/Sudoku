@@ -1,6 +1,8 @@
-package pl.cp.sudoku;
+package pl.cp.sudoku.dao;
 
 import java.io.File;
+
+import pl.cp.sudoku.BacktrackingSudokuSolver;
 import pl.cp.sudoku.model.SudokuBoard;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;

@@ -55,9 +55,9 @@ public abstract class SudokuBoardElement implements PropertyChangeListener, Clon
 
     @Override
     public String toString() {
-        return "SudokuBoardElement{" +
-                "sudokuFields=" + sudokuFields +
-                '}';
+        return "SudokuBoardElement{"
+                + "sudokuFields=" + sudokuFields
+                + '}';
     }
 
     @Override

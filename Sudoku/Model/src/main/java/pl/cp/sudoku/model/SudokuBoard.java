@@ -39,6 +39,7 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     /**
      * gets Board in format of int[][].
+     *
      * @return copy of board
      */
     public int[][] getBoard() {
@@ -55,6 +56,7 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     /**
      * Gets the integer value in given position.
+     *
      * @param x x coordinate
      * @param y y coordinate
      * @return Value of sudokuField.
@@ -65,8 +67,9 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     /**
      * sets the value into the field to which coordinates were provided.
-     * @param x x coordinate
-     * @param y y coordinate
+     *
+     * @param x     x coordinate
+     * @param y     y coordinate
      * @param value value to be set.
      * @return true if value was set correctly, false otherwise.
      */
@@ -97,6 +100,7 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     /**
      * Gets copy of SudokuRow at given position.
+     *
      * @param y y coordinate
      * @return SudokuRow
      */
@@ -106,6 +110,7 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     /**
      * Gets copy of SudokuColumn at given position.
+     *
      * @param x x coordinate
      * @return SudokuColumn
      */
@@ -120,6 +125,7 @@ public class SudokuBoard implements Serializable, Cloneable {
 
     /**
      * Gets copy of sudokuBox at given position.
+     *
      * @param x x coordinate
      * @param y y coordinate
      * @return SudokuBox
@@ -210,7 +216,7 @@ public class SudokuBoard implements Serializable, Cloneable {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 result.set(row, column, board[column][row].getValue());
-                if (isFieldUnmodifiable(row,column)) {
+                if (isFieldUnmodifiable(row, column)) {
                     result.makeFieldUnmodifiable(row, column);
                 }
             }
@@ -219,6 +225,10 @@ public class SudokuBoard implements Serializable, Cloneable {
         return result;
     }
 
+    /**
+     * Check correctness of sudoku board.
+     * @return true, if board is valid, false otherwise.
+     */
     public boolean checkBoard() {
         for (int i = 0; i < 9; i++) {
             if (!getRow(i).verify()) {

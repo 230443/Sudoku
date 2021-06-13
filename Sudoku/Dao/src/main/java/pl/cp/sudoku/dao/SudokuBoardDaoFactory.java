@@ -1,4 +1,4 @@
-package pl.cp.sudoku;
+package pl.cp.sudoku.dao;
 
 import pl.cp.sudoku.model.SudokuBoard;
 

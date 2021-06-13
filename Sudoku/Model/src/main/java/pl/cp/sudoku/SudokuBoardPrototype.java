@@ -1,14 +1,12 @@
 package pl.cp.sudoku;
 
-import pl.cp.sudoku.BacktrackingSudokuSolver;
-import pl.cp.sudoku.model.SudokuBoard;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pl.cp.sudoku.model.SudokuBoard;
 
 public class SudokuBoardPrototype {
 
@@ -18,7 +16,8 @@ public class SudokuBoardPrototype {
         int x;
         int y;
 
-        private static List<Integer> possibleIndex = new ArrayList<>(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8));
+        private static final List<Integer> possibleIndex = new ArrayList<>(
+                List.of(0, 1, 2, 3, 4, 5, 6, 7, 8));
 
         static Point getPoint() {
             Point result = new Point();
@@ -33,11 +32,16 @@ public class SudokuBoardPrototype {
     }
 
 
-
     public static SudokuBoard getInstance() {
         return new SudokuBoard(new BacktrackingSudokuSolver());
     }
 
+    /**
+     * SudokuBoard factory of given difficulty with BacktrackingSudokuSolver.
+     *
+     * @param level Difficulty of the board.
+     * @return SudokuBoard instance.
+     */
     public static SudokuBoard getInstance(Difficulty level) {
         SudokuBoard board = getInstance();
         board.solveGame();
@@ -49,8 +53,7 @@ public class SudokuBoardPrototype {
 
             do {
                 p = Point.getPoint();
-            }
-            while (board.get(p.x, p.y) == 0);
+            } while (board.get(p.x, p.y) == 0);
 
             board.set(p.x, p.y, 0);
             board.set(8 - p.x, 8 - p.y, 0);
@@ -58,8 +61,8 @@ public class SudokuBoardPrototype {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                if (board.get(i,j) != 0) {
-                    board.makeFieldUnmodifiable(i,j);
+                if (board.get(i, j) != 0) {
+                    board.makeFieldUnmodifiable(i, j);
                 }
             }
         }

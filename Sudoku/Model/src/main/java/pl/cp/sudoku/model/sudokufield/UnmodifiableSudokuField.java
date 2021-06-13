@@ -19,7 +19,8 @@ public class UnmodifiableSudokuField extends SudokuField implements Serializable
 
     @Override
     public void setValue(int value) {
-        throw new UnmodifiableSudokuFieldException(UnmodifiableSudokuFieldException.UNMODIFIABLE_VALUE);
+        throw new UnmodifiableSudokuFieldException(
+                UnmodifiableSudokuFieldException.UNMODIFIABLE_VALUE);
     }
 
     @Override

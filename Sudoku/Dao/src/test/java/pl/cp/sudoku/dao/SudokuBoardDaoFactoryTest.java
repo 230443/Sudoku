@@ -1,4 +1,4 @@
-package pl.cp.sudoku;
+package pl.cp.sudoku.dao;
 
 import org.junit.jupiter.api.Test;
 import pl.cp.sudoku.model.*;

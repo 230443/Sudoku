@@ -11,11 +11,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import pl.cp.sudoku.Dao;
 import pl.cp.sudoku.Difficulty;
-import pl.cp.sudoku.SudokuBoardDaoFactory;
 import pl.cp.sudoku.SudokuBoardPrototype;
+import pl.cp.sudoku.dao.Dao;
+import pl.cp.sudoku.dao.SudokuBoardDaoFactory;
 import pl.cp.sudoku.model.SudokuBoard;
+
 
 
 public class MainView {

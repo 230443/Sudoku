@@ -36,6 +36,7 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
 
     /**
      * Sets value of this SudokuField.
+     *
      * @param value int value to be set.
      */
     public void setValue(int value) {
@@ -106,7 +107,9 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
 
     @Override
     public int compareTo(SudokuField o) {
-        if(o==null) throw new NullPointerException("arg is null");
+        if (o == null) {
+            throw new NullPointerException("arg is null");
+        }
         return Integer.compare(this.value, o.getValue());
     }
 
