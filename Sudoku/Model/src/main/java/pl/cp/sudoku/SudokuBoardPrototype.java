@@ -4,13 +4,13 @@ package pl.cp.sudoku;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.cp.sudoku.model.SudokuBoard;
 
 public class SudokuBoardPrototype {
 
-    private static final Logger logger = Logger.getLogger(SudokuBoardPrototype.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(SudokuBoardPrototype.class);
 
     private static class Point {
         int x;
@@ -46,7 +46,7 @@ public class SudokuBoardPrototype {
         SudokuBoard board = getInstance();
         board.solveGame();
 
-        logger.log(Level.INFO, "Original Sudoku: \n" + board.toString());
+        logger.info("Original Sudoku: \n" + board.toString());
 
         for (int i = 0; i < level.numberOfPairs; i++) {
             Point p;

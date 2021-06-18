@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.cp.sudoku.SudokuBoardPrototype;
 import pl.cp.sudoku.SudokuSolver;
 import pl.cp.sudoku.model.sudokuboardelement.FieldAlreadyExistException;
@@ -25,7 +26,7 @@ import pl.cp.sudoku.model.sudokufield.ValueOutOfScopeException;
 
 public class SudokuBoard implements Serializable, Cloneable {
 
-    private static final Logger logger = Logger.getLogger(SudokuBoard.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(SudokuBoardPrototype.class);
 
     public SudokuBoard(SudokuSolver solver) {
         initializeBoard();
@@ -79,7 +80,7 @@ public class SudokuBoard implements Serializable, Cloneable {
         try {
             board[y][x].setValue(value);
         } catch (ValueOutOfScopeException e) {
-            logger.log(Level.INFO, e.getLocalizedMessage());
+            logger.warn(e.getLocalizedMessage());
             return false;
         } catch (FieldAlreadyExistException e) {
             if (isCheckingOn) {
@@ -89,7 +90,7 @@ public class SudokuBoard implements Serializable, Cloneable {
                 return true;
             }
         } catch (UnmodifiableSudokuFieldException e) {
-            logger.log(Level.SEVERE, e.getLocalizedMessage());
+            logger.error(e.getLocalizedMessage());
             return false;
         }
         return true;

@@ -1,6 +1,8 @@
 package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.cp.sudoku.model.SudokuBoard;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
@@ -8,7 +10,6 @@ import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
 
 import java.util.HashMap;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,19 +19,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SudokuBoardPrototypeTest {
 
-    private static final Logger logger = Logger.getLogger(SudokuBoardPrototypeTest.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(SudokuBoardPrototype.class);
 
     @Test
     public void PrintSudoku() {
         SudokuBoard board = SudokuBoardPrototype.getInstance();
-        logger.log(Level.INFO, "Empty:\n" + board.toString());
+        logger.info("Empty:\n" + board.toString());
     }
 
     @Test
     public void PrintSudokuEasy() {
         Difficulty d = Difficulty.EASY;
         SudokuBoard board = SudokuBoardPrototype.getInstance(d);
-        logger.log(Level.INFO, d.name() + "\n" + board.toString());
+        logger.info(d.name() + "\n" + board.toString());
         assertTrue(board.checkBoard());
     }
 
@@ -38,7 +39,7 @@ public class SudokuBoardPrototypeTest {
     public void PrintSudokuNormal() {
         Difficulty d = Difficulty.NORMAL;
         SudokuBoard board = SudokuBoardPrototype.getInstance(d);
-        logger.log(Level.INFO, d.name() + "\n" + board.toString());
+        logger.info(d.name() + "\n" + board.toString());
         assertTrue(board.checkBoard());
     }
 
@@ -46,7 +47,7 @@ public class SudokuBoardPrototypeTest {
     public void PrintSudokuHard() {
         Difficulty d = Difficulty.HARD;
         SudokuBoard board = SudokuBoardPrototype.getInstance(d);
-        logger.log(Level.INFO, d.name() + "\n" + board.toString());
+        logger.info(d.name() + "\n" + board.toString());
         assertTrue(board.checkBoard());
     }
 

@@ -1,14 +1,13 @@
 package pl.cp.sudoku.dao;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.cp.sudoku.SudokuBoardPrototype;
 import pl.cp.sudoku.model.SudokuBoard;
-
-import java.sql.*;
 
 public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
 

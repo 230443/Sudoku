@@ -1,6 +1,8 @@
 package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.cp.sudoku.model.sudokufield.SudokuField;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
@@ -9,13 +11,12 @@ import pl.cp.sudoku.model.sudokufield.UnmodifiableSudokuField;
 import pl.cp.sudoku.model.sudokufield.UnmodifiableSudokuFieldException;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SudokuFieldTest {
 
-    private static final Logger logger = Logger.getLogger(SudokuFieldTest.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(SudokuBoardPrototype.class);
 
     @Test
     public void set_getTest() {
@@ -219,7 +220,7 @@ public class SudokuFieldTest {
             field.setValue(2);
             fail();
         } catch (UnmodifiableSudokuFieldException e) {
-            logger.log(Level.SEVERE,null, e);
+            logger.error(null, e);
         }
     }
 
