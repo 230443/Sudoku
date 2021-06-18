@@ -3,6 +3,7 @@ module Dao {
     requires Model;
 
     requires org.apache.commons.lang3;
-    requires java.logging;
     requires java.sql;
+    requires log4j;
+    requires org.slf4j;
 }

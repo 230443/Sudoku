@@ -9,10 +9,7 @@ import pl.cp.sudoku.SudokuBoardPrototype;
 import pl.cp.sudoku.model.SudokuBoard;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,14 +48,25 @@ public class JdbcSudokuBoardDaoTest {
     @Test
     public void WriteAndReadBoardTest() {
 
-        SudokuBoard b1 = writeSolvedBoard("solvedBoard");
+        SudokuBoard b1 = writeSolvedBoard("Test hard board");
+        SudokuBoard b2 = null;
+        try ( Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao("Test hard board")) {
+            b2 = dao.read();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(b1, b2);
+    }
+
+    @Test
+    public void ReadBoardTest() {
         SudokuBoard b2 = null;
         try ( Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao("solvedBoard")) {
             b2 = dao.read();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        assertEquals(b1, b2);
+        assertNotEquals(b2, SudokuBoardPrototype.getInstance());
     }
 
     @Disabled
