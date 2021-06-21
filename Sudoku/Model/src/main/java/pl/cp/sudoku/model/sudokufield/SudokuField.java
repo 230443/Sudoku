@@ -41,7 +41,7 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
      *
      * @param value int value to be set.
      */
-    public void setValue(int value) throws UnmodifiableSudokuFieldException, ValueOutOfScopeException ,FieldAlreadyExistException {
+    public void setValue(int value) throws UnmodifiableSudokuFieldException, ValueOutOfScopeException, FieldAlreadyExistException {
 
         if (value < 0 || value > 9) {
             throw new ValueOutOfScopeException(ValueOutOfScopeException.ValueOutOfScope);

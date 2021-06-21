@@ -87,18 +87,27 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
                         + boardName
                         + ", id: "
                         + board_id);
-            }
 
-            for (int y = 0; y < 9; y++) {
-                for (int x = 0; x < 9; x++) {
-                    String query = getInsertQuery(x, y, board.get(x, y), board.isFieldUnmodifiable(x, y));
-                    logger.info(query);
-                    statement.execute(query);
+                for (int y = 0; y < 9; y++) {
+                    for (int x = 0; x < 9; x++) {
+                        String query = getInsertQuery(x, y, board.get(x, y), board.isFieldUnmodifiable(x, y));
+                        logger.info(query);
+                        statement.execute(query);
 
-                    logger.info(query);
+                        logger.info(query);
+                    }
+                }
+            } else {
+                for (int y = 0; y < 9; y++) {
+                    for (int x = 0; x < 9; x++) {
+                        String query = getUpdateQuery(x, y, board.get(x, y), board.isFieldUnmodifiable(x, y));
+                        logger.info(query);
+                        statement.execute(query);
+
+                        logger.info(query);
+                    }
                 }
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -127,6 +136,24 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
         return resultQuery;
     }
 
+    private String getUpdateQuery(int x, int y, int val, boolean is_unmodifiable) {
+        int bool = is_unmodifiable ? 1 : 0;
+        String resultQuery = "UPDATE `field_values` SET "
+                + "`value`='"
+                + val
+                + "', `is_unmodifiable`='"
+                + bool
+                + "' WHERE `board_id`='"
+                + board_id
+                + "' AND `x`='"
+                + x
+                + "' AND `y`='"
+                + y
+                + "'";
+
+        return resultQuery;
+    }
+
     private int getBoardId() {
 
         String selectIdQuery = "SELECT id FROM `sudokuboards` WHERE boardname='" + boardName + "'";
@@ -136,10 +163,10 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
         try {
             ResultSet result = null;
             result = executeQuery(selectIdQuery);
-            result.next();
-            if (result.isAfterLast()) return id;
-            id = result.getInt("id");
-            logger.info("board_id: " + id);
+            while (result.next()) {
+                id = result.getInt("id");
+                logger.info("board_id: " + id);
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
