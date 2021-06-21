@@ -137,7 +137,7 @@ public class SudokuBoardView {
     private final StringConverter converter = new SudokuStringConverter();
 
     private void saveBoard() {
-        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getFileDao("savedBoard.dat")) {
+        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getDao("savedBoard.dat")) {
 
             dao.write(model);
 

@@ -14,4 +14,8 @@ public class SudokuBoardDaoFactory {
     public static Dao<SudokuBoard> getJdbcDao(String boardName) {
         return new JdbcSudokuBoardDao(boardName);
     }
+
+    public static Dao<SudokuBoard> getDao(String boardName) {
+        return  getJdbcDao(boardName);
+    }
 }

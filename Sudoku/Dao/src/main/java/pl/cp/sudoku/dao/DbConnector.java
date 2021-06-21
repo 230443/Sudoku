@@ -1,8 +1,7 @@
 package pl.cp.sudoku.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.*;
 
 public class DbConnector {
     private static String URLsqlserver =
@@ -28,5 +27,24 @@ public class DbConnector {
             throw e;
         }
         return connection;
+    }
+
+    public static List<String> getSudokuBoardNames() {
+        List<String> result = new ArrayList<>();
+        String sql = "SELECT boardname FROM `sudokuboards`";
+        try {
+            Connection c = connect();
+            Statement statement = c.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()) {
+                result.add(rs.getString(1));
+            }
+            rs.close();
+            c.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
     }
 }

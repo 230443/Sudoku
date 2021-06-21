@@ -2,18 +2,21 @@ package pl.cp;
 
 
 import java.util.Locale;
+
+import javafx.collections.FXCollections;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import pl.cp.sudoku.Difficulty;
 import pl.cp.sudoku.SudokuBoardPrototype;
 import pl.cp.sudoku.dao.Dao;
+import pl.cp.sudoku.dao.DbConnector;
 import pl.cp.sudoku.dao.SudokuBoardDaoFactory;
 import pl.cp.sudoku.model.SudokuBoard;
 
@@ -68,6 +71,7 @@ public class MainView {
         hard.setOnAction((evt) -> switchToSudokuScene(Difficulty.HARD));
         cbox.getChildren().add(hard);
 
+
         Button load = BundleHandler.buttonForKey("button.load");
         load.setOnAction((evt) -> load());
         cbox.getChildren().add(load);
@@ -116,7 +120,7 @@ public class MainView {
         Stage stage = new Stage();
 
         SudokuBoard model;
-        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getFileDao("savedBoard.dat")) {
+        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getDao("savedBoard.dat")) {
             model = dao.read();
         } catch (Exception e) {
             throw new RuntimeException("Cannot load the board from file");
