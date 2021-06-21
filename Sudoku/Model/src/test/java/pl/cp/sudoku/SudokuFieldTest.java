@@ -8,9 +8,7 @@ import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
 import pl.cp.sudoku.model.sudokufield.UnmodifiableSudokuField;
-import pl.cp.sudoku.model.sudokufield.UnmodifiableSudokuFieldException;
-
-import java.util.logging.Level;
+import pl.cp.sudoku.exceptions.UnmodifiableSudokuFieldException;
 
 import static org.junit.jupiter.api.Assertions.*;
 

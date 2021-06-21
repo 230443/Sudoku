@@ -1,25 +1,31 @@
-package pl.cp.sudoku.model.sudokufield;
+package pl.cp.sudoku.exceptions;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
- * ValueOutOfScopeException.
+ * FieldAlreadyExistException.
  */
 
-public class UnmodifiableSudokuFieldException extends RuntimeException {
-    private static final ResourceBundle messages;
 
-    public static final String UNMODIFIABLE_VALUE = "message.unmodifiableSudokuField";
+public class FieldAlreadyExistException extends ApplicationException {
+    private static final ResourceBundle messages;
+    //Message keys
+
+    public static final String AlreadyExist = "message.fieldAlreadyExist";
 
     static {
         Locale locale = Locale.getDefault(Locale.Category.DISPLAY);
         messages = ResourceBundle.getBundle("exceptions.messages", locale);
     }
 
-    UnmodifiableSudokuFieldException(String msg) {
-        super(msg);
+    public FieldAlreadyExistException(String message) {
+        super(message);
+    }
+
+    public FieldAlreadyExistException(String message, Throwable cause) {
+        super(message, cause);
     }
 
     @Override

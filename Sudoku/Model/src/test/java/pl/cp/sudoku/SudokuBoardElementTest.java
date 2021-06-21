@@ -1,6 +1,7 @@
 package pl.cp.sudoku;
 
 import org.junit.jupiter.api.Test;
+import pl.cp.sudoku.exceptions.FieldAlreadyExistException;
 import pl.cp.sudoku.model.sudokuboardelement.*;
 import pl.cp.sudoku.model.sudokufield.SudokuField;
 

@@ -3,21 +3,21 @@ package pl.cp.sudoku.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.logging.Level;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.cp.sudoku.SudokuBoardPrototype;
 import pl.cp.sudoku.SudokuSolver;
-import pl.cp.sudoku.model.sudokuboardelement.FieldAlreadyExistException;
+import pl.cp.sudoku.exceptions.FieldAlreadyExistException;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuBox;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuColumn;
 import pl.cp.sudoku.model.sudokuboardelement.SudokuRow;
 import pl.cp.sudoku.model.sudokufield.SudokuField;
 import pl.cp.sudoku.model.sudokufield.UnmodifiableSudokuField;
-import pl.cp.sudoku.model.sudokufield.UnmodifiableSudokuFieldException;
-import pl.cp.sudoku.model.sudokufield.ValueOutOfScopeException;
+import pl.cp.sudoku.exceptions.UnmodifiableSudokuFieldException;
+import pl.cp.sudoku.exceptions.ValueOutOfScopeException;
 
 
 /**
@@ -84,7 +84,11 @@ public class SudokuBoard implements Serializable, Cloneable {
             return false;
         } catch (FieldAlreadyExistException e) {
             if (isCheckingOn) {
-                board[y][x].setValue(oldValue);
+                try {
+                    board[y][x].setValue(oldValue);
+                } catch (UnmodifiableSudokuFieldException | ValueOutOfScopeException | FieldAlreadyExistException unmodifiableSudokuFieldException) {
+                    unmodifiableSudokuFieldException.printStackTrace();
+                }
                 return false;
             } else {
                 return true;

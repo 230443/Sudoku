@@ -6,7 +6,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import pl.cp.sudoku.model.sudokuboardelement.FieldAlreadyExistException;
+import pl.cp.sudoku.exceptions.FieldAlreadyExistException;
+import pl.cp.sudoku.exceptions.UnmodifiableSudokuFieldException;
+import pl.cp.sudoku.exceptions.ValueOutOfScopeException;
 
 public class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {
 
@@ -39,10 +41,10 @@ public class SudokuField implements Serializable, Cloneable, Comparable<SudokuFi
      *
      * @param value int value to be set.
      */
-    public void setValue(int value) {
+    public void setValue(int value) throws UnmodifiableSudokuFieldException, ValueOutOfScopeException ,FieldAlreadyExistException {
 
         if (value < 0 || value > 9) {
-            throw new ValueOutOfScopeException("Number out of range 0-9");
+            throw new ValueOutOfScopeException(ValueOutOfScopeException.ValueOutOfScope);
         }
         int oldValue = this.value;
         try {

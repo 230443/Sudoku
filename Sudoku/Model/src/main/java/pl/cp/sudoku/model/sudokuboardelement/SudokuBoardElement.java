@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import pl.cp.sudoku.exceptions.FieldAlreadyExistException;
 import pl.cp.sudoku.model.sudokufield.SudokuField;
 
 public abstract class SudokuBoardElement implements PropertyChangeListener, Cloneable {
@@ -13,7 +14,7 @@ public abstract class SudokuBoardElement implements PropertyChangeListener, Clon
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (!verify()) {
-            throw new FieldAlreadyExistException("FieldAlreadyExist");
+            throw new FieldAlreadyExistException(FieldAlreadyExistException.AlreadyExist);
         }
     }
 

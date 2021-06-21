@@ -1,5 +1,7 @@
 package pl.cp.sudoku.model.sudokufield;
 
+import pl.cp.sudoku.exceptions.UnmodifiableSudokuFieldException;
+
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 
@@ -18,7 +20,7 @@ public class UnmodifiableSudokuField extends SudokuField implements Serializable
     }
 
     @Override
-    public void setValue(int value) {
+    public void setValue(int value) throws UnmodifiableSudokuFieldException {
         throw new UnmodifiableSudokuFieldException(
                 UnmodifiableSudokuFieldException.UNMODIFIABLE_VALUE);
     }
