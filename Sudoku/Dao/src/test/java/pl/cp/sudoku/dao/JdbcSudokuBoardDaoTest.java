@@ -1,5 +1,6 @@
 package pl.cp.sudoku.dao;
 
+import com.mysql.cj.jdbc.JdbcConnection;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -36,14 +37,6 @@ public class JdbcSudokuBoardDaoTest {
         connection.close();
     }
 
-    @Disabled
-    @Test
-    public void writeToWrongFileTest() {
-        SudokuBoard sudokuBoard = new SudokuBoard(new BacktrackingSudokuSolver());
-        Dao<SudokuBoard> fileDao = SudokuBoardDaoFactory.getJdbcDao("&?/|.txt");
-        fileDao.write(sudokuBoard);
-    }
-
 
     @Test
     public void WriteAndReadBoardTest() {
@@ -58,64 +51,48 @@ public class JdbcSudokuBoardDaoTest {
         assertEquals(b1, b2);
     }
 
-    //@Test
-    public void ReadBoardTest() {
-        SudokuBoard b2 = null;
-        try ( Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao("solvedBoard")) {
-            b2 = dao.read();
+    @Test
+    public void readNonExistingBoardTest() {
+        SudokuBoard board = SudokuBoardPrototype.getInstance();
+        try ( Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao("non existing board")) {
+            board = dao.read();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        assertNotEquals(b2, SudokuBoardPrototype.getInstance());
+        assertNull(board);
     }
 
-    @Disabled
+
     @Test
-    public void ReadandSolveBoardTest() {
+    public void readBadBoardTest() throws SQLException {
+        writeSolvedBoard("bad board");
+        Connection c = DbConnector.connect();
+        Statement statement = c.createStatement();
+        statement.execute("DELETE FROM `field_values` WHERE `y`='1' AND `board_id` LIKE (SELECT id FROM `sudokuboards` WHERE boardname='bad board')");
 
-        var board = writeSolvedBoard("solvedSudoku.dat");
-        Dao<SudokuBoard> fileSudokuBoardDao = SudokuBoardDaoFactory.getJdbcDao("solvedSudoku.dat");
-        SudokuBoard readBoard = fileSudokuBoardDao.read();
-        readBoard.solveGame();
-    }
+        c.close();
 
-    @Disabled
-    @Test
-    public void readNonExistingFileTest() {
-        Dao<SudokuBoard> fileSudokuBoardDao = SudokuBoardDaoFactory.getJdbcDao("notFound");
-        var readBoard = fileSudokuBoardDao.read();
-        assertNull(readBoard);
-    }
-
-    @Disabled
-    @Test
-    public void readBadFileTest() {
-        Dao<SudokuBoard> fileSudokuBoardDao = SudokuBoardDaoFactory.getJdbcDao("faulty.txt");
-        SudokuBoard sudokuBoard = fileSudokuBoardDao.read();
-        assertNull(sudokuBoard);
-    }
-
-    @Disabled
-    @Test
-    public void AutoClosableTest() throws Exception {
-        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao("tryTest.dat")) {
-
-            SudokuBoard b1 = new SudokuBoard(new BacktrackingSudokuSolver());
-            b1.solveGame();
-            dao.write(b1);
-            var b2 =  dao.read();
-
-            assertEquals(b1,b2);
+        try ( Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao("bad board")) {
+            dao.read();
+            fail();
+        } catch (DaoException e) {
+        } catch (Exception e) {
+            fail();
         }
+
+
+
     }
 
-    @Disabled
     @AfterAll
-    public static void clean() {
-        File f1 = new File("tryTest.dat");
-        File f2 = new File("solvedSudoku.dat");
-        f1.delete();
-        f2.delete();
+    public static void clean() throws SQLException {
+        Connection c = DbConnector.connect();
+        Statement statement = c.createStatement();
+        statement.execute("DELETE FROM `field_values` WHERE `board_id` LIKE (SELECT id FROM `sudokuboards` WHERE boardname='bad board')");
+        statement.execute("DELETE FROM `field_values` WHERE `board_id` LIKE (SELECT id FROM `sudokuboards` WHERE boardname='Test hard board')");
+        statement.execute("DELETE FROM `sudokuboards` WHERE boardname='bad board'");
+        statement.execute("DELETE FROM `sudokuboards` WHERE  boardname='Test hard board'");
+        c.close();
     }
 
 }

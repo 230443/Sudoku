@@ -37,8 +37,13 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
     }
 
     @Override
-    public SudokuBoard read() {
+    public SudokuBoard read() throws DaoException {
         SudokuBoard board = SudokuBoardPrototype.getInstance();
+
+        if (board_id == 0) {
+            return null;
+        }
+
         String selectFieldsQuery = "SELECT * FROM `field_values` WHERE board_id=" + board_id;
 
         try {
@@ -46,22 +51,27 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
             ResultSet resultSet = statement.executeQuery(selectFieldsQuery);
             logger.info("executed query: " + selectFieldsQuery);
 
+            int rowCount = 0;
             while (resultSet.next()) {
                 int x = resultSet.getInt("x");
                 int y = resultSet.getInt("y");
-                logger.info("(x,y) = ("
-                        + x
-                        + ","
-                        + y
-                        + ")");
+                //logger.info("(x,y) = (" + x + "," + y + ")");
+                //logger.info("rows number: " + (resultSet.getRow()));
+
                 board.set(x, y, resultSet.getInt("value"));
 
                 if (resultSet.getBoolean("is_unmodifiable")) {
                     board.makeFieldUnmodifiable(x, y);
                 }
+                rowCount++;
+            }
+
+            if (rowCount != 81) {
+                logger.error("rows number: " + (rowCount));
+                throw new DaoException("board not complete");
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            throw new DaoException(throwables);
         }
 
         return board;
@@ -72,6 +82,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
     public void write(SudokuBoard board) {
 
         try {
+            connection.setAutoCommit(false);
             Statement statement = connection.createStatement();
 
             if (board_id == 0) {
@@ -109,6 +120,8 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
                 }
             }
 
+            connection.commit();
+            connection.setAutoCommit(true);
         } catch (SQLException e) {
             e.printStackTrace();
             return;
