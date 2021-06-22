@@ -1,16 +1,14 @@
 package pl.cp.sudoku.dao;
 
-import com.mysql.cj.jdbc.JdbcConnection;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import pl.cp.sudoku.BacktrackingSudokuSolver;
 import pl.cp.sudoku.Difficulty;
 import pl.cp.sudoku.SudokuBoardPrototype;
 import pl.cp.sudoku.model.SudokuBoard;
 
-import java.io.File;
-import java.sql.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,11 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class JdbcSudokuBoardDaoTest {
 
 
-
-
     private SudokuBoard writeSolvedBoard(String name) {
         SudokuBoard sudokuBoard = SudokuBoardPrototype.getInstance(Difficulty.HARD);
-        try ( Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao(name)) {
+        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao(name)) {
             dao.write(sudokuBoard);
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,7 +39,7 @@ public class JdbcSudokuBoardDaoTest {
 
         SudokuBoard b1 = writeSolvedBoard("Test hard board");
         SudokuBoard b2 = null;
-        try ( Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao("Test hard board")) {
+        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao("Test hard board")) {
             b2 = dao.read();
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,12 +50,14 @@ public class JdbcSudokuBoardDaoTest {
     @Test
     public void readNonExistingBoardTest() {
         SudokuBoard board = SudokuBoardPrototype.getInstance();
-        try ( Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao("non existing board")) {
+        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao("non existing board")) {
             board = dao.read();
+            fail();
+        } catch (DaoException e) {
         } catch (Exception e) {
-            e.printStackTrace();
+            fail();
         }
-        assertNull(board);
+        //assertNull(board);
     }
 
 
@@ -72,14 +70,13 @@ public class JdbcSudokuBoardDaoTest {
 
         c.close();
 
-        try ( Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao("bad board")) {
+        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getJdbcDao("bad board")) {
             dao.read();
             fail();
         } catch (DaoException e) {
         } catch (Exception e) {
             fail();
         }
-
 
 
     }

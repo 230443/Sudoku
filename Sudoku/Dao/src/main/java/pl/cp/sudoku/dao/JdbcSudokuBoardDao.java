@@ -13,12 +13,14 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
 
     private static final Logger logger = LoggerFactory.getLogger(JdbcSudokuBoardDao.class);
 
-    private String boardName;
+    private final String boardName;
     private int board_id;
-    private Connection connection;
+    private final Connection connection;
 
-
-
+    /**
+     * Initialize DAO component.
+     * @param boardName name of the board in the database.
+     */
     public JdbcSudokuBoardDao(String boardName) {
         this.boardName = boardName;
 
@@ -26,9 +28,9 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
             connection = DbConnector.connect();
             logger.trace("Connecting...");
         } catch (SQLException e) {
-            e.printStackTrace();
-            logger.error("Cannot connect to database.",e);
-            throw new NullPointerException("cannot connect to database");
+            DaoException daoException = new DaoException(DaoException.CONNECTION_ERROR, e);
+            logger.error(daoException.getLocalizedMessage(), e);
+            throw new DaoException(daoException.getLocalizedMessage(), e);
         }
 
         board_id = getBoardId();
@@ -41,7 +43,10 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
         SudokuBoard board = SudokuBoardPrototype.getInstance();
 
         if (board_id == 0) {
-            return null;
+            DaoException daoException = new DaoException(DaoException.BOARD_NOT_FOUND);
+            logger.warn(daoException.getLocalizedMessage());
+            throw daoException;
+            //return null;
         }
 
         String selectFieldsQuery = "SELECT * FROM `field_values` WHERE board_id=" + board_id;
@@ -68,10 +73,10 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
 
             if (rowCount != 81) {
                 logger.error("rows number: " + (rowCount));
-                throw new DaoException("board not complete");
+                throw new DaoException(DaoException.BOARD_CORRUPTED);
             }
         } catch (SQLException throwables) {
-            throw new DaoException(throwables);
+            throw new DaoException(DaoException.BOARD_CORRUPTED, throwables);
         }
 
         return board;
@@ -101,7 +106,8 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
 
                 for (int y = 0; y < 9; y++) {
                     for (int x = 0; x < 9; x++) {
-                        String query = getInsertQuery(x, y, board.get(x, y), board.isFieldUnmodifiable(x, y));
+                        String query = getInsertQuery(
+                                x, y, board.get(x, y), board.isFieldUnmodifiable(x, y));
                         logger.info(query);
                         statement.execute(query);
 
@@ -111,7 +117,8 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
             } else {
                 for (int y = 0; y < 9; y++) {
                     for (int x = 0; x < 9; x++) {
-                        String query = getUpdateQuery(x, y, board.get(x, y), board.isFieldUnmodifiable(x, y));
+                        String query = getUpdateQuery(
+                                x, y, board.get(x, y), board.isFieldUnmodifiable(x, y));
                         logger.info(query);
                         statement.execute(query);
 
@@ -128,7 +135,6 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
         }
 
 
-
     }
 
     @Override
@@ -138,7 +144,9 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
 
     private String getInsertQuery(int x, int y, int val, boolean is_unmodifiable) {
         int bool = is_unmodifiable ? 1 : 0;
-        String resultQuery = "INSERT INTO `field_values` (`board_id`, `x`, `y`, `value`, `is_unmodifiable`) VALUES ("
+        String resultQuery = "INSERT INTO `field_values` "
+                + "(`board_id`, `x`, `y`, `value`, `is_unmodifiable`)"
+                + " VALUES ("
                 + board_id + ","
                 + x + ","
                 + y + ","
