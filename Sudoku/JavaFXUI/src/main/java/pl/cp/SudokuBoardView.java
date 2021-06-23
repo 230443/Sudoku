@@ -1,13 +1,11 @@
 package pl.cp;
 
+import java.util.Optional;
 import java.util.function.UnaryOperator;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -15,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import pl.cp.sudoku.dao.Dao;
+import pl.cp.sudoku.dao.DaoException;
 import pl.cp.sudoku.dao.SudokuBoardDaoFactory;
 import pl.cp.sudoku.model.SudokuBoard;
 
@@ -39,7 +38,8 @@ public class SudokuBoardView {
         createAndConfigurePane();
 
         saveButton = BundleHandler.buttonForKey("button.save");
-        saveButton.setOnAction((evt) -> saveBoard());
+        saveButton.setOnAction((evt) -> showSaveBoardDialog());
+
 
 
         vBox = new VBox();
@@ -86,7 +86,6 @@ public class SudokuBoardView {
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(5);
         gridPane.setVgap(5);
-        System.out.print(model.toString());
 
         for (int y = 0; y < 9; y++) {
             gridPane.getColumnConstraints().add(new ColumnConstraints(30));
@@ -141,6 +140,31 @@ public class SudokuBoardView {
 
             dao.write(model);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showSaveBoardDialog() {
+        TextInputDialog dialog = new TextInputDialog("New board");
+        dialog.setTitle("Save game");
+        dialog.setHeaderText("dialog.header");
+        dialog.setContentText("Choose board name:");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(this::saveBoard);
+    }
+
+    private void saveBoard(String boardName) {
+        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getDao(boardName)) {
+
+            dao.write(model);
+
+        } catch (DaoException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database error");
+            alert.setHeaderText(e.getLocalizedMessage());
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         }

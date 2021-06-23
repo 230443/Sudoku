@@ -32,18 +32,17 @@ public class DbConnector {
     public static List<String> getSudokuBoardNames() {
         List<String> result = new ArrayList<>();
         String sql = "SELECT boardname FROM `sudokuboards`";
-        try {
-            Connection c = connect();
-            Statement statement = c.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-
+        try (
+                Connection c = connect();
+                Statement statement = c.createStatement();
+                ResultSet rs = statement.executeQuery(sql);
+        ) {
             while (rs.next()) {
                 result.add(rs.getString(1));
             }
-            rs.close();
-            c.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+
+        } catch (SQLException e) {
+            throw new DaoException(DaoException.CONNECTION_ERROR, e);
         }
         return result;
     }

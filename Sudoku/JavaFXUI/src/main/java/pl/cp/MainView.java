@@ -2,6 +2,7 @@ package pl.cp;
 
 
 import java.util.Locale;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.SortedList;
@@ -16,6 +17,7 @@ import javafx.stage.Stage;
 import pl.cp.sudoku.Difficulty;
 import pl.cp.sudoku.SudokuBoardPrototype;
 import pl.cp.sudoku.dao.Dao;
+import pl.cp.sudoku.dao.DaoException;
 import pl.cp.sudoku.dao.DbConnector;
 import pl.cp.sudoku.dao.SudokuBoardDaoFactory;
 import pl.cp.sudoku.model.SudokuBoard;
@@ -73,7 +75,7 @@ public class MainView {
 
 
         Button load = BundleHandler.buttonForKey("button.load");
-        load.setOnAction((evt) -> load());
+        load.setOnAction((evt) -> showLoadBoardDialog());
         cbox.getChildren().add(load);
 
 
@@ -115,15 +117,21 @@ public class MainView {
     }
 
     @FXML
-    void load() {
+    void load(String name) {
 
         Stage stage = new Stage();
 
-        SudokuBoard model;
-        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getDao("savedBoard.dat")) {
+        SudokuBoard model = null;
+        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getDao(name)) {
             model = dao.read();
+        } catch (DaoException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database error");
+            alert.setHeaderText(e.getLocalizedMessage());
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
         } catch (Exception e) {
-            throw new RuntimeException("Cannot load the board from file");
+            e.printStackTrace();
         }
 
         if (model == null) {
@@ -136,6 +144,16 @@ public class MainView {
         stage.setScene(new Scene(view.asParent()));
         stage.show();
 
+    }
+
+    private void showLoadBoardDialog() {
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("", DbConnector.getSudokuBoardNames());
+        dialog.setTitle("Board selection");
+        dialog.setHeaderText("Select board ");
+        dialog.setContentText("Choose your sudoku board:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(this::load);
     }
 
 
