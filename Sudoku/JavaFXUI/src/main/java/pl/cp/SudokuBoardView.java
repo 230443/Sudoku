@@ -5,7 +5,14 @@ import java.util.function.UnaryOperator;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -24,17 +31,19 @@ public class SudokuBoardView {
     private VBox vBox;
     private Button saveButton;
     Label boardLabel = new Label();
-    private SudokuBoardController controller;
-    SudokuBoardStringProperty boardStringProperty;
+    //SudokuBoardStringProperty boardStringProperty;
 
+    /**
+     * View for presenting and solving sudoku.
+     * @param model SudokuBoard
+     */
+    public SudokuBoardView(SudokuBoard model) {
 
-    public SudokuBoardView(SudokuBoardController controller, SudokuBoard model) {
-        this.controller = controller;
         this.model = model;
         //model.isCheckingOn = false;
 
-        boardStringProperty = new SudokuBoardStringProperty(model);
-        boardLabel.textProperty().bindBidirectional(boardStringProperty);
+        //boardStringProperty = new SudokuBoardStringProperty(model);
+        //boardLabel.textProperty().bindBidirectional(boardStringProperty);
 
         createAndConfigurePane();
 
@@ -50,23 +59,6 @@ public class SudokuBoardView {
 
     }
 
-    private static boolean isNotNumeric(String str) {
-        return !(str.matches("[0-9]"));
-    }
-
-    private static boolean check(String str) {
-        if (str.equals("")) {
-            return false;
-        }
-        return isNotNumeric(str);
-    }
-
-    private static int getNumberFromString(String str) {
-        if (str.equals("")) {
-            return 0;
-        }
-        return Integer.parseInt(str);
-    }
 
     UnaryOperator<TextFormatter.Change> integerFilter = change -> {
         String newText = change.getControlNewText();
@@ -108,7 +100,7 @@ public class SudokuBoardView {
                     textField.textProperty().addListener((observable, oldValue, newValue) -> {
                         System.out.println("Changed");
                         sudokuFieldProperty.set((Integer) converter.fromString(newValue));
-                        boardStringProperty.fireValueChangedEvent();
+                        //boardStringProperty.fireValueChangedEvent();
 
                         if (model.isCheckingOn) {
                             if (converter.fromString(newValue).equals(0)) {
@@ -122,7 +114,7 @@ public class SudokuBoardView {
                         }
                     });
 
-                    Bindings.bindBidirectional(textField.textProperty(), boardStringProperty);
+                    //Bindings.bindBidirectional(textField.textProperty(), boardStringProperty);
 
 
                     gridPane.add(textField, x, y);
@@ -136,21 +128,12 @@ public class SudokuBoardView {
 
     private final StringConverter converter = new SudokuStringConverter();
 
-    private void saveBoard() {
-        try (Dao<SudokuBoard> dao = SudokuBoardDaoFactory.getDao("savedBoard.dat")) {
-
-            dao.write(model);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private void showAddBoardDialog() {
         TextInputDialog dialog = new TextInputDialog("New board");
         dialog.setTitle("Save game");
-        dialog.setHeaderText("dialog.header");
-        dialog.setContentText("Choose board name:");
+        dialog.setHeaderText("Choose board name");
+        dialog.setContentText("Board name:");
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(this::saveBoard);
     }

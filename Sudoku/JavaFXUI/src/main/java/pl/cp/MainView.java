@@ -3,9 +3,6 @@ package pl.cp;
 
 import java.util.Locale;
 import java.util.Optional;
-
-import javafx.collections.FXCollections;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -107,9 +104,7 @@ public class MainView {
 
         SudokuBoard model = SudokuBoardPrototype.getInstance(difficulty);
 
-        SudokuBoardController controller = new SudokuBoardController(model);
-
-        SudokuBoardView view = new SudokuBoardView(controller, model);
+        SudokuBoardView view = new SudokuBoardView(model);
 
         stage.setScene(new Scene(view.asParent()));
         stage.show();
@@ -137,9 +132,8 @@ public class MainView {
         if (model == null) {
             return;
         }
-        SudokuBoardController controller = new SudokuBoardController(model);
 
-        SudokuBoardView view = new SudokuBoardView(controller, model);
+        SudokuBoardView view = new SudokuBoardView(model);
 
         stage.setScene(new Scene(view.asParent()));
         stage.show();

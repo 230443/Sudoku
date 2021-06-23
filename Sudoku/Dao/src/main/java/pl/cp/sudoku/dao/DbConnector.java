@@ -1,7 +1,12 @@
 package pl.cp.sudoku.dao;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DbConnector {
     private static String URLsqlserver =
@@ -19,6 +24,11 @@ public class DbConnector {
 
     private static String URL = URLMySQL;
 
+    /**
+     * Creates connection with database from URL property.
+     * @return Connection
+     * @throws SQLException connection errors.
+     */
     public static Connection connect() throws SQLException {
         Connection connection = null;
         try {
@@ -29,6 +39,10 @@ public class DbConnector {
         return connection;
     }
 
+    /**
+     * Get names of sudoku boards from database from URL property.
+     * @return List of strings.
+     */
     public static List<String> getSudokuBoardNames() {
         List<String> result = new ArrayList<>();
         String sql = "SELECT boardname FROM `sudokuboards`";
