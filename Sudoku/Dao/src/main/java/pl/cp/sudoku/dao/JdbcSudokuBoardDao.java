@@ -51,9 +51,9 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
 
         String selectFieldsQuery = "SELECT * FROM `field_values` WHERE board_id=" + board_id;
 
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(selectFieldsQuery);
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(selectFieldsQuery)) {
+
             logger.info("executed query: " + selectFieldsQuery);
 
             int rowCount = 0;
@@ -86,9 +86,9 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
     @Override
     public void write(SudokuBoard board) {
 
-        try {
+        try (Statement statement = connection.createStatement()) {
+
             connection.setAutoCommit(false);
-            Statement statement = connection.createStatement();
 
             if (board_id == 0) {
 
@@ -130,8 +130,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
             connection.commit();
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            e.printStackTrace();
-            return;
+            throw new DaoException(DaoException.BOARD_CORRUPTED, e);
         }
 
 
