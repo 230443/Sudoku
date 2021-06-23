@@ -27,7 +27,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
         try {
             connection = DbConnector.connect();
             logger.trace("Connecting...");
-        } catch (SQLException e) {
+        } catch (DaoException e) {
             DaoException daoException = new DaoException(DaoException.CONNECTION_ERROR, e);
             logger.error(daoException.getLocalizedMessage(), e);
             throw new DaoException(daoException.getLocalizedMessage(), e);
@@ -180,9 +180,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
 
         int id = 0;
 
-        try {
-            ResultSet result = null;
-            result = executeQuery(selectIdQuery);
+        try (ResultSet result = executeQuery(selectIdQuery)) {
             while (result.next()) {
                 id = result.getInt("id");
                 logger.info("board_id: " + id);
@@ -196,8 +194,7 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
 
     private ResultSet executeQuery(String query) throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery(query);
-        return result;
+        return statement.executeQuery(query);
     }
 
 }

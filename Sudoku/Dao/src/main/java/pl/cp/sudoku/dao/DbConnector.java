@@ -27,14 +27,14 @@ public class DbConnector {
     /**
      * Creates connection with database from URL property.
      * @return Connection
-     * @throws SQLException connection errors.
+     * @throws DaoException connection errors.
      */
-    public static Connection connect() throws SQLException {
+    public static Connection connect() throws DaoException {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(URL);
         } catch (SQLException e) {
-            throw e;
+            throw new DaoException(DaoException.CONNECTION_ERROR, e);
         }
         return connection;
     }
