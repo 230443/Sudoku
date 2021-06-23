@@ -14,6 +14,7 @@ import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import pl.cp.sudoku.dao.Dao;
 import pl.cp.sudoku.dao.DaoException;
+import pl.cp.sudoku.dao.DbConnector;
 import pl.cp.sudoku.dao.SudokuBoardDaoFactory;
 import pl.cp.sudoku.model.SudokuBoard;
 
@@ -38,7 +39,7 @@ public class SudokuBoardView {
         createAndConfigurePane();
 
         saveButton = BundleHandler.buttonForKey("button.save");
-        saveButton.setOnAction((evt) -> showSaveBoardDialog());
+        saveButton.setOnAction((evt) -> showAddBoardDialog());
 
 
 
@@ -145,13 +146,52 @@ public class SudokuBoardView {
         }
     }
 
-    private void showSaveBoardDialog() {
+    private void showAddBoardDialog() {
         TextInputDialog dialog = new TextInputDialog("New board");
         dialog.setTitle("Save game");
         dialog.setHeaderText("dialog.header");
         dialog.setContentText("Choose board name:");
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(this::saveBoard);
+    }
+
+    private void showSelectBoardDialog() {
+        try {
+            ChoiceDialog<String> dialog = new ChoiceDialog<>("", DbConnector.getSudokuBoardNames());
+            dialog.setTitle("Board selection");
+            dialog.setHeaderText("Select board ");
+            dialog.setContentText("Choose your sudoku board:");
+
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(this::saveBoard);
+        } catch (DaoException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database error");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
+        }
+    }
+
+    private void showChooseMethodDialog() {
+
+            Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
+            dialog.setTitle("Board selection");
+            dialog.setHeaderText("Select board ");
+            dialog.setContentText("Choose your sudoku board:");
+
+            ButtonType select = new ButtonType("button.select");
+            ButtonType add = new ButtonType("button.add");
+
+            dialog.getButtonTypes().setAll(select, add);
+
+            Optional<ButtonType> result = dialog.showAndWait();
+            if (result.get() == select) {
+                showSelectBoardDialog();
+            } else if (result.get() == add) {
+                showAddBoardDialog();
+            } else {
+                dialog.close();
+            }
     }
 
     private void saveBoard(String boardName) {

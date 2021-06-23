@@ -147,13 +147,20 @@ public class MainView {
     }
 
     private void showLoadBoardDialog() {
-        ChoiceDialog<String> dialog = new ChoiceDialog<>("", DbConnector.getSudokuBoardNames());
-        dialog.setTitle("Board selection");
-        dialog.setHeaderText("Select board ");
-        dialog.setContentText("Choose your sudoku board:");
+        try {
+            ChoiceDialog<String> dialog = new ChoiceDialog<>("", DbConnector.getSudokuBoardNames());
+            dialog.setTitle("Board selection");
+            dialog.setHeaderText("Select board ");
+            dialog.setContentText("Choose your sudoku board:");
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(this::load);
+        } catch (DaoException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database error");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
+        }
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(this::load);
     }
 
 
