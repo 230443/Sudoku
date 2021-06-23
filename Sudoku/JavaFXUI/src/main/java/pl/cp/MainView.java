@@ -143,9 +143,9 @@ public class MainView {
     private void showLoadBoardDialog() {
         try {
             ChoiceDialog<String> dialog = new ChoiceDialog<>("", DbConnector.getSudokuBoardNames());
-            dialog.setTitle("Board selection");
-            dialog.setHeaderText("Select board ");
-            dialog.setContentText("Choose your sudoku board:");
+            dialog.setTitle(BundleHandler.get("dialog.selectionTitle"));
+            dialog.setHeaderText(BundleHandler.get("dialog.selectionHeader"));
+            dialog.setContentText(BundleHandler.get("dialog.selectionContent"));
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(this::load);
         } catch (DaoException e) {

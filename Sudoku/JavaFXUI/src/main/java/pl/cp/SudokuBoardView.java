@@ -130,10 +130,10 @@ public class SudokuBoardView {
 
 
     private void showAddBoardDialog() {
-        TextInputDialog dialog = new TextInputDialog("New board");
-        dialog.setTitle("Save game");
-        dialog.setHeaderText("Choose board name");
-        dialog.setContentText("Board name:");
+        TextInputDialog dialog = new TextInputDialog(BundleHandler.get("dialog.defaultname"));
+        dialog.setTitle(BundleHandler.get("dialog.title"));
+        dialog.setHeaderText(BundleHandler.get("dialog.header"));
+        dialog.setContentText("BoardName:");
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(this::saveBoard);
     }
